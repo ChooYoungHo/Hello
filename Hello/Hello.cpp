@@ -19,7 +19,8 @@ Ctrl+Space 누르면 자동완성 다시 뜸
 프로그램 디버그 : <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
 Ctrl+B+B : 프로젝트 빌드 (Alt+B+B)
 Ctrl+B+R : 프로젝트 리빌드
-
+Ctrl+K+C : 블럭 영역 전부 주석 처리
+Ctrl+K+U : 블럭 영역 전부 주석 주석해제 처리
 */
 
 
@@ -33,6 +34,29 @@ Ctrl+B+R : 프로젝트 리빌드
 .pdb 파일은 절대 주지마
 */
 
+/*
+변수(Variable)
+  - 변하는 숫자
+  - 컴퓨터에 값을 기억 시키기 위해 만들고 사용
+*/
+
+/*
+연산자(Operator)
+  - 계산을 하기 위한 기호
+  - 대입 연산자
+  = 오른쪽에 있는 값을 왼쪽에 넣어라
+  a = b; // b에 있는 값을 a에 넣어라
+  - 산술 연산자
+	  사칙연산 + - * / %(나머지 연산 a=5%3; a에는 2가 들어간다)
+  - 복합 대입연산자
+      줄여쓰기용
+      a += b; // 아래와 같은 코드
+	  a = a + b;
+  - 증감 연산자
+      a++; // a = a + 1; a에다가 1을 더해라
+	  a--; // a = a - 1; a에다가 1을 빼라
+  == 양변이 같다
+*/
 
 #include <iostream>   // 입출력 관련
 #include <stdio.h>
@@ -59,7 +83,17 @@ int main()  // main 함수는 반드시 하나만, 앤트리 포인트 (코드�
 
     //std::cout << "Hello World!\n"; // c++ 출력 방법
 
-    int number = 0;
+    int number = 0; // number라는 이름을 가진 int(인티저)변수를 선언하고 거기에 0을 대입한다.
+    /*
+    int number; 변수 선업
+    number = 0; 변수 선언
+
+    int : 정수형 (소수점이 없는 숫자
+    number : 5.3 이면 5가 저장
+	number : 5/2 이면 2가 저장
+    */
+
+
     scanf("%d", &number); // 숫자를 하나 입력 받기 (c)
     printf("입력한 숫자는 : %d\n", number);
 
@@ -68,7 +102,24 @@ int main()  // main 함수는 반드시 하나만, 앤트리 포인트 (코드�
     printf("나이는: %d\n", number);
 
     //프로그램을 실행했을 때 나이를 물어보고 입력받은 숫자를 그대로 출력해보기
+    // 
+    // 
+    //
 
+    int number1 = 0;
+    int number2 = 0;
+
+    printf("숫자 1을 입력하시오 :");
+    std::cin >> number1;
+    printf("숫자 2을 입력하시오 :");
+    std::cin >> number2;
+    /*
+	int number3 = number1 + number2;
+	printf("두 숫자의 합은 %d입니다.", number3);
+
+    */
+
+    printf("두 숫자의 합은 %d입니다.", number1 + number2);
     return 0;
 }
 
