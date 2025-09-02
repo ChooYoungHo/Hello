@@ -66,60 +66,164 @@ Ctrl+K+U : 블럭 영역 전부 주석 주석해제 처리
 //using namespace std; // 이름 공간
 
 int main()  // main 함수는 반드시 하나만, 앤트리 포인트 (코드가 시작되는 곳)
+
+
 {
-    printf("Hello\tWorld!\n"); // c언어의 출력 방법
-    printf("\"추영호\t");       //""안에 \n이 있으면 줄을 바꾸라는 의미
-    printf("90년생입니다.\n");
-    printf("");
+
+    
+    
+ //   printf("Hello\tWorld!\n"); // c언어의 출력 방법
+ //   printf("\"추영호\t");       //""안에 \n이 있으면 줄을 바꾸라는 의미
+ //   printf("90년생입니다.\n");
+ //   printf("");
 
 
-    // 이스케이프 스퀸스
-    // \n : 줄바꾸기 (개행문자)
-    // \t : 탭 넣기
-    // \" : 쌍따음표 한개
-    // \\ : \찍기
-    // \r : 캐리지 리턴 (윈도우에서는 중요하지 않음. 리눅스에서는 중요함 커서가 줄 바꾸고 맨 앞으로)
+ //   // 이스케이프 스퀸스
+ //   // \n : 줄바꾸기 (개행문자)
+ //   // \t : 탭 넣기
+ //   // \" : 쌍따음표 한개
+ //   // \\ : \찍기
+ //   // \r : 캐리지 리턴 (윈도우에서는 중요하지 않음. 리눅스에서는 중요함 커서가 줄 바꾸고 맨 앞으로)
 
 
-    //std::cout << "Hello World!\n"; // c++ 출력 방법
+ //   //std::cout << "Hello World!\n"; // c++ 출력 방법
 
-    int number = 0; // number라는 이름을 가진 int(인티저)변수를 선언하고 거기에 0을 대입한다.
-    /*
-    int number; 변수 선업
-    number = 0; 변수 선언
+ //   int number = 0; // number라는 이름을 가진 int(인티저)변수를 선언하고 거기에 0을 대입한다.
+ //   /*
+ //   int number; 변수 선업
+ //   number = 0; 변수 선언
 
-    int : 정수형 (소수점이 없는 숫자
-    number : 5.3 이면 5가 저장
-	number : 5/2 이면 2가 저장
-    */
-
-
-    scanf("%d", &number); // 숫자를 하나 입력 받기 (c)
-    printf("입력한 숫자는 : %d\n", number);
+ //   int : 정수형 (소수점이 없는 숫자
+ //   number : 5.3 이면 5가 저장
+	//number : 5/2 이면 2가 저장
+ //   */
 
 
-    std::cin >> number; // 숫자를 하나 입력 받기 (c++)
-    printf("나이는: %d\n", number);
+ //   scanf("%d", &number); // 숫자를 하나 입력 받기 (c)
+ //   printf("입력한 숫자는 : %d\n", number);
 
-    //프로그램을 실행했을 때 나이를 물어보고 입력받은 숫자를 그대로 출력해보기
-    // 
-    // 
-    //
 
-    int number1 = 0;
-    int number2 = 0;
+ //   std::cin >> number; // 숫자를 하나 입력 받기 (c++)
+ //   printf("나이는: %d\n", number);
 
-    printf("숫자 1을 입력하시오 :");
-    std::cin >> number1;
-    printf("숫자 2을 입력하시오 :");
-    std::cin >> number2;
-    /*
-	int number3 = number1 + number2;
-	printf("두 숫자의 합은 %d입니다.", number3);
+ //   //프로그램을 실행했을 때 나이를 물어보고 입력받은 숫자를 그대로 출력해보기
+ // 
 
-    */
+ //   int number1 = 0;
+ //   int number2 = 0;
 
-    printf("두 숫자의 합은 %d입니다.", number1 + number2);
+ //   printf("숫자 1을 입력하시오 :");
+ //   std::cin >> number1;
+ //   printf("숫자 2을 입력하시오 :");
+ //   std::cin >> number2;
+ //   /*
+	//int number3 = number1 + number2;
+	//printf("두 숫자의 합은 %d입니다.", number3);
+
+ //   */
+
+ //   printf("두 숫자의 합은 %d입니다.", number1 + number2);
+
+    
+
+    printf("  *  \n");
+	printf(" *** \n");
+	printf("*****\n");
+
+	printf("□□□□□□□□\n");
+	printf("□  □    □  □\n");
+	printf("□     □     □\n");
+	printf("□□□□□□□□\n");
+
+
+
+	
+
+	int number1 = 0;
+	int number2 = 0;
+	
+	printf("사각형 가로 : \n");
+	std::cin >> number1;
+	printf("사각형 세로 : \n");
+	std::cin >> number2;
+
+	int number3 = number1 * number2;
+	printf("사각형 넓이: %d\n" , number3);
+
+
+	int number4 = 0;
+	int number5 = 0;
+	std::cin >> number4;
+	std::cin >> number5;
+	
+	int number6 = number4 - (number4 / number5) * number5;
+	printf("두 수의 나머지 : %d\n", number6);  //int num = num1 - (num1 / num2) * num2;
+
+
+	int number7 = 0;
+	std::cin >> number7;
+	int number8 = 0;
+	std::cin >> number8;
+
+	int number9 = number7;
+	int number11 = number8;
+
+	printf("두 수 스왑 : %d , %d\n", number11 , number9 );
+	
+	
+
+	//시간 계산기 초를 입력 받아 시분초 출력하기
+
+	int numberc = 0;
+	std::cin >> numberc; // 초 저장
+
+	int numbers = numberc % 60; // 초
+	int numberm = (numberc % 3600) / 60; // 분
+	int numberh = numberc / 3600; // 시
+	
+
+	printf("%d시%d분%d초\n", numberh, numberm, numbers);
+
+
+
+	/*  동전 개수 계산하기
+		금액을 입력받아 500원, 100원, 50원, 10원 동전이 각각 몇 개 필요한지 계산하는 프로그램.
+		금액이 큰 동전을 최대한 많이 받아야 한다.
+	*/
+	int numberd = 0;
+	std::cin >> numberd; 
+	int number500 = numberd / 500;
+	int number100 = (numberd % 500) / 100;
+	int number50 = (numberd % 100) / 50;
+	int number10 = (numberd % 50) / 10;
+
+	printf("500원:%d개\t", number500);
+	printf("100원:%d개\t", number100);
+	printf("50원:%d개\t", number50);	
+	printf("10원:%d개\t\n", number10);
+	
+
+
+
+	/*
+		자리수 분리하기(입력은 항상 세자리라고 가정)
+		수를 입력받고 100의 자리, 10의 자리, 1의 자리를 각각 출력하기
+		각 자리의 수를 합해서 출력하기
+	*/
+	
+	    int numberj = 0;
+		std::cin >> numberj;
+		int number100j = numberj / 100;
+		int number10j = (numberj % 100) / 10;
+		int number1j = numberj % 10;
+		int numberjs = number100j + number10j + number1j;
+		printf("100의 자리:%d\t", number100j);
+		printf("10의 자리:%d\t", number10j);
+		printf("1의 자리:%d\n", number1j);
+		printf("각 자리의 합: %d", numberjs);
+
+
+
     return 0;
 }
 
