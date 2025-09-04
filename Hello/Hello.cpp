@@ -6,7 +6,7 @@
 // 소스파일
 // 주석 : 프로그램에서 영향을 끼치지 않는 부분
 // F5 : 디버그 실행 
-// F9 : 브레이크 포인트 설정/해제
+// F9 : 브레이크 포인트 설정/해제 (빨간점 오른쪽 누르면 조건에서 사용)
 // 이름 공간 : using namespace std; 
 // if는 범위가 큰 것이 먼저 체크 하기
 // 변수는 사용하기 직전에 선언하기
@@ -100,7 +100,8 @@ std::string : 스트링, 문자열을 쉽게 다룰 수 있는 자료형
 /*
 비교 연산자
   - 비교를 하는 연산자, 참이냐 거젓이냐가 결과로 나온다.
-  - >, <, >=, ,<=, ==
+  - >, <, >=, ,<=, == 
+  - (a !=  b) : a와 b가 다르다.
 
 int a = 10;
 int b = 20;
@@ -201,150 +202,485 @@ a < (b + epslion);
 a > (b - epslion);
 */
 
+/*
+비트 연산자
+& (And) : 두 비트가 모두 1이면 1, 아니면 0 
+          특정 비트가 세팅이 되어 있는지 확인하는데 사용 (플래그 검사)
+    int a = 10;     //0b1010  (0b는 이진수라는뜻)
+	int b = 9;      //0b1001
+	int c = a & b;  //0b1000
+
+	int flag = 0b1010;
+	//0b0001 = 왼쪽 키가 눌러졌다.
+	//0b0010 = 오른쪽 키가 눌러졌다.
+	//0b0100 = 위쪽 키가 눌러졌다.
+	//0b1000 = 아래쪽 키가 눌러졌다.
+	if ((flag & 0b0010) != 0b0000)
+	{
+		// 오른쪽 키가 눌러져 있다.
+	}
+	else
+	{
+		// 오른쪽 키가 눌려져 있지 않다.
+	}
+
+| (Or) : 두 비트가 하나라도 1이면 1, 둘 다 0이면 0 
+         특정 비트에 플래그를 세팅하고 싶을 때 사용 (플래그 설정)
+    int a = 10;     //0b1010  
+	int b = 9;      //0b1001
+	int c = a & b;  //0b1011
+
+	int flag = 0b1010;
+	flag = flag | 0b0001;  // flag = 0b1011; 어떤 비트를 켜고 싶을떄
+
+^ (XOR) : 두 비트가 서로 다르면 1, 같으면 0
+          특정 비트를 토글하고 싶을 때 사용
+    int a = 10;     //0b1010  
+	int b = 9;      //0b1001
+	int c = a & b;  //0b0011
+
+	int flag = 0b1010;
+	int result = flag ^ 0b0001; // 결과 = 0b1011;
+	result = 0b1011 ^ 0b0001;   // 결과 = 0b1010;
+
+~ (Not) : 비트값을 반전 시킨다 (0->1, 1->0)
+    int a = 10;     //0b1010
+	a = ~a;         //0b0101
+
+	int flag = 0b1010;
+	int test = 0b0001;
+	test = ~test  // 왼쪽 키를 제외한 나머지 모두 세팅
+
+<< (Left Shift) : 비트들을 왼쪽으로 이동
+                  한번 움직일 때마다 수가 두배가 된다. 
+    int a = 7;      //0b0111
+	a = a << 1;     //ob1110 (앞은 밀려서 사리지고 오른쪽은 새로 0으로 채워짐)
+
+>> (Right Shift) : 비트들을 오른쪽으로 이동
+                   한번 움직일 떄마다 수가 절반이 된다.
+    int a = 7;      //0b0111
+	a = a <>> 1;    //0b0011
+
+enum Key  // 상수들에게 사람이 알아보기 좋은 이름을 붙여 놓은 것
+{
+   up    = 1 << 0,  //0b0001 
+   Down  = 1 << 1,  //0b0010
+   Left  = 1 << 2,  //0b0100
+   Right = 1 << 3,  //0b1000
+};
+   if ((flag & Up) != 0) // 위쪽 키가 눌려져 있다.
+   {
+   }
+*/
+
+/*
+반복문
+  - 제어문 중의 하나
+  - 특정 코드 블록을 조건에 따라 여러번 반복해서 실행할 수 있게 해주는 문
+  for      : 반복 횟수가 명확할 때 좋음
+        for (int i = 0; i < 10; i++)
+	    {
+		printf("Hello World : %d\n", i);
+	    }
+	    return 0;
+
+  while    : 반복 횟수가 명확하지 않고 조건에 따라 반복할 때 사용 
+        int Count = 1;
+	    while ((Count % 3 != 0) // 3의 배수 while()조건이 참이면 코드 블럭 실행
+	    {
+		printf("Hello World While: %d\n", Count);
+		Count++;
+	    }
+	    return 0;
+
+  do-while : 최소 한번은 무조건 실행해야 할 때 사용. (while과 거의 같음)
+        int Count = 1;
+	    do
+	    {
+		printf("Hello World While: %d\n", Count);
+		Count++;
+	    }
+	    while ((Count % 3 != 0)
+		return 0;
+*/
+
+/*
+continue
+   - 반복문 안에서 사용
+   - continue를 만나면 그 이후의 코드는 스킵하고 다음 반복을 진행
+break
+   - 반복문이나 switch문에서 반복문을 벗어나거나 case를 종료시킨다.
+     	int Count = -1;
+	    int Sum = 0;
+	
+	    while (true)   // 무한루프. 조건이 참일때까지 계속 로프
+	    {
+		std::cin >> Count;
+        Sum += Count;
+				if (Count == 0)
+		        {
+		        break;
+	            }
+		}
+		printf("숫자의 합: %d\n", Sum);
+
+*/
+
+/*
+랜덤 
+   - 무작위로 숫자를 선택하는 법
+   - C 스타일
+      - rand();         // 함수 사용
+	  - srand(time(0)); // 시드값 사용
+
+      srand(time(0));  // 시드 값 시간 사용,  테스트용은 srand(0); 사용 
+      for (int i = 0; i < 100; i++)
+      {
+          int RandomNumber = rand();
+          printf("랜덤한 숫자: %d\n", RandomNumber);
+      }
+      //0~5까지의 숫자를 랜덤으로 구하고 싶다.
+        int RandomNumber1 = rand() % 6;
+      //1~6까지의 숫자를 랜덤으로 구하고 싶다.
+        int RandomNumber1 = rand() % 6; + 1
+
+   - C++ 스타일
+      - #include <random>
+
+	    std::random_device RandomDivece;
+	    std::mt19937 Generate(RandomDivece());
+	  
+	    	printf("균등분포 : ");
+	    	std::uniform_int_distribution<> uniformDis(1, 100); // 1~100사이 랜덤으로 뽑아라
+	    	for (int i = 0; i < 10; i++)
+	    	{
+	    		int Number = uniformDis(Generate);
+	    		printf("%d", Number);
+	    		if (i < 9)
+	    		{
+	    			printf(", ");
+	    		}
+	    	}
+	    	printf("\n");
+	    
+	    	printf("정규분포 : ");
+	    	std::normal_distribution<> normalDis(80, 10);
+	    	for (int i = 0; i < 10; i++)
+	    	{
+	    		float fNumber = uniformDis(Generate);
+	    		printf("%.2f", fNumber);
+	    		if (i < 9)
+	    		{
+	    			printf(", ");
+	    		}
+	    	}
+	    	printf("\n");
+*/
 
 
 #include <iostream>   // 입출력 관련
 #include <stdio.h>
 #include <cstdio>     // stdio.h에 네임스페이스 추가한 래퍼 
-#include "header.h"   //헤더파일
+#include <time.h>     // 시간 값
+#include <random>
+#include "header.h"   // 헤더 파일
 
 
 int main()  // main 함수는 반드시 하나만, 앤트리 포인트 (코드가 시작되는 곳)
 
 
 {
-	
-	//숫자를 입력받아 양수인지 음수인지 0인지 출력하기
+	 //양수를 하나 입력받고 홀수인지 짝수인지 출력하기 (% 사용금지)
+	 //	int Number111 = 0;
+		//std::cin >> Number111;
 
-	int num1 = 0;
-	std::cin >> num1;
-
-	if (num1 > 0)
-	{
-		printf("양수.\n");
-	}
-	else if (num1 < 0)
-	{
-		printf("음수.\n");
-	}
-	else
-	{
-		printf("0\n");
-	}
+		//if ((Number111 & 1) != 0)
+		//{
+		//	printf("홀수 입니다.\n");
+		//}
+		//else
+		//{
+		//	printf("짝수 입니다.\n");
+		//}
 
 
+	 //헬로 월드 10번찍기 (for)
+		//for (int i = 0; i < 10; i++)
+		//{
+		//	printf("Hello World : %d\n", i);
+		//}
+		//	return 0;
 
-	//숫자를 입력받아 홀수인지 짝수인지 출력하기
+		//int Count = 1;
+		//while (Count % 3 != 0) // 3의 배수 while()조건이 참이면 코드 블럭 실행
+		//{
+		//	printf("Hello World While: %d\n", Count);
+		//	Count++;
+		//}
+		//return 0;
 
-	int num2 = 0;
-	std::cin >> num2;
-
-	if (num2 % 2 == 0)
-	{
-		printf("짝수");
-	}
-	else
-	{
-		printf("홀수");
-	}
-
-
-
-	//두 수를 입력 받아 더 큰 수를 출력하기. 같을 경우는 같다고 출력.
-
-	int num3 = 0;
-	int num4 = 0;
-	std::cin >> num3 >> num4;
-	if (num3 > num4)
-	{
-		printf("큰 수: %d\n", num3);
-	}
-	else if (num3 < num4)
-	{
-		printf("큰 수: %d\n", num4);
-	}
-	else
-	{
-		printf("같음\n");
-	}
-
-
-
-
-	//나이와 키를 입력 받아, 6세 이상, 120cm 이상일 때 롤러코스터 탑승 가능, 그 외에는 -불가능으로 출력
-
-	const unsigned int LimitAge = 5;
-	const unsigned Limithei = 120.0f;
-	unsigned int age = 0;
-	float hei = 0; // 임시적 변환 (대충 변환해주는거, 보통 표현 범위가 큰쪽으로 변경됨)
-
-	std::cin >> age >> hei;
-	if (age > LimitAge && hei >= Limithei)
-	{
-		printf("탑승 가능\n");
-	}
-	else
-	{
-		printf("탑승 불가능\n");
-	}
-
-
-
-
-	//점수를 입력 받아 90점 이상은 A, 80점 이상은 B, 70점 이상은 C, 60점 이상은 D, 그 -이하는 F라고 출력하기
-
-	int grade = 0;
-	std::cin >> grade;
-
-	if (grade >= 90)
-	{
-		printf("A");
-	}
-	else if (grade >= 80)
-	{
-		printf("B");
-	}
-	else if (grade >= 70)
-	{
-		printf("C");
-	}
-	else if (grade >= 60)
-	{
-		printf("D");
-	}
-	else
-	{
-		printf("F");
-	}
-
+		//int Count = 1;
+		//do
+		//{
+		//	printf("Hello World While: %d\n", Count);
+		//	Count++;
+		//}
+		//while ((Count % 3 != 0)
 
 	
-   
-    //세 과목의 점수를 입력받아, 세 과목 모두 평균 60점 이상이면 "합격", 아니면 "불합격"을 출력하는 프로그램을 작성하세요.
-	//한과목이라도 40점 미만이면 불합격 출력하기
+	 //  0을 입력 받을때까지 입력을 계속 받고, 0이 입력되면 입력받은 숫자의 합을 출력하기 while문 do-while문 모두 해보기
+	 //   int Count = -1;
+	 //   int Sum = 0;
+	
+	 //   while (Count != 0)
+	 //   {
+	 //   	std::cin >> Count;
+  //          Sum += Count;
+	 //   }
+	 //   	printf("숫자의 합: %d\n", Sum);
+	 //   
+	 //   	
+	 //   입력받은 숫자의 구구단 출력해보기
+	 //   int Gugu = 0;
+	 //   std::cin >> Gugu;
+	 //   
+	 //   for (int i = 1; i < 10; i++)
+	 //   {
+	 //   	printf("%d * %d = %d\n", Gugu, i, Gugu * i);
+	 //   }
+	 //   
+	 //   
+	 //   숫자를 하나 입력받고, 입력 받은 수까지 있는 숫자 중 홀수만 출력하기
+	 //   int Count = 0;
+	 //   std::cin >> Count;
+	 //   Count++;   만약 for문에서 조건 <=를 쓰기 싫어서 1 더함
+	 //   for (int i = 1; i <= Count; i++)
+	 //   {
+	 //   	if ((i & 2) == 1)
+	 //   	{
+	 //   		printf("%d\n", i);
+	 //   	}
+	 //   }
+	 //   
+	 //   	
+	 //   1~100사이의 숫자 중에 7의 배수만 출력하기
+	 //   const int MinNumber = 1;
+	 //   const int MaxNumber = 100;
+	 //   for (int i = 1; i <= MaxNumber; i++)
+	 //   {
+	 //   	if ((i % 7) == 0)
+	 //   	{
+	 //   		printf("%d\n", i);
+	 //   	}
+	 //   }
+	 //   return 0;
+	 //   
+	 //   
+	 //   
+	 //   입력받은 숫자만큼의 층을 가진 피라미드 그리기
+	 //   3을 입력 받았으면 아래와 같이 출력하기
+	 //   	 *
+	 //   	***
+	 //    *****
+	 //   1. 입력을 받아야 한다.
+	 //   2. *표가 첫번째 층에서는 1개 두번째 층에서는 3개...
+	 //      각 층별로 (층수*2 + 1)만큼의 *을 찍어야 한다.
+	 //   3. 각 층별로 " "을 (총층수 - (현재 층수 + 1))만큼 추가해야 한다.	
+  //      int Count = 0;
+	 //   std::cin >> Count;
+	 //   
+	 //   for (int i = 0; i < Count; i++)
+	 //   {
+	 //   	for (int j = 0; j < (Count - (i + 1)); j++)
+	 //   	{
+	 //   		printf(" ");
+	 //   	}
+	 //   	for (int k = 0; k < (i * 2 + 1); k++)
+	 //   	{
+	 //   		printf("*");
+	 //   	}
+	 //   printf("\n");
+	 //   }
+	 //   return 0;
+		
+		
 
-	int test1 = 0;
-	int test2 = 0;
-	int test3 = 0;
-	std::cin >> test1 >> test2 >> test3;
 
-	const int AverageLimit = 60;
-	const int FailLimit = 40;
-	float Average = (test1 + test2 + test3) / 3.0f;
+//주사위를 100만번 돌려서 6이 몇번 나왔는지 카운팅해서 출력하기
 
+std::random_device randomdivece;
+std::mt19937 generate(randomdivece());
 
-	if ((Average >= AverageLimit) && (test1 > FailLimit && test2 > FailLimit && test3 > FailLimit))
+const int million = 1000000;
+std::uniform_int_distribution<> uniformdis(1, 6);
+
+int count = 0;
+
+for (int i = 0; i < million; i++)
+{
+	int number = uniformdis(generate);
+	if (number == 6)
 	{
-		printf("합격\n");
+		count++;	
 	}
-	else
+}
+printf("6나온 횟수: %d\n", count);
+
+
+
+
+//가위 바위 보 게임 만들기 3선승제 enum 활용
+
+std::random_device randomdivece;
+std::mt19937 generate(randomdivece());
+
+std::uniform_int_distribution<> uniformdis(0, 2);
+
+enum fate
+{
+	가위 = 0,
+	바위 = 1,
+	보 = 2
+};
+int usercount = 0;
+int comcount = 0;
+
+while (usercount < 3 && comcount < 3)
+{
+	int user = 0;
+	int com = uniformdis(generate);
+
+	printf("가위(0), 바위(1), 보(2) 선택: ");
+	std::cin >> user;
+
+	if ((user == 가위 && com == 보) || (user == 바위 && com == 가위) || (user == 보 || com == 가위))
 	{
-		printf("불합격\n");
+		printf("유저 승리.\n");
+		usercount++;
+	}
+	else if (com == user)
+	{
+		printf("비겼다.\n");
+		
+	}
+	else 
+	{
+		printf("컴퓨터 승리.\n");
+		comcount++;
 	}
 }
 
 
+//하이 로우
+//컴퓨터가 1~100사이의 임의의 숫자를 선택하고
+//사용자가 맞출 때까지 입력을 받아 "더 높게", "더 낮게" 등의 힌트를 제공하는 게임
+//5번안에 맞춰야 승리
 
+std::random_device randomdivece;
+std::mt19937 generate(randomdivece());
+
+std::uniform_int_distribution<> uniformdis(1, 100);
+
+int usercount = 0;
+int user = 0;
+int com = uniformdis(generate);
+
+   while (usercount < 5)
+   {
+	   std::cin >> user;
+	   usercount++;
+
+	   if (user < com)
+	   {
+		   printf("더 높게. 남은 횟수 : %d\n", 5 - usercount );
+	   }
+	   else if (user > com)
+	   {
+		   printf("더 낮게. 남은 횟수 : %d\n", 5 - usercount);
+	   }
+	   else 
+	   {
+		   printf("맞춤.\n");
+	   }
+   }
+   printf("실패. 정답은 %d.\n", com);
+ 
+return 0;
+
+
+
+//공포게임의 인벤토리를 비트플래그로 표현하기
+//아이템 종류를 나타내는 enum을 만들고
+//특정 아이템을 추가하고 삭제하는 예시 보여주기
+// 인번토리 내용 출력하기 (인벤토리의 비트내용에 따라 출력)
+// 1번 : 아이템 추가, 2번 : 아이템 버리기, 3번 : 종료
+// 이미 있는 아이템을 추가하려고하면 "이미 있는 아이템입니다." 출력
+// 없는 아이템을 버리려고하면 "없는 아이템입니다." 출력
+
+
+enum Item {
+	EMPTY = 0,
+	TOOTH = 1,   // 1 << 0
+	NAIL = 2,    //  1 << 1
+	CLAW = 4,    // 1 << 2
+	HAIR = 8,    // 1 << 3    
+};
+
+	int Inventory = 0;
+	std::cin >> Inventory;
+
+	// 아이템 추가
+	Inventory = Inventory | TOOTH;   
+	Inventory = Inventory | CLAW;
+	Inventory = Inventory | HAIR; 
+	Inventory = Inventory | NAIL;
+
+	// 아이템 제거
+	Inventory = Inventory ^ TOOTH; 
+
+    
+		return 0;
+}
+
+
+
+/*
+9/4 실습
+주사위 게임 만들기
+초기 세팅
+플레이어와 컴퓨터 모두 일정 금액(예: 10000원)으로 시작한다.
+1차 주사위 굴리기
+게임 시작 시, 플레이어와 컴퓨터가 각각 주사위(1~6)를 한 번 굴린다.
+각자 주사위 결과를 공개한다.
+배팅
+이전 판에서 진 쪽이 배팅 금액을 제시한다.
+제시한 배팅 금액은 두 사람 모두의 현재 소지 금액 이하이어야 한다.
+배팅 금액은 두 사람 모두에게서 차감된다.
+2차 주사위 굴리기
+다시 플레이어와 컴퓨터가 각각 주사위를 한 번씩 굴린다.
+(1차+2차) 주사위의 합을 계산한다.
+승패 판정 및 금액 증감
+합이 더 큰 쪽이 배팅 금액의 총합(즉, 2×배팅금액)을 모두 가져간다.
+동점일 경우 배팅 금액은 그대로 반환한다.
+다음 판 진행
+소지금이 0 이하인 쪽이 나오면 게임 종료.
+고병조 — 오후 5:18
+9/4
+홀짝 게임
+초기 금액 및 배팅
+플레이어는 기본금 100원으로 베팅을 시작한다.
+홀짝 선택
+플레이어가 1(홀) 또는 2(짝)을 선택한다.
+결과 결정
+컴퓨터가 랜덤으로 1(홀) 또는 2(짝)을 선택한다.
+플레이어의 선택과 결과가 일치하면 승리(이기면 배팅금의 2배 획득), 다르면 패배(배팅금 전액 잃음).
+연속 배팅 선택
+승리 시 플레이어는 두 가지 중 하나를 선택:
+(A) 이긴 금액을 모두 다시 한 번에 배팅 (연승 도전)
+(B) 이긴 금액을 얻고, 다시 100원부터 새로 배팅 시작
+게임 종료 조건
+플레이어가 소지금이 100원 미만일 경우 게임 종료.
+*/
 
 
 
