@@ -506,106 +506,106 @@ int main()  // main 함수는 반드시 하나만, 앤트리 포인트 (코드�
 		
 
 
-//주사위를 100만번 돌려서 6이 몇번 나왔는지 카운팅해서 출력하기
-
-std::random_device randomdivece;
-std::mt19937 generate(randomdivece());
-
-const int million = 1000000;
-std::uniform_int_distribution<> uniformdis(1, 6);
-
-int count = 0;
-
-for (int i = 0; i < million; i++)
-{
-	int number = uniformdis(generate);
-	if (number == 6)
-	{
-		count++;	
-	}
-}
-printf("6나온 횟수: %d\n", count);
-
-
-
-
-//가위 바위 보 게임 만들기 3선승제 enum 활용
-
-std::random_device randomdivece;
-std::mt19937 generate(randomdivece());
-
-std::uniform_int_distribution<> uniformdis(0, 2);
-
-enum fate
-{
-	가위 = 0,
-	바위 = 1,
-	보 = 2
-};
-int usercount = 0;
-int comcount = 0;
-
-while (usercount < 3 && comcount < 3)
-{
-	int user = 0;
-	int com = uniformdis(generate);
-
-	printf("가위(0), 바위(1), 보(2) 선택: ");
-	std::cin >> user;
-
-	if ((user == 가위 && com == 보) || (user == 바위 && com == 가위) || (user == 보 || com == 가위))
-	{
-		printf("유저 승리.\n");
-		usercount++;
-	}
-	else if (com == user)
-	{
-		printf("비겼다.\n");
-		
-	}
-	else 
-	{
-		printf("컴퓨터 승리.\n");
-		comcount++;
-	}
-}
-
-
-//하이 로우
-//컴퓨터가 1~100사이의 임의의 숫자를 선택하고
-//사용자가 맞출 때까지 입력을 받아 "더 높게", "더 낮게" 등의 힌트를 제공하는 게임
-//5번안에 맞춰야 승리
-
-std::random_device randomdivece;
-std::mt19937 generate(randomdivece());
-
-std::uniform_int_distribution<> uniformdis(1, 100);
-
-int usercount = 0;
-int user = 0;
-int com = uniformdis(generate);
-
-   while (usercount < 5)
-   {
-	   std::cin >> user;
-	   usercount++;
-
-	   if (user < com)
-	   {
-		   printf("더 높게. 남은 횟수 : %d\n", 5 - usercount );
-	   }
-	   else if (user > com)
-	   {
-		   printf("더 낮게. 남은 횟수 : %d\n", 5 - usercount);
-	   }
-	   else 
-	   {
-		   printf("맞춤.\n");
-	   }
-   }
-   printf("실패. 정답은 %d.\n", com);
- 
-return 0;
+////주사위를 100만번 돌려서 6이 몇번 나왔는지 카운팅해서 출력하기
+//
+//std::random_device randomdivece;
+//std::mt19937 generate(randomdivece());
+//
+//const int million = 1000000;
+//std::uniform_int_distribution<> uniformdis(1, 6);
+//
+//int count = 0;
+//
+//for (int i = 0; i < million; i++)
+//{
+//	int number = uniformdis(generate);
+//	if (number == 6)
+//	{
+//		count++;	
+//	}
+//}
+//printf("6나온 횟수: %d\n", count);
+//
+//
+//
+//
+////가위 바위 보 게임 만들기 3선승제 enum 활용
+//
+//std::random_device randomdivece;
+//std::mt19937 generate(randomdivece());
+//
+//std::uniform_int_distribution<> uniformdis(0, 2);
+//
+//enum fate
+//{
+//	가위 = 0,
+//	바위 = 1,
+//	보 = 2
+//};
+//int usercount = 0;
+//int comcount = 0;
+//
+//while (usercount < 3 && comcount < 3)
+//{
+//	int user = 0;
+//	int com = uniformdis(generate);
+//
+//	printf("가위(0), 바위(1), 보(2) 선택: ");
+//	std::cin >> user;
+//
+//	if ((user == 가위 && com == 보) || (user == 바위 && com == 가위) || (user == 보 || com == 가위))
+//	{
+//		printf("유저 승리.\n");
+//		usercount++;
+//	}
+//	else if (com == user)
+//	{
+//		printf("비겼다.\n");
+//		
+//	}
+//	else 
+//	{
+//		printf("컴퓨터 승리.\n");
+//		comcount++;
+//	}
+//}
+//
+//
+////하이 로우
+////컴퓨터가 1~100사이의 임의의 숫자를 선택하고
+////사용자가 맞출 때까지 입력을 받아 "더 높게", "더 낮게" 등의 힌트를 제공하는 게임
+////5번안에 맞춰야 승리
+//
+//std::random_device randomdivece;
+//std::mt19937 generate(randomdivece());
+//
+//std::uniform_int_distribution<> uniformdis(1, 100);
+//
+//int usercount = 0;
+//int user = 0;
+//int com = uniformdis(generate);
+//
+//   while (usercount < 5)
+//   {
+//	   std::cin >> user;
+//	   usercount++;
+//
+//	   if (user < com)
+//	   {
+//		   printf("더 높게. 남은 횟수 : %d\n", 5 - usercount );
+//	   }
+//	   else if (user > com)
+//	   {
+//		   printf("더 낮게. 남은 횟수 : %d\n", 5 - usercount);
+//	   }
+//	   else 
+//	   {
+//		   printf("맞춤.\n");
+//	   }
+//   }
+//   printf("실패. 정답은 %d.\n", com);
+// 
+//return 0;
 
 
 
@@ -617,73 +617,133 @@ return 0;
 // 이미 있는 아이템을 추가하려고하면 "이미 있는 아이템입니다." 출력
 // 없는 아이템을 버리려고하면 "없는 아이템입니다." 출력
 
-
-enum Item {
-	EMPTY = 0,
-	TOOTH = 1,   // 1 << 0
-	NAIL = 2,    //  1 << 1
-	CLAW = 4,    // 1 << 2
-	HAIR = 8,    // 1 << 3    
+enum Item	
+{					
+	None = 0,
+	Gun = 1 << 0,   //0b0001
+	Bullet = 1 << 1, //0b0010
+	Sword = 1 << 2,  //0b0100
+	Shield = 1 << 3, //0b1000
 };
-
-	int Inventory = 0;
-	std::cin >> Inventory;
-
-	// 아이템 추가
-	Inventory = Inventory | TOOTH;   
-	Inventory = Inventory | CLAW;
-	Inventory = Inventory | HAIR; 
-	Inventory = Inventory | NAIL;
-
-	// 아이템 제거
-	Inventory = Inventory ^ TOOTH; 
-
-	int choice, item;
-	
-
-	int Inventory = 0;
-	int choice, item;
-
-	while (true) {
-		PrintInventory(Inventory);
-
-		printf("1: 아이템 추가, 2: 아이템 버리기, 3: 종료 >> ");
-		cin >> choice;
-
-		if (choice == 3) break;
-
-		printf("아이템 선택 (1:이빨 2:손톱 3:발톱 4:머리카락) >> ");
-		cin >> item;
-
-		int itemFlag = 0;
-		switch (item) {
-		case 1: itemFlag = TOOTH; break;
-		case 2: itemFlag = NAIL; break;
-		case 3: itemFlag = CLAW; break;
-		case 4: itemFlag = HAIR; break;
-		default: printf("잘못된 선택\n"); continue;
-		}
-
-		if (choice == 1) { // 추가
-			if (Inventory & itemFlag) {
+int Inventory = Item::None;
+int Select = 0;
+while (true)
+{
+	printf("1번 : 아이템 추가, 2번 : 아이템 버리기, 3번 : 종료\n");
+	std::cin >> Select;
+	if (Select == 1)
+	{
+		int AddItem = 0;
+		printf("추가할 아이템 선택 (1: Gun, 2: Bullet, 3: Sword, 4: Shield) : ");
+		std::cin >> AddItem;
+		if (AddItem == 1)
+		{
+			if ((Inventory & Item::Gun) != 0)
+			{
 				printf("이미 있는 아이템입니다.\n");
 			}
-			else {
-				Inventory = Inventory | itemFlag;
+			else
+			{
+				Inventory = Inventory | Item::Gun;
 			}
 		}
-		else if (choice == 2) { // 제거
-			if (Inventory & itemFlag) {
-				Inventory = Inventory ^ itemFlag; // 제거
+		else if (AddItem == 2)
+		{
+			if ((Inventory & Item::Bullet) != 0)
+			{
+				printf("이미 있는 아이템입니다.\n");
 			}
-			else {
+			else
+			{
+				Inventory = Inventory | Item::Bullet;
+			}
+		}
+		else if (AddItem == 3)
+		{
+			if ((Inventory & Item::Sword) != 0)
+			{
+				printf("이미 있는 아이템입니다.\n");
+			}
+			else
+			{
+				Inventory = Inventory | Item::Sword;
+			}
+		}
+		else if (AddItem == 4)
+		{
+			if ((Inventory & Item::Shield) != 0)
+			{
+				printf("이미 있는 아이템입니다.\n");
+			}
+			else
+			{
+				Inventory = Inventory | Item::Shield;
+			}
+		}
+	if (Select == 2)
+	{
+		int RemoveItem = 0;
+		printf("버릴 아이템 선택 (1: Gun, 2: Bullet, 3: Sword, 4: Shield) : ");
+		std::cin >> RemoveItem;
+		if (RemoveItem == 1)
+		{
+			if ((Inventory & Item::Gun) == 0)
+			{
 				printf("없는 아이템입니다.\n");
 			}
+			else
+			{
+				Inventory = Inventory & ~Item::Gun;
+			}
 		}
+		else if (RemoveItem == 2)
+		{
+			if ((Inventory & Item::Bullet) == 0)
+			{
+				printf("없는 아이템입니다.\n");
+			}
+			else
+			{
+				Inventory = Inventory & ~Item::Bullet;
+			}
+		}
+		else if (RemoveItem == 3)
+		{
+			if ((Inventory & Item::Sword) == 0)
+			{
+				printf("없는 아이템입니다.\n");
+			}
+			else
+			{
+				Inventory = Inventory & ~Item::Sword;
+			}
+		}
+		else if (RemoveItem == 4)
+		{
+			if ((Inventory & Item::Shield) == 0)
+			{
+				printf("없는 아이템입니다.\n");
+			}
+			else
+			{
+				Inventory = Inventory & ~Item::Shield;
+			}
+		}
+		
+	}
+	else if (Select == 3)
+	{
+	   break;
 	}
 
-	printf("게임 종료\n");
-	return 0;
+	}
+	
+
+}
+
+	
+
+		return 0;
 }
 
 
@@ -708,7 +768,19 @@ enum Item {
 동점일 경우 배팅 금액은 그대로 반환한다.
 다음 판 진행
 소지금이 0 이하인 쪽이 나오면 게임 종료.
-고병조 — 오후 5:18
+
+
+
+
+
+
+
+
+
+
+
+
+
 9/4
 홀짝 게임
 초기 금액 및 배팅
