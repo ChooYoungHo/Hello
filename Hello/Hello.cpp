@@ -638,8 +638,52 @@ enum Item {
 	// 아이템 제거
 	Inventory = Inventory ^ TOOTH; 
 
-    
-		return 0;
+	int choice, item;
+	
+
+	int Inventory = 0;
+	int choice, item;
+
+	while (true) {
+		PrintInventory(Inventory);
+
+		printf("1: 아이템 추가, 2: 아이템 버리기, 3: 종료 >> ");
+		cin >> choice;
+
+		if (choice == 3) break;
+
+		printf("아이템 선택 (1:이빨 2:손톱 3:발톱 4:머리카락) >> ");
+		cin >> item;
+
+		int itemFlag = 0;
+		switch (item) {
+		case 1: itemFlag = TOOTH; break;
+		case 2: itemFlag = NAIL; break;
+		case 3: itemFlag = CLAW; break;
+		case 4: itemFlag = HAIR; break;
+		default: printf("잘못된 선택\n"); continue;
+		}
+
+		if (choice == 1) { // 추가
+			if (Inventory & itemFlag) {
+				printf("이미 있는 아이템입니다.\n");
+			}
+			else {
+				Inventory = Inventory | itemFlag;
+			}
+		}
+		else if (choice == 2) { // 제거
+			if (Inventory & itemFlag) {
+				Inventory = Inventory ^ itemFlag; // 제거
+			}
+			else {
+				printf("없는 아이템입니다.\n");
+			}
+		}
+	}
+
+	printf("게임 종료\n");
+	return 0;
 }
 
 
