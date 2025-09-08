@@ -423,7 +423,109 @@ break
    - 전역 변수 : 프로그램 전체에서 사용할 수 있는 변수
 */
 
+/*
+배열(Array)
+   - 같은 데이터타입을 가진 요소들이 연속적으로 저장되어 있는 데이터 구조
+   - 장점 : 빠르게 각 요소에 접근이 가능하다.
+   - 단점 : 크기가 고정이다. 중간에 데이터 삽입/삭제가 어렵다.
+		 int a = 10;
+		 int Array[5];    // int 5개를 관리하는 배열
+		 Array[0] = 10;   // 배열의 첫번째 요소에 10을 대입한다.
+		 Array[3] = 40;   // 배열의 네번째 요소에 40을 대입한다.
+		 //Array[5] = 60;   // 버퍼 오버런, 배열 영역 밖을 접근하려고 하기 때문에 에러 발생
 
+		 int Array2[5] = { 1,2,3,4,5 };
+		 int Array3[5] = { 1,2,3 };   // 설정 안한부분은 0
+		 int Array4[5] = { 0 };       // 0으로 채울때
+
+		 const int Size = 5;
+		 int Array5[Size] = {};
+		 //sizeof(Array5);      // Array5의 전체 바이트 크기를 알 수 있다.
+		 //sizeof(Array5[0]);   // Array5의 요소 하나의 크기를 알 수 있다.
+		 int ElementCount = sizeof(Array5) / sizeof(Array5[0]);   // Array5의 요소 개수
+
+		 //int Size2 = 5;
+		 //int Array6[Size2] = {};     // 배열 선언할 때 크기를 변수로 지정할 수 없다.
+
+ 이차원 배열
+    - 배열을 이차원으로 표현한 것 (축이 2개)
+	- int Array[4][3] = {{1,2,3}, {4,5,6}, {7,8,9}, {0,1,2}};
+	     int 3개짜리 배열이 4줄 들어있다.
+		 사실 int Array[12]랑 메모리 구조가 같다.  // Array[12] = {1,2,3,4,5,6,7,8,9,0,1,2};
+		 int Array[4][3] = {{1,2,3}, {4,5,6}, {7,8,9}, {0,1,2}};   
+		 뒤에서 부터 계산 3개(x)짜리가 4개(y)다.
+		 int test = Array[1][2];   // test =6
+*/
+
+/*
+캐스팅(Casting)
+   -  하나의 데이터 타입을 다른 데이터 타입으로 변경하는 행위
+      //C스타일
+      int a = 10;
+      float b = 15.5f;
+      
+      a = (int)b; // b를 int형으로 캐스팅해서 a에 대입한다. 15가 a에 들어간다. (C스타일, 명시적 캐스팅)
+      a = b;      // b를 a에 대입한다. 그런데 a와 b는 타입이 다르니까 b를 a로 암시적으로 캐스팅해서 대입한다. (C스타일, 암시적 캐스팅)
+      b = a;      // 암시적 캐스팅은 대체로 표현이 작은쪽으로 큰쪽으로는 문제없는 경우가 많다.
+      
+      C++ 캐스팅
+      static_csat : C스타일 캐스팅을 안전하게 만든 것, 컴파일 타임에 결정됨.
+      dynamic_cast : 다음에 (클래스 배우고 이후에)
+      const_cast : const 속성을 제거하거나 추가하는데 사용. 사용하지 않는 것을 권장.
+      reinterpret_cast : C스타일 캐스팅에서 위험한 부분, 원래 타입의 구조를 무시하고 새 타입으로 해석하게 한다.
+      
+      a = static_cast<int>(b);   // b를 int형으로 캐스팅해서 a에 대입한다. 15가 a에 들어간다. (C++스타일, 명시적 캐스팅)
+*/
+
+/*
+피셔-예이츠 알고리즘
+   - 배열이 내용을 랜덤하게 섞는 셔플 알고리즘
+   - 동일한 확률로 섞이도록 증명 완료된 알고리즘
+
+    void Shuffle(int Array[], int Length)  //배열의 크기도 같이 넘기고 리턴이 없다. // ex} Shuffle(Array7, 12)
+    {
+
+	알고리즘 순서
+	1. 배열의 마지막 요소에서 첫 요소까지 순회,
+	2. 현재 요소의 인덱스(i)와 0~i 중 임의의 인덱스(j)를 선택한다.
+	3. i번째 요소와 j번째 요소를 서로 교환
+	4. i가 0이 될때까지 반복
+
+       for (int i = Length - 1; i > 0; i--)
+       {
+	      int j = rand() % (i + 1);
+	      int Temp = Array[i];
+	      Array[i] = Array[j];
+	      Array[j] = Temp;
+       }
+    }
+*/
+
+/*
+참조(Reference)
+   - 변수의 별명
+   - 참조를 변경할 경우 원본 변수도 함께 수정된다. -> 함수 파라메터로 사용하면 편리함.
+   - 참조는 항상 어떤 변수와 연결되어 있어야 한다.
+   - 함수 파라메터에 참조를 사용할 때 
+      - 파라메터 값을 수정하는 출력용 파라메터일 경우 Out이라는 접두사를 붙이는 것이 관례이다.
+	  - 파라메터 값을 읽기만 하는 경우에는 const를 붙여줘서 실수로라도 고칠 수 없게 하는 것이 좋다.
+
+	  void TestRef(int& OutData, const int& ReadData)
+      {
+      	OutData *= ReadData;
+      }
+      
+      void Ref()
+      {
+      	int Number = 10;
+      	int Number2 = 10;
+      	int& Ref = Number; //Number의 참조는 Ref다.
+      
+      	TestRef(Number, Number2);
+      
+      	int i = 0;
+      }
+*/
 
 
 #include <iostream>   // 입출력 관련
@@ -431,6 +533,7 @@ break
 #include <cstdio>     // stdio.h에 네임스페이스 추가한 래퍼 
 #include <time.h>     // 시간 값
 #include <random>
+#include <limits.h>
 #include "header.h"   // 헤더 파일
 #include "TestMath.h"
 
@@ -438,486 +541,216 @@ break
 
 
 
-////3개의 파라메터를 받아 평균값을 리턴하는 함수 만들기
-//int main()
-//{
-//	float Number1 = 0.0f;
-//	float Number2 = 0.0f;
-//	float Number3 = 0.0f;
-//	std::cin >> Number1 >> Number2 >> Number3;
-//
-//	float Result = Average(Number1, Number2, Number3);
-//	printf("평균값: %.2f\n", Result);
-//	return 0;
-//}
-
-
-//2. 정가와 할인율 입력 받아 할인가 구하는 함수 만들기
-//int main()
-//{
-//	float Price = 0.0f;
-//	float DiscountRate = 0.0f;
-//	std::printf("정가와 할인율을 입력해 주세요: ");
-//	std::cin >> Price >> DiscountRate;
-//	std::printf("할인가: %d\n", DiscountedPrice(Price, DiscountRate));
-//	return 0;
-//}
-
-
-////3. 주사위를 굴린 결과를 리턴하는 함수 만들기
-//int main()
-//{
-//	int DiceResult = RollDice();
-//	printf("주사위 결과: %d\n", DiceResult);
-//	return 0;
-//}
-
-
-//4. 점수를 주면 성적(A~F)를 주는 함수 만들기
-//int main()
-//{
-//	int Score = 0;
-//	printf("점수 입력하세요: ");
-//	std::cin >> Score;	
-//
-//	char Grade = GetGrade(Score);
-//	printf("성적: %c\n", Grade);
-//	return 0;
-//}
-
-
 ///*
-//탬플릿 함수 만들기
-//- Min
-//파라메터 2개
-//리턴 : 파라메터 중 작은 수 리턴
-//- Max
-//파라메터 2개
-//리턴 : 파라메터 중 큰 수 리턴
-//- Clamp
-//파라메터 3개(value, min, max)
-//리턴
-//value값이 min보다 작으면 min
-//value값이 max보다 크면 max
-//value값이 min과 max 사이면 value
+//6면체 주사위를 100만번 던져서 각 눈의 수가 몇번 나왔는지 카운팅하기
+//- 6면체 주사위를 돌리는 함수 만들기
 //*/
 //int main()
 //{
-//	printf("Min: %d\n", Min(3, 7));
-//	printf("Max: %d\n", Max(3, 7));
-//	printf("Clamp: %d\n", Clamp(10, 0, 5));
+//	int Count[6] = { 0 };
 //
-//	return 0;
-//}
-
-
-
-////1. 자리수 분리하기(입력은 자리 수 제한 없음) - 각 자리의 수를 합해서 출력하기
-//int main()
-//{
-//	int InputNumber;
-//	std::cin >> InputNumber;
-//
-//	int Sum = 0;
-//	while (InputNumber > 0)
+//	for (int i = 0; i < 1000000; i++)
 //	{
-//		Sum = Sum + InputNumber % 10; // 일의 자리 수 더하기
-//		InputNumber = InputNumber / 10;       // 일의 자리 수 제거
+//		int result = rand() % 6 + 1;
+//		Count[result - 1]++;
 //	}
-//	printf("자리수의 합: %d\n", Sum);
-//	return 0;
-//}
-
-
-
-////2. 재귀 함수를 이용하여 10진수를 입력받아 2진수로 출력하는 함수 만들기
-//void Binary(int Number)
-//{
-//	if (Number > 1)
+//	for (int i = 0; i < 6; i++)
 //	{
-//		Binary(Number / 2);
+//		printf("%d의 개수: %d\n", i + 1, Count[i]);
 //	}
-//	printf("%d", Number % 2);
-//}
-//
-//int main()
-//{
-//	int Number;
-//	printf("10진수를 입력하세요: ");
-//	std::cin >> Number;
-//
-//	printf("2진수: ");
-//	Binary(Number);
-//	printf("\n");
-//
-//	return 0;
-//}
-
-
-/*
-3. 슬롯 머신 게임 만들기
-- 시작 금액 10000
-- 한판에 무조건  최소 100 배팅해야 함.만약 소지금액이 100 이하일 경우 게임 종료.
-- 같은 숫자 3개가 나오면 50배로 돌려 받는다.
-- 만약 777이면 10000배 받음
-*/
-
-//int main()
-//{
-//	const int StartMoney = 10000;
-//	int Money = StartMoney;
-//
-//	std::random_device RandomSlot;
-//	std::mt19937 SlotEngine(RandomSlot());
-//	std::uniform_int_distribution<int> SlotDist(1, 9); 
-//
-//	while (Money > 100)  // 소지금이 100이하일경우 게임 종료
-//	{
-//		int BettingMoney = 0;
-//		printf("현재 금액 : %d\n", Money);
-//		printf("현재 배팅할 금액(100이상): ");
-//		std::cin >> BettingMoney;
-//
-//		if (BettingMoney < 100)
-//		{
-//			printf("100이상 다시 베팅하세요.\n");
-//			continue;
-//		}
-//		else if (BettingMoney > Money)
-//		{
-//			printf("소지금보다 많이 걸 수 없습니다.\n");
-//			continue; 
-//		}
-//		else
-//		{
-//		Money = Money - BettingMoney;
-//		}
-//
-//		int Slot1 = SlotDist(SlotEngine);
-//		int Slot2 = SlotDist(SlotEngine);
-//		int Slot3 = SlotDist(SlotEngine);
-//		printf("슬롯 결과: %d %d %d\n", Slot1, Slot2, Slot3);
-//
-//		if (Slot1 == Slot2 && Slot2 == Slot3)
-//		{
-//			int RewardMoney = BettingMoney * 50;
-//			Money = Money + RewardMoney;
-//			printf("같은 숫자를 뽑으셨습니다. %d원을 받으셨습니다.\n", RewardMoney);
-//		}
-//		else if (Slot1 == 7 && Slot2 == 7 && Slot3 == 7)
-//		{
-//			int RewardMoney = BettingMoney * 10000;
-//			printf("잭팟! 777을 뽑으셨습니다!\n");
-//			Money = Money * RewardMoney;
-//		}
-//		else
-//		{
-//			printf("돈을 잃으셨습니다.\n");
-//		}
-//	}
-//	printf("게임 종료! 최종 금액: %d\n", Money);
-//
-//	return 0;
-//}
-
-
-///*
-//4. 플레이어와 적의 턴제 전투 만들기
-//- HP는 100으로 시작
-//- 공격을 할 때 상대방에게 5~15의 데미지를 준다.
-//- 10 % 의 확률로 크리티컬이 발생해 2배의 데미지를 준다.
-//- 상대방의 HP가 0 이하가 되면 승리한다.
-//*/
-//int main()
-//{
-//	const int StartHp = 100;
-//	int PlayerHp = StartHp;
-//	int EnemyHp = StartHp;
-//	std::random_device RandomDamage;
-//	std::mt19937 DamageEngine(RandomDamage());
-//	std::uniform_int_distribution<int> DamageDist(5, 15);
-//	std::uniform_int_distribution<int> CriticalDist(1, 100);
-//
-//	while (PlayerHp > 0 && EnemyHp > 0)
-//	{
-//		int PlayerDamage = DamageDist(DamageEngine);
-//		int CriticalDamage = CriticalDist(DamageEngine);
-//
-//		if (CriticalDamage <= 10)
-//		{
-//			PlayerDamage = PlayerDamage * 2;
-//			printf("플레이어 크리티컬 공격!\n");
-//		}
-//		else
-//		{
-//			printf("플에이어 공격!\n");
-//		}
-//		EnemyHp = EnemyHp - PlayerDamage;
 //		
-//        if (EnemyHp <= 0) 
-//		{
-//			printf("적에게 %d 데미지 -> 적 체력: 0\n", PlayerDamage);
-//			break; 
-//		}
-//		else 
-//		{
-//			printf("적에게 %d 데미지 -> 적 체력: %d\n", PlayerDamage, EnemyHp);
-//		}
-//
-//		//적 턴
-//		int EnemyDamage = DamageDist(DamageEngine);
-//		int EnemyCritical = CriticalDist(DamageEngine);
-//
-//		if (EnemyCritical <= 10) 
-//		{
-//			EnemyDamage = EnemyDamage * 2;
-//			printf("적 크리티컬 공격! ");
-//		}
-//		else 
-//		{
-//			printf("적 공격! ");
-//		}
-//        PlayerHp = PlayerHp - EnemyDamage;
-//
-//		if (PlayerHp <= 0) 
-//		{
-//			printf("플레이어에게 %d 데미지 → 플레이어 HP: 0\n", EnemyDamage);
-//			break; 
-//		}
-//		else 
-//		{
-//			printf("플레이어에게 %d 데미지 → 플레이어 HP: %d\n", EnemyDamage, PlayerHp);
-//		}
-//	}
-//
-//	if (PlayerHp > 0 && EnemyHp <= 0)
-//	{
-//		printf("플레이어 승리!");
-//	}
-//	else if (EnemyHp > 0 && PlayerHp <= 0)
-//	{
-//		printf("적 승리!\n");
-//	}
-//	else
-//	{
-//		printf("무승부!");
-//	}
-//
 //	return 0;
 //}
 
 
+///*
+//배열에 저장된 값을 거꾸로 뒤집는 함수 만들기
+//- 파라메터 int Array[], int Size
+//*/
+//int main()
+//{
+//	int Array[5] = { 1,2,3,4,5 };
+//	for (int i = 0; i < 5 / 2; i++)
+//	{
+//		int Temp = Array[i];
+//		Array[i] = Array[5 - 1 - i];
+//		Array[5 - 1 - i] = Temp;
+//	}
+//	for (int i = 0; i < 5; i++)
+//	{
+//		printf("%d ", Array[i]);
+//	}
+//	printf("\n");
+//	return 0;
+//}
+
+
+///*
+//로또 번호 생성기
+//- 전체 숫자 범위: 1번부터 45번까지.
+//- 맞춰야 하는 숫자 개수: 6개.
+//*/
+//void Shuffle(int Array[], int Length) 
+//{
+//		for (int i = Length - 1; i > 0; i--)
+//		{
+//			int j = rand() % (i + 1);
+//			int Temp = Array[i];
+//			Array[i] = Array[j];
+//			Array[j] = Temp;
+//		}
+//}
+//int main()
+//{
+//	int Array[45] = { 0 };
+//	for (int i = 0; i < 45; i++)
+//	{
+//		Array[i] = i + 1;
+//	}
+//	Shuffle(Array, 45);
+//	for (int i = 0; i < 6; i++)
+//	{
+//		printf("%d ", Array[i]);
+//	}
+//	printf("\n");
+//	return 0;
+//}
+
+
+
+
 /*
-5. 도둑 잡기 만들기
-- 시작 금액 10000
-- 한판에 무조건 최소 100 배팅해야 함.만약 소지금액이 100 이하일 경우 게임 종료.
-- 딜러는 A~K까지의 트럼프 카드 중 2장을 중복없이 선택하고 조커 카드가 추가된다.
-- 플레이어는 딜러의 카드 중 한장을 선택한다.
-- 만약 플레이어가 조커를 뽑다면 플레이어의 승리.배팅 금액의 2배를 받는다.
-- 플레이어가 조커를 뽑지 못했다면 다음 게임을 시작하거나 배팅 금액의 2배를 추가로 지불하고 한번 더 선택할 수 있다.
+미로 탈출 게임 만들기
+
+2차원 배열을 활용하여 텍스트 기반 미로 탈출 게임을 구현.
+미로의 구성
+10행 20열의 2차원 배열
+저장 방식
+길(0): '. '으로 표시
+벽(1): '# '으로 표시
+시작점(2): 'S '로 표시
+출구(3): 'E '로 표시
+미로 코드
+
+  // 미로 크기
+  const int MazeHeight = 10;
+  const int MazeWidth = 20;
+
+  // 미로 배열
+  int Maze[MazeH][MazeWidth] =
+  {
+	  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	  {1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
+	  {1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
+	  {1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
+	  {1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+	  {1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
+	  {1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
+	  {1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
+	  {1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+	  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+  };
+
+이동 입력 처리
+w(W): 위, s(S): 아래, a(A): 왼쪽, d(D): 오른쪽
+대소문자 구분 없이 처리
+플레이어가 출구에 도착하면 종료
+플레이어는 ‘P ‘로 표시
+게임 화면은 다음과 같은 양식을 따른다.
 */
+
+const int MazeHeight = 10;
+const int MazeWidth = 20;
+
+// 미로 배열 (0:길, 1:벽, 2:시작, 3:출구)
+int Maze[MazeHeight][MazeWidth] =
+{
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	{1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
+	{1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
+	{1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
+	{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+	{1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
+	{1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
+	{1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
+	{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+};
 
 int main()
 {
-	const int StartMoney = 10000;
-	int Money = StartMoney;
-	std::random_device RandomCard;
-	std::mt19937 CardEngine(RandomCard());
-	std::uniform_int_distribution<int> CardDist(1, 11); // A~K 
-	
-	while (Money > 100)
-	{
-		int BettingMoney = 0;
-		printf("배팅 금액을 입력하세요.: ");
-		std::cin >> BettingMoney;
+		// 플레이어 시작점 (2)
+	    int PlayerX = 1;
+		int PlayerY = 1;
+		
+		while (true)
+		{
+			// 미로 변신
+			for (int y = 0; y < MazeHeight; y++)
+			{
+				for (int x = 0; x < MazeWidth; x++)
+				{
+					if (x == PlayerX && y == PlayerY)
+					{
+						printf("P ");          // 플레이어
+					}
+					else if (Maze[y][x] == 0)  // 길
+					{ 
+						printf(". ");
+					}
+					else if (Maze[y][x] == 1)  // 벽
+					{ 
+						printf("# ");
+					}
+					else if (Maze[y][x] == 2)  // 시작점
+					{ 
+						printf("S ");
+					}
+					else if (Maze[y][x] == 3)  // 출구
+					{ 
+						printf("E ");
+					}
+				}
+				printf("\n");
+			}
+			// 이동
+			char Input = 0;
+			printf("이동할 수 있는 방향을 선택하세요 (w: 위, s: 아래, a: 왼쪽, d: 오른쪽): \n");
+			printf("방향 입력: ");
+			std::cin >> Input;
 
-		if (BettingMoney < 100)
-		{
-			printf("100이상 베팅 하십시오.\n");
-			continue;
-		}
-		else if (BettingMoney > Money)
-		{
-			printf("소지금보다 많이 걸수 없습니다.");
-			continue;
-		}
-		else 
-		{
-			Money = Money - BettingMoney;
-		}
-
-		int Card1 = CardDist(CardEngine);
-		int Card2 = CardDist(CardEngine);
-		while (Card2 == Card1)
-		{
-			Card2 = CardDist(CardEngine);
-		}
-		//int Joker = 0;
-
-		std::uniform_int_distribution<int> PositionDist(1, 3);       //조커가 들어갈 슬롯
-		int JokerPosition = PositionDist(CardEngine);                //실제 조커 슬롯 번호를 랜덤 뽑기
-		std::uniform_int_distribution<int> CardPositionDist(0, 1);   //두 일반 카드 순서 랜덤하게
-		int CardPosition = CardPositionDist(CardEngine);             //0이면 Card1 먼저, 1이면 Card2 먼저
-		int Slot1 = 0;
-		int Slot2 = 0;
-		int Slot3 = 0;
-		if (JokerPosition == 1)
-		{
-			Slot1 = 0;               // 조커
-			if (CardPosition == 0)
+			int PlayerNewX = PlayerX;  // 바로 PlayerX로 하면 벽에 끼어서 되돌리는 코드 또 넣어야 됨.
+			int PlayerNewY = PlayerY;
+			if 
+				(Input == 'w' || Input == 'W') 
+				PlayerNewY--;
+			else if 
+				(Input == 's' || Input == 'S') 
+				PlayerNewY++;
+			else if 
+				(Input == 'a' || Input == 'A') 
+				PlayerNewX--;
+			else if 
+				(Input == 'd' || Input == 'D') 
+				PlayerNewX++;
+			// 이동 벽 확인 0 이면 가고 1이면 안감
+			if (PlayerNewX >= 0 && PlayerNewX < MazeWidth && PlayerNewY >= 0 && PlayerNewY < MazeHeight)
 			{
-				Slot2 = Card1;
-				Slot3 = Card2;
+				if (Maze[PlayerNewY][PlayerNewX] != 1) // 벽이 아니면 이동
+				{
+					PlayerX = PlayerNewX;
+					PlayerY = PlayerNewY;
+				}
 			}
-			else
+			// 출구
+			if (Maze[PlayerY][PlayerX] == 3)  // 아마 플레이어 위치를 임의로 정해서 그런듯
 			{
-				Slot2 = Card2;
-				Slot3 = Card1;
+				printf("축하합니다! 출구에 도착했습니다!\n");
+				break;
 			}
 		}
-		else if (JokerPosition == 2)
-		{
-			Slot2 = 0;  
-			if (CardPosition == 0)
-			{
-				Slot1 = Card1;
-				Slot3 = Card2;
-			}
-			else
-			{
-				Slot1 = Card2;
-				Slot3 = Card1;
-			}
-		}
-		else // JokerPosition == 3
-		{
-			Slot3 = 0;  
-			if (CardPosition == 0)
-			{
-				Slot1 = Card1;
-				Slot2 = Card2;
-			}
-			else
-			{
-				Slot1 = Card2;
-				Slot2 = Card1;
-			}
-		}
-
-		int PlayerChoice = 0;
-		printf("카드를 선택하세요. 1.첫번째 카드, 2.두번째 카드, 3.세번째 카드\n"); 
-		std::cin >> PlayerChoice;
-	
-		int ChoiceValue = 0;
-		if (PlayerChoice == 1)
-			ChoiceValue = Slot1;
-		else if (PlayerChoice == 2)
-			ChoiceValue = Slot2;
-		else if (PlayerChoice == 3)
-			ChoiceValue = Slot3;
-		else
-		{
-			printf("잘못된 입력입니다. 이번 판은 무효이며 베팅액을 반환합니다.\n");
-			Money = Money + BettingMoney;   // 환불
-			continue;                       // 다음 라운드
-		}
-
-		if (ChoiceValue == 0)               // 조커
-		{
-			printf("승리! 조커를 뽑았습니다. ");
-			Money = Money + (BettingMoney * 2);
-			printf("현재 금액 : %d\n", Money);
-			continue;
-		}
-		else
-		{
-			printf("아쉽습니다. 조커가 아닙니다. (당신이 뽑은 카드: %d)\n", ChoiceValue);
-		}
-
-		int PlayerRetry = 0;
-		printf("배팅 금액의 2배를 추가로 지불(%d)하고 한번 더 선택하시겠습니까? (예: 1, 아니오: 0):\n", BettingMoney * 2);
-		std::cin >> PlayerRetry;
-				
-		if (PlayerRetry == 1)
-		{
-			if (Money < BettingMoney * 2)  // 돈 확인
-			{
-				printf("소지금이 부족하여 재도전을 할 수 없습니다.\n");
-				printf("현재 금액: %d\n", Money);
-				continue;
-			}
-			else
-			{
-				Money = Money - (BettingMoney * 2);    // 추가 비용 선차감
-			}
-
-			int RetrySlot = 0;
-			printf("남은 두 카드 중 하나를 고르세요. (1.첫번째 카드, 2.두번째 카드): \n");
-			std::cin >> RetrySlot;
-
-			int InputOK = 1;                // 입력 오류 확인 (1정상, 0잘못됨)
-			int ChoiceValue2 = 0;           // 두 번째로 뽑은 카드 값
-
-			if (PlayerChoice == 1) 			// 처음 고른 카드 제외하고 남은 두 카드
-			{
-				if (RetrySlot == 1)
-					ChoiceValue2 = Slot2;   // 남은 2,3
-				else if (RetrySlot == 2)
-					ChoiceValue2 = Slot3;
-				else
-					InputOK = 0;
-			}
-			else if (PlayerChoice == 2)
-			{
-				if (RetrySlot == 1)
-					ChoiceValue2 = Slot1;   // 남은 1,3
-				else if (RetrySlot == 2)
-					ChoiceValue2 = Slot3;
-				else
-					InputOK = 0;
-			}
-			else // PlayerChoice == 3
-			{
-				if (RetrySlot == 1)
-					ChoiceValue2 = Slot1;   // 남은 1,2
-				else if (RetrySlot == 2)
-					ChoiceValue2 = Slot2;
-				else
-					InputOK = 0;
-			}
-
-			if (InputOK == 0)
-			{
-				printf("잘못된 입력입니다. 재도전은 무효 처리됩니다.\n");
-				printf("현재 금액: %d\n", Money);  
-				continue;                           
-			}
-			else if (ChoiceValue2 == 0)
-			{
-				Money += (BettingMoney * 2);
-				printf("재도전 성공! JOKER를 뽑았습니다. (지급: %d)\n", BettingMoney * 2);
-				printf("현재 금액: %d\n", Money);
-				continue;
-			}
-			else
-			{
-				printf("재도전 실패! 조커가 아니었습니다. (당신이 뽑은 카드: %d)\n", ChoiceValue2);
-				printf("현재 금액: %d\n", Money);
-				continue;
-			}
-		}
-		else
-		{
-			printf("재도전을 하지 않습니다.\n");
-			printf("현재 금액: %d\n", Money);
-			continue;
-		}
-	}
-
-	return 0;
+		return 0;
 }
-
-
 
 
 

@@ -81,5 +81,17 @@ void Practice20250905();
 //
 ///*
 
+//template <typename T>
+//T Clamp(T Value, T Min, T Max)  // (const T& Value, const T& Min, const T& Max)
+//{
+//	if (Value < Min)
+//		return Min;
+//	else if (Value > Max)
+//		return Max;
+//	else
+//		return Value;
+//}
 
 void Practice20250906();
+
+void Practice20250908();

@@ -14,29 +14,34 @@ int RollDice();
 
 char GetGrade(int Score);
 
+//void Shuffle(int Array[], int Length);
 
-template <typename T>
-T Min(T MinNumber1, T MinNumber2) 
-{
-	return (MinNumber1 < MinNumber2) ? MinNumber1 : MinNumber2;
-}
 
-template <typename T>
-T Max(T MinNumber1, T MinNumber2)
-{
-    return (MinNumber1 > MinNumber2) ? MinNumber1 : MinNumber2;
-}
 
-template <typename T>
-T Clamp(T value, T Minvalue, T Maxvalue)
-{
-    if (value < Minvalue) {
-        return Minvalue;
-    if (value > Maxvalue)
-        return Maxvalue;
-    }
-    return value;
-}
+
+//template <typename T>
+//T Min(T MinNumber1, T MinNumber2) 
+//{
+//	return (MinNumber1 < MinNumber2) ? MinNumber1 : MinNumber2;
+//}
+//
+//template <typename T>
+//T Max(T MinNumber1, T MinNumber2)
+//{
+//    return (MinNumber1 > MinNumber2) ? MinNumber1 : MinNumber2;
+//}
+//
+//template <typename T>
+//T Clamp(T value, T Minvalue, T Maxvalue)
+//{
+//    if (value < Minvalue) {
+//        return Minvalue;
+//    if (value > Maxvalue)
+//        return Maxvalue;
+//    }
+//    return value;
+//}
+
 
 
 
