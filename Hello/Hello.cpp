@@ -448,11 +448,11 @@ break
 		 //int Array6[Size2] = {};     // 배열 선언할 때 크기를 변수로 지정할 수 없다.
 
  이차원 배열
-    - 배열을 이차원으로 표현한 것 (축이 2개)
+	- 배열을 이차원으로 표현한 것 (축이 2개)
 	- int Array[4][3] = {{1,2,3}, {4,5,6}, {7,8,9}, {0,1,2}};
-	     int 3개짜리 배열이 4줄 들어있다.
+		 int 3개짜리 배열이 4줄 들어있다.
 		 사실 int Array[12]랑 메모리 구조가 같다.  // Array[12] = {1,2,3,4,5,6,7,8,9,0,1,2};
-		 int Array[4][3] = {{1,2,3}, {4,5,6}, {7,8,9}, {0,1,2}};   
+		 int Array[4][3] = {{1,2,3}, {4,5,6}, {7,8,9}, {0,1,2}};
 		 뒤에서 부터 계산 3개(x)짜리가 4개(y)다.
 		 int test = Array[1][2];   // test =6
 */
@@ -460,21 +460,21 @@ break
 /*
 캐스팅(Casting)
    -  하나의 데이터 타입을 다른 데이터 타입으로 변경하는 행위
-      //C스타일
-      int a = 10;
-      float b = 15.5f;
-      
-      a = (int)b; // b를 int형으로 캐스팅해서 a에 대입한다. 15가 a에 들어간다. (C스타일, 명시적 캐스팅)
-      a = b;      // b를 a에 대입한다. 그런데 a와 b는 타입이 다르니까 b를 a로 암시적으로 캐스팅해서 대입한다. (C스타일, 암시적 캐스팅)
-      b = a;      // 암시적 캐스팅은 대체로 표현이 작은쪽으로 큰쪽으로는 문제없는 경우가 많다.
-      
-      C++ 캐스팅
-      static_csat : C스타일 캐스팅을 안전하게 만든 것, 컴파일 타임에 결정됨.
-      dynamic_cast : 다음에 (클래스 배우고 이후에)
-      const_cast : const 속성을 제거하거나 추가하는데 사용. 사용하지 않는 것을 권장.
-      reinterpret_cast : C스타일 캐스팅에서 위험한 부분, 원래 타입의 구조를 무시하고 새 타입으로 해석하게 한다.
-      
-      a = static_cast<int>(b);   // b를 int형으로 캐스팅해서 a에 대입한다. 15가 a에 들어간다. (C++스타일, 명시적 캐스팅)
+	  //C스타일
+	  int a = 10;
+	  float b = 15.5f;
+
+	  a = (int)b; // b를 int형으로 캐스팅해서 a에 대입한다. 15가 a에 들어간다. (C스타일, 명시적 캐스팅)
+	  a = b;      // b를 a에 대입한다. 그런데 a와 b는 타입이 다르니까 b를 a로 암시적으로 캐스팅해서 대입한다. (C스타일, 암시적 캐스팅)
+	  b = a;      // 암시적 캐스팅은 대체로 표현이 작은쪽으로 큰쪽으로는 문제없는 경우가 많다.
+
+	  C++ 캐스팅
+	  static_csat : C스타일 캐스팅을 안전하게 만든 것, 컴파일 타임에 결정됨.
+	  dynamic_cast : 다음에 (클래스 배우고 이후에)
+	  const_cast : const 속성을 제거하거나 추가하는데 사용. 사용하지 않는 것을 권장.
+	  reinterpret_cast : C스타일 캐스팅에서 위험한 부분, 원래 타입의 구조를 무시하고 새 타입으로 해석하게 한다.
+
+	  a = static_cast<int>(b);   // b를 int형으로 캐스팅해서 a에 대입한다. 15가 a에 들어간다. (C++스타일, 명시적 캐스팅)
 */
 
 /*
@@ -482,8 +482,8 @@ break
    - 배열이 내용을 랜덤하게 섞는 셔플 알고리즘
    - 동일한 확률로 섞이도록 증명 완료된 알고리즘
 
-    void Shuffle(int Array[], int Length)  //배열의 크기도 같이 넘기고 리턴이 없다. // ex} Shuffle(Array7, 12)
-    {
+	void Shuffle(int Array[], int Length)  //배열의 크기도 같이 넘기고 리턴이 없다. // ex} Shuffle(Array7, 12)
+	{
 
 	알고리즘 순서
 	1. 배열의 마지막 요소에서 첫 요소까지 순회,
@@ -491,14 +491,14 @@ break
 	3. i번째 요소와 j번째 요소를 서로 교환
 	4. i가 0이 될때까지 반복
 
-       for (int i = Length - 1; i > 0; i--)
-       {
-	      int j = rand() % (i + 1);
-	      int Temp = Array[i];
-	      Array[i] = Array[j];
-	      Array[j] = Temp;
-       }
-    }
+	   for (int i = Length - 1; i > 0; i--)
+	   {
+		  int j = rand() % (i + 1);
+		  int Temp = Array[i];
+		  Array[i] = Array[j];
+		  Array[j] = Temp;
+	   }
+	}
 */
 
 /*
@@ -506,28 +506,158 @@ break
    - 변수의 별명
    - 참조를 변경할 경우 원본 변수도 함께 수정된다. -> 함수 파라메터로 사용하면 편리함.
    - 참조는 항상 어떤 변수와 연결되어 있어야 한다.
-   - 함수 파라메터에 참조를 사용할 때 
-      - 파라메터 값을 수정하는 출력용 파라메터일 경우 Out이라는 접두사를 붙이는 것이 관례이다.
+   - 함수 파라메터에 참조를 사용할 때
+	  - 파라메터 값을 수정하는 출력용 파라메터일 경우 Out이라는 접두사를 붙이는 것이 관례이다.
 	  - 파라메터 값을 읽기만 하는 경우에는 const를 붙여줘서 실수로라도 고칠 수 없게 하는 것이 좋다.
 
 	  void TestRef(int& OutData, const int& ReadData)
-      {
-      	OutData *= ReadData;
-      }
-      
-      void Ref()
-      {
-      	int Number = 10;
-      	int Number2 = 10;
-      	int& Ref = Number; //Number의 참조는 Ref다.
-      
-      	TestRef(Number, Number2);
-      
-      	int i = 0;
-      }
+	  {
+		OutData *= ReadData;
+	  }
+
+	  void Ref()
+	  {
+		int Number = 10;
+		int Number2 = 10;
+		int& Ref = Number; //Number의 참조는 Ref다.
+
+		TestRef(Number, Number2);
+
+		int i = 0;
+	  }
+*/
+
+/*
+포인터
+   - 메모리 주소를 저장하는 데이터 타입
+   - 각 데이터 타입에 *에 붙이면 포인터 타입
+		ex) int* 인티저 포인터, float*  플로트 포인터, char* 캐릭터 포린터
+   - 포인터 연산자
+	  - 주소 연산자 (&)
+		 int i = 10;
+		 int* p = &i;    // i의 주소를 int* p에 대입해라.
+	  - 간접참조 연산자(*)
+		 int i = 20;
+		 int* p = &i;
+		 (*p) = 30;     // i = 30;과 같다
+
+		 void PointerParameter(int* pNumber)
+		 {
+			 (*pNumber) = (*pNumber) * 2;  // 입력받은 주소에 있는 int 값을 2배로 만들기
+		 }
+
+		 void Practice20250909()
+		 {
+			// Number라는 변수를 하나 선언하고 포인터 변수 p에 Number의 주소를 저장하기
+			// p를 이용해서 Number의 값을 변경 시키기
+
+			float Number = 123.0f;
+			int Number2 = 10;
+			float* p = nullptr;    // p는 완전히 비어있다.
+			p = &Number;
+			//p = &Number2;        // int는 안된다. 데이터 타입이 같아야 함.
+
+			(*p) = 100.0f;        // Number값이 100.0으로 바뀜
+
+			PointerParameter(&Number2);
+		 }
+
+	  - 산술 연산자 (+, -, ++, --)
+		 int i = 30;
+		 int* p = &i;
+		 p = p + 1;   // 예시로 p가 원래 0x0004라고 가정했을 때 p + 1을 한 값은 0x0008,
+		 double d = 10.5;
+		 double* pD = &d;
+		 pD += 1;    // pD가 원래 0x0000이라고 가정했을 때 pD += 1은 0x0008
+
+   - 배열과 포인터는 기본적으로 같다. (배열의 주소는
+		 int Array[5] = { 10, 20, 30, 40, 50 };
+		 int* pArray = Array;        // 배열의 이름은 배열의 첫번째 요소의 주소와 같다.
+		 int* pArray2 = &Array[0];   // Array ==  &Array[0] 두 개는 같은 의미
+
+		 // pArray를 이용해서 Array[2]를 300으로 수정하기
+		 (pArray + 2) = 300;         // 30의 주소,  +1 할때마다 배열 주소 증가
+
+		 for (int data : Array)      // range-for : Array안에 요소들을 순차적으로 하나씩 data에 넣어 처리
+		 {
+			printf("%d ", data);
+		 }
+		 == 위 아래가 같은 결과
+		 for (int i = 0; i < 5; i++)
+		 {
+			printf("%d ", Array[i]);
+		 }
+*/
+
+/*
+C++ 의 메모리 영역 (단순화 된 버전)
+   - 코드 영역 : 실행코드가 저장되는 공간
+   - 데이터 영역 :
+		 프로그램이 시작할 때부터 끝날 떄까지 유지되는 변수가 저장되는 공간
+   - 힙 영역 :
+		 램 그 자체
+		 프로그램 실행 중에 프로그램이 필요에 따라 직접 메모리를 할당 '받고' 사용하는 공간
+		 힙은 운영체제가 관리하기 때문에 힙을 할당받는 행위는 느리다.
+		 메모리는 할당 받았으면 반드시 '해제'를 해줘야 한다. (해제를 하지 않으면 메모리 릭(누수) 발생)
+   - 스택 영역
+		 함수가 호출될 때마다 필요한 변수 (지역 변수)가 저장하는 공간
+		 함수가 끝나면 자동으로 정리
+*/
+
+/*
+정적(static)  : 프로그램 실행 전에 이미 결정 나 있는 것들.
+동정(dynamic) : 프래그램 실행 중에 결정이 되는 것들.
+*/
+
+/*
+동적 할당(Dynamic Allocation)
+   - 프로그램 실행 중(Runtime)에 메모리를 사용하기 위해 확보하는 행위
+   - 운영체제(OS)에게 요청함 -> 그래서 늦다.
+   - C 스타일
+		 할당 : malloc
+		 해제 : free
+		 단순 메모리 블럭만 받는 형식(초기화가 없음. 타입 안정성 없음. 생성자/소멸자 실행 안됨)
+
+		 // C 스타일 메모리 할당 및 해제
+		 int Size = 5;
+		 int* Array = nullptr;
+		 Array = (int*)malloc(sizeof(int) * Size);  // int 5개짜리 메모리 블럭 할당 받기
+		 //조사식에 Array.5 (.5)를 추가하면 해당 주소 나옴.
+			   '작업들'
+		 free(Array);       // Array를 해제. malloc을 했으면 무조건 free부터 만들고 작업할것.
+		 Array = nullptr;   // 댕글링 포인터 방지
+
+   - C++ 스타일
+		 할당 : new
+		 해제 : 일반 변수는 delete, 배열은 delete[]
+		 int* Data = new int(5);   // int 하나를 할당 받는데 주소가 가리키는 값은 5를 설정해라
+		 delete Data;
+		 Data = nullptr;
+		 int* Array = new int[10]; // int 10개짜리 배열을 만들어라
+		 delete[] Array;           // 배열은 반드시 이렇게 해제해야 함.
+		 //delete Array;           // 이렇게 하면 Array[0] 부분 하나만 할당 해제가 된다.
+		 Array = nullptr;
+		 특정 객체(Object)를 생성하는 방식. (초기화가 있다. 타입 안정성이 있다. 생성자와 소멸자가 실행된다.)
+
+	- 메모리 할당과 성능 문제
+		 메모리 할당은 오래 걸린다. (컴퓨터 입장에서 느리다. 운영체제의 메모리 관리나 적절한 사이즈를 찾는데 시간이 걸림.)
+		 메모리 단편화 문제 (메모리 할당 해제를 반복하다가 전체 빈공간은 충분하지만 연속된 빈공간이 부족해지는 현상.)
+		 멀티 스레드 문제 (동시에 접근할때 락을 하는데 까지 시간 걸림)
+		 CPU 캐시 할당 문제
+	- 메모리 릭(메모리 누수)
+		 할당한 메모리는 반환하지 않아 해당 영역을 사용하지 못하게 되는 현상
+
+	#define _CRTDBG_MAP_ALLOC
+	#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)              // 메모리 할당했는데 delete 알려주는
+	#include <crtdbg.h>
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);   // main() 안에
 */
 
 
+
+#define _CRTDBG_MAP_ALLOC
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__) // 메모리 할당했는데 delete 알려주는
+#include <crtdbg.h>
 #include <iostream>   // 입출력 관련
 #include <stdio.h>
 #include <cstdio>     // stdio.h에 네임스페이스 추가한 래퍼 
@@ -535,227 +665,211 @@ break
 #include <random>
 #include <limits.h>
 #include "header.h"   // 헤더 파일
-#include "TestMath.h"
+#include "Practice.h"
 
 
 
 
-
-///*
-//6면체 주사위를 100만번 던져서 각 눈의 수가 몇번 나왔는지 카운팅하기
-//- 6면체 주사위를 돌리는 함수 만들기
-//*/
-//int main()
-//{
-//	int Count[6] = { 0 };
-//
-//	for (int i = 0; i < 1000000; i++)
-//	{
-//		int result = rand() % 6 + 1;
-//		Count[result - 1]++;
-//	}
-//	for (int i = 0; i < 6; i++)
-//	{
-//		printf("%d의 개수: %d\n", i + 1, Count[i]);
-//	}
-//		
-//	return 0;
-//}
-
-
-///*
-//배열에 저장된 값을 거꾸로 뒤집는 함수 만들기
-//- 파라메터 int Array[], int Size
-//*/
-//int main()
-//{
-//	int Array[5] = { 1,2,3,4,5 };
-//	for (int i = 0; i < 5 / 2; i++)
-//	{
-//		int Temp = Array[i];
-//		Array[i] = Array[5 - 1 - i];
-//		Array[5 - 1 - i] = Temp;
-//	}
-//	for (int i = 0; i < 5; i++)
-//	{
-//		printf("%d ", Array[i]);
-//	}
-//	printf("\n");
-//	return 0;
-//}
-
-
-///*
-//로또 번호 생성기
-//- 전체 숫자 범위: 1번부터 45번까지.
-//- 맞춰야 하는 숫자 개수: 6개.
-//*/
-//void Shuffle(int Array[], int Length) 
-//{
-//		for (int i = Length - 1; i > 0; i--)
-//		{
-//			int j = rand() % (i + 1);
-//			int Temp = Array[i];
-//			Array[i] = Array[j];
-//			Array[j] = Temp;
-//		}
-//}
-//int main()
-//{
-//	int Array[45] = { 0 };
-//	for (int i = 0; i < 45; i++)
-//	{
-//		Array[i] = i + 1;
-//	}
-//	Shuffle(Array, 45);
-//	for (int i = 0; i < 6; i++)
-//	{
-//		printf("%d ", Array[i]);
-//	}
-//	printf("\n");
-//	return 0;
-//}
-
-
-
-
-/*
-미로 탈출 게임 만들기
-
-2차원 배열을 활용하여 텍스트 기반 미로 탈출 게임을 구현.
-미로의 구성
-10행 20열의 2차원 배열
-저장 방식
-길(0): '. '으로 표시
-벽(1): '# '으로 표시
-시작점(2): 'S '로 표시
-출구(3): 'E '로 표시
-미로 코드
-
-  // 미로 크기
-  const int MazeHeight = 10;
-  const int MazeWidth = 20;
-
-  // 미로 배열
-  int Maze[MazeH][MazeWidth] =
-  {
-	  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-	  {1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
-	  {1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
-	  {1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
-	  {1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
-	  {1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
-	  {1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
-	  {1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
-	  {1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
-	  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-  };
-
-이동 입력 처리
-w(W): 위, s(S): 아래, a(A): 왼쪽, d(D): 오른쪽
-대소문자 구분 없이 처리
-플레이어가 출구에 도착하면 종료
-플레이어는 ‘P ‘로 표시
-게임 화면은 다음과 같은 양식을 따른다.
-*/
-
-const int MazeHeight = 10;
-const int MazeWidth = 20;
-
-// 미로 배열 (0:길, 1:벽, 2:시작, 3:출구)
-int Maze[MazeHeight][MazeWidth] =
-{
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-	{1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
-	{1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
-	{1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
-	{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
-	{1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
-	{1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
-	{1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
-	{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
 
 int main()
 {
-		// 플레이어 시작점 (2)
-	    int PlayerX = 1;
-		int PlayerY = 1;
-		
-		while (true)
-		{
-			// 미로 변신
-			for (int y = 0; y < MazeHeight; y++)
-			{
-				for (int x = 0; x < MazeWidth; x++)
-				{
-					if (x == PlayerX && y == PlayerY)
-					{
-						printf("P ");          // 플레이어
-					}
-					else if (Maze[y][x] == 0)  // 길
-					{ 
-						printf(". ");
-					}
-					else if (Maze[y][x] == 1)  // 벽
-					{ 
-						printf("# ");
-					}
-					else if (Maze[y][x] == 2)  // 시작점
-					{ 
-						printf("S ");
-					}
-					else if (Maze[y][x] == 3)  // 출구
-					{ 
-						printf("E ");
-					}
-				}
-				printf("\n");
-			}
-			// 이동
-			char Input = 0;
-			printf("이동할 수 있는 방향을 선택하세요 (w: 위, s: 아래, a: 왼쪽, d: 오른쪽): \n");
-			printf("방향 입력: ");
-			std::cin >> Input;
+	/*
+	   3. 미로 탈출 게임 수정하기
+		- 이동했을 때 일정확률(20 %)로 전투가 발생한다.
+		- 이동했을 때 일정확률(10 %)로 플레이어 HP가 회복된다.
+		- 두 이벤트는 중복으로 발생하지 않는다.
+	*/
 
-			int PlayerNewX = PlayerX;  // 바로 PlayerX로 하면 벽에 끼어서 되돌리는 코드 또 넣어야 됨.
-			int PlayerNewY = PlayerY;
-			if 
-				(Input == 'w' || Input == 'W') 
-				PlayerNewY--;
-			else if 
-				(Input == 's' || Input == 'S') 
-				PlayerNewY++;
-			else if 
-				(Input == 'a' || Input == 'A') 
-				PlayerNewX--;
-			else if 
-				(Input == 'd' || Input == 'D') 
-				PlayerNewX++;
-			// 이동 벽 확인 0 이면 가고 1이면 안감
-			if (PlayerNewX >= 0 && PlayerNewX < MazeWidth && PlayerNewY >= 0 && PlayerNewY < MazeHeight)
+
+
+	const int MazeHeight = 10;
+	const int MazeWidth = 20;
+
+	// 미로 배열 (0:길, 1:벽, 2:시작, 3:출구)
+	int Maze[MazeHeight][MazeWidth] =
+	{
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
+		{1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
+		{1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
+		{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+		{1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
+		{1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
+		{1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
+		{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+	};
+
+
+
+	std::random_device Event;
+	std::mt19937 EventEngine(Event());
+	std::uniform_int_distribution<int> EnemyEventDist(1, 100);
+	std::uniform_int_distribution<int> PlayerHpEventDist(1, 100);
+
+	// 플레이어 시작점 
+	int PlayerX = 0;
+	int PlayerY = 0;
+	for (int y = 0; y < MazeHeight; y++)
+	{
+		for (int x = 0; x < MazeWidth; x++)
+		{
+			if (Maze[y][x] == 2)
 			{
-				if (Maze[PlayerNewY][PlayerNewX] != 1) // 벽이 아니면 이동
-				{
-					PlayerX = PlayerNewX;
-					PlayerY = PlayerNewY;
-				}
-			}
-			// 출구
-			if (Maze[PlayerY][PlayerX] == 3)  // 아마 플레이어 위치를 임의로 정해서 그런듯
-			{
-				printf("축하합니다! 출구에 도착했습니다!\n");
-				break;
+				PlayerX = x;
+				PlayerY = y;
 			}
 		}
-		return 0;
+	}
+
+	while (true)
+	{
+		// 미로 변신
+		for (int y = 0; y < MazeHeight; y++)
+		{
+			for (int x = 0; x < MazeWidth; x++)
+			{
+				if (x == PlayerX && y == PlayerY)
+				{
+					printf("P ");          // 플레이어
+				}
+				else if (Maze[y][x] == 0)  // 길
+				{
+					printf(". ");
+				}
+				else if (Maze[y][x] == 1)  // 벽
+				{
+					printf("# ");
+				}
+				else if (Maze[y][x] == 2)  // 시작점
+				{
+					printf("S ");
+				}
+				else if (Maze[y][x] == 3)  // 출구
+				{
+					printf("E ");
+				}
+			}
+			printf("\n");
+		}
+		// 이동
+		char Input = 0;
+		printf("이동할 수 있는 방향을 선택하세요 (w: 위, s: 아래, a: 왼쪽, d: 오른쪽): \n");
+		printf("방향 입력: ");
+		std::cin >> Input;
+
+		int PlayerNewX = PlayerX;  // 바로 PlayerX로 하면 벽에 끼어서 되돌리는 코드 또 넣어야 됨.
+		int PlayerNewY = PlayerY;
+		if
+			(Input == 'w' || Input == 'W')
+			PlayerNewY--;
+		else if
+			(Input == 's' || Input == 'S')
+			PlayerNewY++;
+		else if
+			(Input == 'a' || Input == 'A')
+			PlayerNewX--;
+		else if
+			(Input == 'd' || Input == 'D')
+			PlayerNewX++;
+		// 이동 벽 확인 0 이면 가고 1이면 안감
+		if (PlayerNewX >= 0 && PlayerNewX < MazeWidth && PlayerNewY >= 0 && PlayerNewY < MazeHeight)
+		{
+			if (Maze[PlayerNewY][PlayerNewX] != 1) // 벽이 아니면 이동
+			{
+				PlayerX = PlayerNewX;
+				PlayerY = PlayerNewY;
+			}
+		}
+		// 출구
+		if (Maze[PlayerY][PlayerX] == 3)  // 아마 플레이어 위치를 임의로 정해서 그런듯
+		{
+			printf("축하합니다! 출구에 도착했습니다!\n");
+			break;
+		}
+	}
+
+	return 0;
 }
 
 
 
-
-
+//4. 플레이어와 적의 턴제 전투 만들기
+	//- HP는 100으로 시작
+	//- 공격을 할 때 상대방에게 5~15의 데미지를 준다.
+	//- 10 % 의 확률로 크리티컬이 발생해 2배의 데미지를 준다.
+	//- 상대방의 HP가 0 이하가 되면 승리한다.
+	//*/
+	//int main()
+	//{
+	//	const int StartHp = 100;
+	//	int PlayerHp = StartHp;
+	//	int EnemyHp = StartHp;
+	//	std::random_device RandomDamage;
+	//	std::mt19937 DamageEngine(RandomDamage());
+	//	std::uniform_int_distribution<int> DamageDist(5, 15);
+	//	std::uniform_int_distribution<int> CriticalDist(1, 100); // 확률
+	//
+	//	while (PlayerHp > 0 && EnemyHp > 0)
+	//	{
+	//		int PlayerDamage = DamageDist(DamageEngine);
+	//		int CriticalDamage = CriticalDist(DamageEngine);
+	//
+	//		if (CriticalDamage <= 10)
+	//		{
+	//			PlayerDamage = PlayerDamage * 2;
+	//			printf("플레이어 크리티컬 공격!\n");
+	//		}
+	//		else
+	//		{
+	//			printf("플에이어 공격!\n");
+	//		}
+	//		EnemyHp = EnemyHp - PlayerDamage;
+	//		
+	//        if (EnemyHp <= 0) 
+	//		{
+	//			printf("적에게 %d 데미지 -> 적 체력: 0\n", PlayerDamage);
+	//			break; 
+	//		}
+	//		else 
+	//		{
+	//			printf("적에게 %d 데미지 -> 적 체력: %d\n", PlayerDamage, EnemyHp);
+	//		}
+	//
+	//		//적 턴
+	//		int EnemyDamage = DamageDist(DamageEngine);
+	//		int EnemyCritical = CriticalDist(DamageEngine);
+	//
+	//		if (EnemyCritical <= 10) 
+	//		{
+	//			EnemyDamage = EnemyDamage * 2;
+	//			printf("적 크리티컬 공격! ");
+	//		}
+	//		else 
+	//		{
+	//			printf("적 공격! ");
+	//		}
+	//        PlayerHp = PlayerHp - EnemyDamage;
+	//
+	//		if (PlayerHp <= 0) 
+	//		{
+	//			printf("플레이어에게 %d 데미지 → 플레이어 HP: 0\n", EnemyDamage);
+	//			break; 
+	//		}
+	//		else 
+	//		{
+	//			printf("플레이어에게 %d 데미지 → 플레이어 HP: %d\n", EnemyDamage, PlayerHp);
+	//		}
+	//	}
+	//
+	//	if (PlayerHp > 0 && EnemyHp <= 0)
+	//	{
+	//		printf("플레이어 승리!");
+	//	}
+	//	else if (EnemyHp > 0 && PlayerHp <= 0)   // 중복 없애
+	//	{
+	//		printf("적 승리!\n");
+	//	}
 
 
 
