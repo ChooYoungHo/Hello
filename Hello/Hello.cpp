@@ -573,7 +573,7 @@ break
    - 배열과 포인터는 기본적으로 같다. (배열의 주소는
 		 int Array[5] = { 10, 20, 30, 40, 50 };
 		 int* pArray = Array;        // 배열의 이름은 배열의 첫번째 요소의 주소와 같다.
-		 int* pArray2 = &Array[0];   // Array ==  &Array[0] 두 개는 같은 의미
+		 int* pArray2 = &Array[0];   // Array == &Array[0] 두 개는 같은 의미
 
 		 // pArray를 이용해서 Array[2]를 300으로 수정하기
 		 (pArray + 2) = 300;         // 30의 주소,  +1 할때마다 배열 주소 증가
@@ -668,20 +668,106 @@ C++ 의 메모리 영역 (단순화 된 버전)
 #include "Practice.h"
 
 
+/*
+   3. 미로 탈출 게임 수정하기
+	- 이동했을 때 일정확률(20 %)로 전투가 발생한다.
+	- 이동했을 때 일정확률(10 %)로 플레이어 HP가 회복된다.
+	- 두 이벤트는 중복으로 발생하지 않는다.
+*/
 
+std::random_device Random;
+std::mt19937 RandomEngine(Random());
+std::uniform_int_distribution<int> DamageDist(5, 15);
+std::uniform_int_distribution<int> PercentDist(1, 100); // 확률
 
+enum EventType
+{
+	Battle     = 0,
+	Heal       = 1,
+	EventNone  = 2,
+};
+
+EventType GetMoveEvent()
+{
+	int RandomNumber = PercentDist(RandomEngine);
+
+	if (RandomNumber <= 20)
+		return Battle;
+	else if (RandomNumber <= 30)
+		return Heal;
+	else
+		return EventNone;
+}
+
+void RunBattle(int& PlayerHp)
+{
+	const int StartHp = 100;
+	int EnemyHp = StartHp;
+
+	while (PlayerHp > 0 && EnemyHp > 0)
+	{
+		int PlayerDamage = DamageDist(RandomEngine);
+		int CriticalDamage = PercentDist(RandomEngine);  // 크리티컬 데미지
+
+		if (CriticalDamage <= 10)
+		{
+			PlayerDamage = PlayerDamage * 2;
+			printf("플레이어 크리티컬 공격!\n");
+		}
+		else
+		{
+			printf("플에이어 공격!\n");
+		}
+		EnemyHp = EnemyHp - PlayerDamage;
+
+		if (EnemyHp <= 0)
+		{
+			printf("적에게 %d 데미지 -> 적 체력: 0\n", PlayerDamage);
+			break;
+		}
+		else
+		{
+			printf("적에게 %d 데미지 -> 적 체력: %d\n", PlayerDamage, EnemyHp);
+		}
+
+		//적 턴
+		int EnemyDamage = DamageDist(RandomEngine);
+		int EnemyCritical = PercentDist(RandomEngine);
+
+		if (EnemyCritical <= 10)
+		{
+			EnemyDamage = EnemyDamage * 2;
+			printf("적 크리티컬 공격! ");
+		}
+		else
+		{
+			printf("적 공격! ");
+		}
+		PlayerHp = PlayerHp - EnemyDamage;
+
+		if (PlayerHp <= 0)
+		{
+			printf("플레이어에게 %d 데미지 → 플레이어 HP: 0\n", EnemyDamage);
+			break;
+		}
+		else
+		{
+			printf("플레이어에게 %d 데미지 → 플레이어 HP: %d\n", EnemyDamage, PlayerHp);
+		}
+	}
+
+	if (PlayerHp > 0 && EnemyHp <= 0)
+	{
+		printf("플레이어 승리!");
+	}
+	else if (EnemyHp > 0 && PlayerHp <= 0)   // 중복 없애
+	{
+		printf("적 승리!\n");
+	}
+}
 
 int main()
 {
-	/*
-	   3. 미로 탈출 게임 수정하기
-		- 이동했을 때 일정확률(20 %)로 전투가 발생한다.
-		- 이동했을 때 일정확률(10 %)로 플레이어 HP가 회복된다.
-		- 두 이벤트는 중복으로 발생하지 않는다.
-	*/
-
-
-
 	const int MazeHeight = 10;
 	const int MazeWidth = 20;
 
@@ -700,16 +786,11 @@ int main()
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 	};
 
-
-
-	std::random_device Event;
-	std::mt19937 EventEngine(Event());
-	std::uniform_int_distribution<int> EnemyEventDist(1, 100);
-	std::uniform_int_distribution<int> PlayerHpEventDist(1, 100);
-
-	// 플레이어 시작점 
+    // 플레이어 시작점 
 	int PlayerX = 0;
 	int PlayerY = 0;
+	int PlayerHp = 100;
+
 	for (int y = 0; y < MazeHeight; y++)
 	{
 		for (int x = 0; x < MazeWidth; x++)
@@ -721,7 +802,6 @@ int main()
 			}
 		}
 	}
-
 	while (true)
 	{
 		// 미로 변신
@@ -773,12 +853,37 @@ int main()
 			(Input == 'd' || Input == 'D')
 			PlayerNewX++;
 		// 이동 벽 확인 0 이면 가고 1이면 안감
-		if (PlayerNewX >= 0 && PlayerNewX < MazeWidth && PlayerNewY >= 0 && PlayerNewY < MazeHeight)
+		if (PlayerNewX >= 0 && PlayerNewX < MazeWidth && 
+			PlayerNewY >= 0 && PlayerNewY < MazeHeight)
 		{
-			if (Maze[PlayerNewY][PlayerNewX] != 1) // 벽이 아니면 이동
+			if (Maze[PlayerNewY][PlayerNewX] != 1)   // 벽이 아니면 이동
 			{
 				PlayerX = PlayerNewX;
 				PlayerY = PlayerNewY;
+			}
+
+			EventType Result = GetMoveEvent();
+			if (Result == Battle)
+			{
+				printf("전투 발생!\n");
+				RunBattle(PlayerHp);                 // 전투 시작
+				if (PlayerHp <= 0)
+				{
+					printf("게임 오버!\n");
+					break;
+				}
+			}
+			else if (Result == Heal)
+			{
+				int Recover = 30;                    // 고정 회복
+				PlayerHp += Recover;
+				if (PlayerHp > 100) 
+					PlayerHp = 100;                  // 최대치 보정
+				printf("체력 회복! +%d → 현재 체력: %d/100\n", Recover, PlayerHp);
+			}
+			else
+			{
+				printf("아무 일도 없음!\n");
 			}
 		}
 		// 출구
@@ -792,84 +897,6 @@ int main()
 	return 0;
 }
 
-
-
-//4. 플레이어와 적의 턴제 전투 만들기
-	//- HP는 100으로 시작
-	//- 공격을 할 때 상대방에게 5~15의 데미지를 준다.
-	//- 10 % 의 확률로 크리티컬이 발생해 2배의 데미지를 준다.
-	//- 상대방의 HP가 0 이하가 되면 승리한다.
-	//*/
-	//int main()
-	//{
-	//	const int StartHp = 100;
-	//	int PlayerHp = StartHp;
-	//	int EnemyHp = StartHp;
-	//	std::random_device RandomDamage;
-	//	std::mt19937 DamageEngine(RandomDamage());
-	//	std::uniform_int_distribution<int> DamageDist(5, 15);
-	//	std::uniform_int_distribution<int> CriticalDist(1, 100); // 확률
-	//
-	//	while (PlayerHp > 0 && EnemyHp > 0)
-	//	{
-	//		int PlayerDamage = DamageDist(DamageEngine);
-	//		int CriticalDamage = CriticalDist(DamageEngine);
-	//
-	//		if (CriticalDamage <= 10)
-	//		{
-	//			PlayerDamage = PlayerDamage * 2;
-	//			printf("플레이어 크리티컬 공격!\n");
-	//		}
-	//		else
-	//		{
-	//			printf("플에이어 공격!\n");
-	//		}
-	//		EnemyHp = EnemyHp - PlayerDamage;
-	//		
-	//        if (EnemyHp <= 0) 
-	//		{
-	//			printf("적에게 %d 데미지 -> 적 체력: 0\n", PlayerDamage);
-	//			break; 
-	//		}
-	//		else 
-	//		{
-	//			printf("적에게 %d 데미지 -> 적 체력: %d\n", PlayerDamage, EnemyHp);
-	//		}
-	//
-	//		//적 턴
-	//		int EnemyDamage = DamageDist(DamageEngine);
-	//		int EnemyCritical = CriticalDist(DamageEngine);
-	//
-	//		if (EnemyCritical <= 10) 
-	//		{
-	//			EnemyDamage = EnemyDamage * 2;
-	//			printf("적 크리티컬 공격! ");
-	//		}
-	//		else 
-	//		{
-	//			printf("적 공격! ");
-	//		}
-	//        PlayerHp = PlayerHp - EnemyDamage;
-	//
-	//		if (PlayerHp <= 0) 
-	//		{
-	//			printf("플레이어에게 %d 데미지 → 플레이어 HP: 0\n", EnemyDamage);
-	//			break; 
-	//		}
-	//		else 
-	//		{
-	//			printf("플레이어에게 %d 데미지 → 플레이어 HP: %d\n", EnemyDamage, PlayerHp);
-	//		}
-	//	}
-	//
-	//	if (PlayerHp > 0 && EnemyHp <= 0)
-	//	{
-	//		printf("플레이어 승리!");
-	//	}
-	//	else if (EnemyHp > 0 && PlayerHp <= 0)   // 중복 없애
-	//	{
-	//		printf("적 승리!\n");
-	//	}
 
 
 
