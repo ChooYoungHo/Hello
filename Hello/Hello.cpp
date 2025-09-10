@@ -653,6 +653,27 @@ C++ 의 메모리 영역 (단순화 된 버전)
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);   // main() 안에
 */
 
+/*
+문자열
+   - 글자 여러개를 모아 문장을 만들어 놓은 것
+   - C언어에서는 문자열을 표현하기 위해 char*를 사용. (=> char[]을 쓰기도 한다.)
+   - 항상 마지막 문자열은 널 문자('\0')로 끝난다. (만약 13배열이면 총 14배열이 할당)
+   - char*에는 아스키 코드가 기록된다.
+		printf("%s", HelloString);  // 문자열 출력하기
+
+*/
+
+/*
+파싱(Parsing)
+   - 문자열을 분석해서 의미있는 정보로 변환하는 과정
+       const int Size = 32;
+       char InputString[Size];
+       printf("문장입력하세요\n");
+       std::cin.getline(InputString, Size);
+       printf("입력된 문장은 %s입니다.", InputString);
+*/
+
+
 
 
 #define _CRTDBG_MAP_ALLOC
@@ -664,239 +685,336 @@ C++ 의 메모리 영역 (단순화 된 버전)
 #include <time.h>     // 시간 값
 #include <random>
 #include <limits.h>
-#include "header.h"   // 헤더 파일
+#include "Hello.h"   // 헤더 파일
 #include "Practice.h"
+#include <direct.h>
+#include <fstream>
+#include <string>
+
+
+
 
 
 /*
-   3. 미로 탈출 게임 수정하기
-	- 이동했을 때 일정확률(20 %)로 전투가 발생한다.
-	- 이동했을 때 일정확률(10 %)로 플레이어 HP가 회복된다.
-	- 두 이벤트는 중복으로 발생하지 않는다.
+심화문제
+미로 탈출 게임을 수정하여 맵 데이터파일에서 읽은 내용을 기반으로 맵 만들기
+데이터 파일 구조
+첫줄은 가로 길이와 세로 길이가 저장되어 있다.
+ex) 20, 10 ⇒ 가로 20, 세로 10
+두번째 줄 부터는 미로의 각 셀을 콤마(, )로 구분하여 셀의 타입을 나타낸다.
+콤마(, ),
+\n으로 다음 줄로 이동한다.
 */
 
-std::random_device Random;
-std::mt19937 RandomEngine(Random());
-std::uniform_int_distribution<int> DamageDist(5, 15);
-std::uniform_int_distribution<int> PercentDist(1, 100); // 확률
+const int MazeWidth = 100;
+const int MazeHeight = 100;
+int Maze[MazeHeight][MazeWidth];
+int Width = 0, Height = 0;
 
-enum EventType
+void ReadFile()
 {
-	Battle     = 0,
-	Heal       = 1,
-	EventNone  = 2,
-};
+	//#include <fstream>	#include <string> 필요
+	const char* FilePath = "C:\\Users\\KGA\\Desktop\\c\\Data\\TestData.txt";
 
-EventType GetMoveEvent()
+	std::ifstream InputFile(FilePath);
+	if (!InputFile.is_open())	// 파일이 열렸는지 확인하는 함수
+	{
+		printf("파일을 열 수 없습니다.\n");
+		printf("[%s] 경로를 확인하세요.\n", FilePath);
+		return;
+	}
+
+	std::string FileContents(
+	(std::istreambuf_iterator<char>(InputFile)),
+	std::istreambuf_iterator<char>());	//InputFile에 있는 글자들을 모두 읽어서 FileContents에 저장하기
+
+	printf("파일 내용은 다음과 같습니다.\n");
+	printf("%s\n", FileContents.c_str());	// FileContents안에 있는 문자열을 const char*로 돌려주는 함수
+
+const char* CharPoint = FileContents.c_str();
+int Row = 0, col = 0;
+int Value = 0;
+bool firstLine = true;
+
+while (*CharPoint != '\0')
 {
-	int RandomNumber = PercentDist(RandomEngine);
+	char CharIndex = *CharPoint;
 
-	if (RandomNumber <= 20)
-		return Battle;
-	else if (RandomNumber <= 30)
-		return Heal;
-	else
-		return EventNone;
+	if (CharIndex >= '0' && CharIndex <= '9') {
+		Value = Value * 10 + (CharIndex - '0');
+	}
+	else if (CharIndex == ',' || CharIndex == '\n' || CharIndex == '\r') {
+		if (firstLine) {
+			// Width, Height
+			if (Width == 0) Width = Value;
+			else if (Height == 0) Height = Value;
+		}
+		else {
+			// 미로 데이터 
+			Maze[Row][col++] = Value;
+		}
+		Value = 0;
+
+		if (CharIndex == '\n') {
+			if (firstLine) {
+				firstLine = false;
+			}
+			else {
+				Row++;
+				col = 0;
+			}
+		}
+	}
+	++CharPoint;
 }
 
-void RunBattle(int& PlayerHp)
-{
-	const int StartHp = 100;
-	int EnemyHp = StartHp;
 
-	while (PlayerHp > 0 && EnemyHp > 0)
-	{
-		int PlayerDamage = DamageDist(RandomEngine);
-		int CriticalDamage = PercentDist(RandomEngine);  // 크리티컬 데미지
-
-		if (CriticalDamage <= 10)
-		{
-			PlayerDamage = PlayerDamage * 2;
-			printf("플레이어 크리티컬 공격!\n");
-		}
-		else
-		{
-			printf("플에이어 공격!\n");
-		}
-		EnemyHp = EnemyHp - PlayerDamage;
-
-		if (EnemyHp <= 0)
-		{
-			printf("적에게 %d 데미지 -> 적 체력: 0\n", PlayerDamage);
-			break;
-		}
-		else
-		{
-			printf("적에게 %d 데미지 -> 적 체력: %d\n", PlayerDamage, EnemyHp);
-		}
-
-		//적 턴
-		int EnemyDamage = DamageDist(RandomEngine);
-		int EnemyCritical = PercentDist(RandomEngine);
-
-		if (EnemyCritical <= 10)
-		{
-			EnemyDamage = EnemyDamage * 2;
-			printf("적 크리티컬 공격! ");
-		}
-		else
-		{
-			printf("적 공격! ");
-		}
-		PlayerHp = PlayerHp - EnemyDamage;
-
-		if (PlayerHp <= 0)
-		{
-			printf("플레이어에게 %d 데미지 → 플레이어 HP: 0\n", EnemyDamage);
-			break;
-		}
-		else
-		{
-			printf("플레이어에게 %d 데미지 → 플레이어 HP: %d\n", EnemyDamage, PlayerHp);
-		}
-	}
-
-	if (PlayerHp > 0 && EnemyHp <= 0)
-	{
-		printf("플레이어 승리!");
-	}
-	else if (EnemyHp > 0 && PlayerHp <= 0)   // 중복 없애
-	{
-		printf("적 승리!\n");
-	}
+// 마지막 값 
+if (Value != 0 || !firstLine) {
+	Maze[Row][col] = Value;
 }
 
-int main()
-{
-	const int MazeHeight = 10;
-	const int MazeWidth = 20;
+//결과
+printf("\n가로:%d 세로:%d\n", Width, Height);
+for (int y = 0; y < Height; y++) {
+	for (int x = 0; x < Width; x++) {
+		printf("%d ", Maze[y][x]);
+	}
+	printf("\n");
+}
+}
 
-	// 미로 배열 (0:길, 1:벽, 2:시작, 3:출구)
-	int Maze[MazeHeight][MazeWidth] =
+
+
+    std::random_device Random;
+	std::mt19937 RandomEngine(Random());
+	std::uniform_int_distribution<int> DamageDist(5, 15);
+	std::uniform_int_distribution<int> PercentDist(1, 100); // 확률
+
+	enum EventType
 	{
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		{1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
-		{1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
-		{1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
-		{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
-		{1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
-		{1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
-		{1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
-		{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+		Battle = 0,
+		Heal = 1,
+		EventNone = 2,
 	};
 
-    // 플레이어 시작점 
-	int PlayerX = 0;
-	int PlayerY = 0;
-	int PlayerHp = 100;
-
-	for (int y = 0; y < MazeHeight; y++)
+	EventType GetMoveEvent()
 	{
-		for (int x = 0; x < MazeWidth; x++)
-		{
-			if (Maze[y][x] == 2)
-			{
-				PlayerX = x;
-				PlayerY = y;
-			}
-		}
+		int RandomNumber = PercentDist(RandomEngine);
+
+		if (RandomNumber <= 20)
+			return Battle;
+		else if (RandomNumber <= 30)
+			return Heal;
+		else
+			return EventNone;
 	}
-	while (true)
+
+
+	void RunBattle(int& PlayerHp)
 	{
-		// 미로 변신
-		for (int y = 0; y < MazeHeight; y++)
-		{
-			for (int x = 0; x < MazeWidth; x++)
-			{
-				if (x == PlayerX && y == PlayerY)
-				{
-					printf("P ");          // 플레이어
-				}
-				else if (Maze[y][x] == 0)  // 길
-				{
-					printf(". ");
-				}
-				else if (Maze[y][x] == 1)  // 벽
-				{
-					printf("# ");
-				}
-				else if (Maze[y][x] == 2)  // 시작점
-				{
-					printf("S ");
-				}
-				else if (Maze[y][x] == 3)  // 출구
-				{
-					printf("E ");
-				}
-			}
-			printf("\n");
-		}
-		// 이동
-		char Input = 0;
-		printf("이동할 수 있는 방향을 선택하세요 (w: 위, s: 아래, a: 왼쪽, d: 오른쪽): \n");
-		printf("방향 입력: ");
-		std::cin >> Input;
+		const int StartHp = 100;
+		int EnemyHp = StartHp;
 
-		int PlayerNewX = PlayerX;  // 바로 PlayerX로 하면 벽에 끼어서 되돌리는 코드 또 넣어야 됨.
-		int PlayerNewY = PlayerY;
-		if
-			(Input == 'w' || Input == 'W')
-			PlayerNewY--;
-		else if
-			(Input == 's' || Input == 'S')
-			PlayerNewY++;
-		else if
-			(Input == 'a' || Input == 'A')
-			PlayerNewX--;
-		else if
-			(Input == 'd' || Input == 'D')
-			PlayerNewX++;
-		// 이동 벽 확인 0 이면 가고 1이면 안감
-		if (PlayerNewX >= 0 && PlayerNewX < MazeWidth && 
-			PlayerNewY >= 0 && PlayerNewY < MazeHeight)
+		while (PlayerHp > 0 && EnemyHp > 0)
 		{
-			if (Maze[PlayerNewY][PlayerNewX] != 1)   // 벽이 아니면 이동
-			{
-				PlayerX = PlayerNewX;
-				PlayerY = PlayerNewY;
-			}
+			int PlayerDamage = DamageDist(RandomEngine);
+			int CriticalDamage = PercentDist(RandomEngine);  // 크리티컬 데미지
 
-			EventType Result = GetMoveEvent();
-			if (Result == Battle)
+			if (CriticalDamage <= 10)
 			{
-				printf("전투 발생!\n");
-				RunBattle(PlayerHp);                 // 전투 시작
-				if (PlayerHp <= 0)
-				{
-					printf("게임 오버!\n");
-					break;
-				}
-			}
-			else if (Result == Heal)
-			{
-				int Recover = 30;                    // 고정 회복
-				PlayerHp += Recover;
-				if (PlayerHp > 100) 
-					PlayerHp = 100;                  // 최대치 보정
-				printf("체력 회복! +%d → 현재 체력: %d/100\n", Recover, PlayerHp);
+				PlayerDamage = PlayerDamage * 2;
+				printf("플레이어 크리티컬 공격!\n");
 			}
 			else
 			{
-				printf("아무 일도 없음!\n");
+				printf("플에이어 공격!\n");
+			}
+			EnemyHp = EnemyHp - PlayerDamage;
+
+			if (EnemyHp <= 0)
+			{
+				printf("적에게 %d 데미지 -> 적 체력: 0\n", PlayerDamage);
+				break;
+			}
+			else
+			{
+				printf("적에게 %d 데미지 -> 적 체력: %d\n", PlayerDamage, EnemyHp);
+			}
+
+			//적 턴
+			int EnemyDamage = DamageDist(RandomEngine);
+			int EnemyCritical = PercentDist(RandomEngine);
+
+			if (EnemyCritical <= 10)
+			{
+				EnemyDamage = EnemyDamage * 2;
+				printf("적 크리티컬 공격! ");
+			}
+			else
+			{
+				printf("적 공격! ");
+			}
+			PlayerHp = PlayerHp - EnemyDamage;
+
+			if (PlayerHp <= 0)
+			{
+				printf("플레이어에게 %d 데미지 → 플레이어 HP: 0\n", EnemyDamage);
+				break;
+			}
+			else
+			{
+				printf("플레이어에게 %d 데미지 → 플레이어 HP: %d\n", EnemyDamage, PlayerHp);
 			}
 		}
-		// 출구
-		if (Maze[PlayerY][PlayerX] == 3)  // 아마 플레이어 위치를 임의로 정해서 그런듯
+
+		if (PlayerHp > 0 && EnemyHp <= 0)
 		{
-			printf("축하합니다! 출구에 도착했습니다!\n");
-			break;
+			printf("플레이어 승리!");
+		}
+		else if (EnemyHp > 0 && PlayerHp <= 0)   // 중복 없애
+		{
+			printf("적 승리!\n");
 		}
 	}
 
-	return 0;
-}
+	int main()
+	{
 
+		ReadFile();
+
+		//const int MazeHeight = 10;
+		//const int MazeWidth = 20;
+
+		//// 미로 배열 (0:길, 1:벽, 2:시작, 3:출구)
+
+		//int Maze[MazeHeight][MazeWidth] =
+		//{
+		//	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		//	{1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
+		//	{1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
+		//	{1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
+		//	{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+		//	{1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
+		//	{1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
+		//	{1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
+		//	{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+		//	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+		//};
+
+		// 플레이어 시작점 
+		int PlayerX = 0;
+		int PlayerY = 0;
+
+		for (int y = 0; y < MazeHeight; y++) 
+		{
+			for (int x = 0; x < MazeWidth; x++)
+			{
+				if (Maze[y][x] == 2)
+				{
+					PlayerX = x;
+					PlayerY = y;
+				}
+			}
+		}
+		while (true)
+		{
+			// 미로 변신
+			for (int y = 0; y < MazeHeight; y++)
+			{
+				for (int x = 0; x < MazeWidth; x++)
+				{
+					if (x == PlayerX && y == PlayerY)
+					{
+						printf("P ");          // 플레이어
+					}
+					else if (Maze[y][x] == 0)  // 길
+					{
+						printf(". ");
+					}
+					else if (Maze[y][x] == 1)  // 벽
+					{
+						printf("# ");
+					}
+					else if (Maze[y][x] == 2)  // 시작점
+					{
+						printf("S ");
+					}
+					else if (Maze[y][x] == 3)  // 출구
+					{
+						printf("E ");
+					}
+				}
+				printf("\n");
+			}
+			// 이동
+			char Input = 0;
+			printf("이동할 수 있는 방향을 선택하세요 (w: 위, s: 아래, a: 왼쪽, d: 오른쪽): \n");
+			printf("방향 입력: ");
+			std::cin >> Input;
+
+			int PlayerNewX = PlayerX;  // 바로 PlayerX로 하면 벽에 끼어서 되돌리는 코드 또 넣어야 됨.
+			int PlayerNewY = PlayerY;
+			if
+				(Input == 'w' || Input == 'W')
+				PlayerNewY--;
+			else if
+				(Input == 's' || Input == 'S')
+				PlayerNewY++;
+			else if
+				(Input == 'a' || Input == 'A')
+				PlayerNewX--;
+			else if
+				(Input == 'd' || Input == 'D')
+				PlayerNewX++;
+			// 이동 벽 확인 0 이면 가고 1이면 안감
+			if (PlayerNewX >= 0 && PlayerNewX < MazeWidth &&
+				PlayerNewY >= 0 && PlayerNewY < MazeHeight)
+			{
+				if (Maze[PlayerNewY][PlayerNewX] != 1)   // 벽이 아니면 이동
+				{
+					PlayerX = PlayerNewX;
+					PlayerY = PlayerNewY;
+				}
+				//이벤트
+				EventType Result = GetMoveEvent();
+				int PlayerHp = 100;
+
+				if (Result == Battle)
+				{
+					printf("전투 발생!\n");
+					RunBattle(PlayerHp);                 // 전투 시작
+					if (PlayerHp <= 0)
+					{
+						printf("게임 오버!\n");
+						break;
+					}
+				}
+				else if (Result == Heal)
+				{
+					int RecoverHp = 30;                    // 고정 회복
+					PlayerHp += RecoverHp;
+					if (PlayerHp > 100)
+						PlayerHp = 100;                   // 최대치 보정
+					printf("체력 회복! +%d → 현재 체력: %d/100\n", RecoverHp, PlayerHp);
+				}
+				else
+				{
+					printf("아무 일도 없음!\n");
+				}
+			}
+			// 출구
+			if (Maze[PlayerY][PlayerX] == 3)  // 아마 플레이어 위치를 임의로 정해서 그런듯
+			{
+				printf("축하합니다! 출구에 도착했습니다!\n");
+				break;
+			}
+		}
+
+		ReadFile();
+
+		return 0;
+	}
 
 
 

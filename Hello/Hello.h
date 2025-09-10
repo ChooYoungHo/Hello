@@ -52,8 +52,8 @@
 //    return value;
 //}
 
-
-
+void ReadFile();
+//void TestString();
 
 
 

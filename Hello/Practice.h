@@ -170,7 +170,6 @@ void Practice20250905();
 void Practice20250906();
 
 
-
 void Day20250908_Practice1();
 void Day20250908_Practice2();
 ///// <summary>
@@ -266,12 +265,32 @@ void Day20250908_Practice5();
 void Day20250909_Practice4();
 void Day20250909_Practice5();
 
-
-
-void Day20250909_Practice1();
-void Day20250909_Practice1();
-void Day20250909_Practice1();
-void Day20250909_Practice1();
+void Day20250910_파싱();
+void Day20250910_Practice1();
+///// <summary>
+///// TargetString에서 TargetCharacter가 몇번째 있는지 찾아주는 함수
+///// </summary>
+///// <param name="TargetString">찾아질 문자열</param>
+///// <param name="TargetCharacter">찾을 글자</param>
+///// <returns>-1이면 못찾음, 그 외는 TargetCharacter의 인덱스</returns>
+//int FindCharIndex(const char* TargetString, const char TargetCharacter);
+void Day20250909_Practice2();
+///// <summary>
+///// TargetString에서 TargetCharacter가 몇번째 있는지 찾아주는 함수
+///// </summary>
+///// <param name="TargetString">찾아질 문자열</param>
+///// <param name="TargetCharacter">찾을 글자</param>
+///// <returns>-1이면 못찾음, 그 외는 TargetCharacter의 인덱스</returns>
+//int FindCharIndex(const char* TargetString, const char TargetCharacter);
+//
+//int MyStringLength(const char* Target);
+//void MyStringCopy(const char* Source, char* Destination);
+//void MyStringCat(char* Source, const char* Destination);
+//void SimpleParser(char* Source, const char Delimiter);
+//void ReadFile();
+//void TestString();
+void Day20250909_Practice3();
+void Day20250909_Practice4();
 void Day20250909_Practice1();
 void Day20250909_Practice1();
 
