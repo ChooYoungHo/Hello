@@ -1,9 +1,9 @@
 #pragma once // 헤더를 읽은적이 있으면 넘긴다.
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream> 
 #include <stdio.h>
 #include <cstdio>  
-
-
 
 
 //float Average(float Number1, float Number2, float Number3);
@@ -52,12 +52,8 @@
 //    return value;
 //}
 
-void ReadFile();
-//void TestString();
-
-
-
-
+// extern : 다른 cpp에 이 변수나 함수가 있다고 알려주는 용도.
+// 조사식 : (int(*)[20])Maze,10 
 
 
 

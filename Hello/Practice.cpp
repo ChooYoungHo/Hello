@@ -2742,7 +2742,7 @@ void MyStringCat(char* Source, const char* Destination)
 
 void SimpleParser(char* Source, const char Delimiter)
 {
-	int CommaIndex = FindCharIndex(Source, Delimiter);
+	int CommaIndex = FindCharIndex(Source, Delimiter); // (InputString, ',');
 	char* AfterComma = Source + CommaIndex + 1;
 	const int ToUpperGap = 'a' - 'A';
 	while ((*AfterComma) != '\0')
@@ -2754,8 +2754,6 @@ void SimpleParser(char* Source, const char Delimiter)
 		AfterComma++;
 	}
 }
-
-
 */
 }
 
