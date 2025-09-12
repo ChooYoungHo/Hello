@@ -123,12 +123,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Day2025.09.11.cpp" />
+    <ClCompile Include="Day2025.09.11_Maze.cpp" />
+    <ClCompile Include="Day2025.09.12_Maze_Struct.cpp" />
+    <ClCompile Include="Day2025.09.12_Struct.cpp" />
     <ClCompile Include="Hello.cpp" />
     <ClCompile Include="Practice.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Day2025.09.11.h" />
+    <ClInclude Include="Day2025.09.11_Maze.h" />
+    <ClInclude Include="Day2025.09.12_Maze_Struct.h" />
+    <ClInclude Include="Day2025.09.12_Struct.h" />
     <ClInclude Include="Hello.h" />
     <ClInclude Include="Practice.h" />
   </ItemGroup>

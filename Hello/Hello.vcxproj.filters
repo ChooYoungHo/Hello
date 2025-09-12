@@ -21,7 +21,13 @@
     <ClCompile Include="Practice.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Day2025.09.11.cpp">
+    <ClCompile Include="Day2025.09.11_Maze.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Day2025.09.12_Struct.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Day2025.09.12_Maze_Struct.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +38,13 @@
     <ClInclude Include="Practice.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Day2025.09.11.h">
+    <ClInclude Include="Day2025.09.11_Maze.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Day2025.09.12_Struct.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Day2025.09.12_Maze_Struct.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

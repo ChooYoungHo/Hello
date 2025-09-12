@@ -427,7 +427,7 @@ break
    - 장점 : 빠르게 각 요소에 접근이 가능하다.
    - 단점 : 크기가 고정이다. 중간에 데이터 삽입/삭제가 어렵다.
 		 int a = 10;
-		 int Array[5];    // int 5개를 관리하는 배열
+		 int Array[5];    // int 5개를 관리하는 배열.
 		 Array[0] = 10;   // 배열의 첫번째 요소에 10을 대입한다.
 		 Array[3] = 40;   // 배열의 네번째 요소에 40을 대입한다.
 		 //Array[5] = 60;   // 버퍼 오버런, 배열 영역 밖을 접근하려고 하기 때문에 에러 발생
@@ -502,6 +502,9 @@ break
 /*
 참조(Reference)
    - 변수의 별명
+       int Number = 10;
+	   int& Ref = Number;    //Number의 참조를 Ref로 가정
+	   Ref = 20;             //Number가 20으로 수정된다.
    - 참조를 변경할 경우 원본 변수도 함께 수정된다. -> 함수 파라메터로 사용하면 편리함.
    - 참조는 항상 어떤 변수와 연결되어 있어야 한다.
    - 함수 파라메터에 참조를 사용할 때
@@ -531,10 +534,10 @@ break
    - 각 데이터 타입에 *에 붙이면 포인터 타입
 		ex) int* 인티저 포인터, float*  플로트 포인터, char* 캐릭터 포린터
    - 포인터 연산자
-	  - 주소 연산자 (&)
+	  - 주소 연산자 (&) : 변수의 주소를 가져온다.
 		 int i = 10;
 		 int* p = &i;    // i의 주소를 int* p에 대입해라.
-	  - 간접참조 연산자(*)
+	  - 간접참조 연산자(*) : 포인터 변수가 가리키는 주소에 저장되는 있는 실제 값
 		 int i = 20;
 		 int* p = &i;
 		 (*p) = 30;     // i = 30;과 같다
@@ -658,7 +661,6 @@ C++ 의 메모리 영역 (단순화 된 버전)
    - 항상 마지막 문자열은 널 문자('\0')로 끝난다. (만약 13배열이면 총 14배열이 할당)
    - char*에는 아스키 코드가 기록된다.
 		printf("%s", HelloString);  // 문자열 출력하기
-
 */
 
 /*
@@ -670,6 +672,49 @@ C++ 의 메모리 영역 (단순화 된 버전)
        std::cin.getline(InputString, Size);
        printf("입력된 문장은 %s입니다.", InputString);
 */
+
+/*
+구조체(Struct)
+   - 여러 종류의 데이터타입을 하나로 묶을 때 사용
+   - 프로그램의 코드의 가독성과 유지 보수성을 향상시켜 준다.
+      Struct Enemy
+	  {
+	     std::string Name;
+		 float Health;
+		 float AttackPower;
+		 int DropGold;
+	  }
+	  Enemy goblin;      // 적 하나에 대한 정보 만들기
+	  Enemy goblins[3];  // 적 3마리에 대한 정보 만들기
+
+   - 구조체 동적 할당하는 법
+      Enemy* pGoblin = new Enemy(); // 구조체는 () 넣어야 된다. 새 적을 동적할당 받음
+	  delete pGoblin;               // 동적할당 받을 것을 해제
+	  pGobiln = nullptr;
+
+   - 구조체 데이터 접근법
+      - 일반적인 경우 점(.) 연산자 사용
+	     goblin.Name = "고블린"; 
+	     goblin.Health = 20;
+	  - 포인터 변수인 경우 화살표(->)연산자 사용
+	     pGoblin->AttackPower = 5.0f;
+		 pGoblin->DropGold = 100;
+   - 구조체의 생성자
+      - 객체가 만들어질 때 자동으로 호출되는 특별한 함수
+	  - 객체
+	     int i = 10;                   // 인티저 객체 하나가 만들어짐
+		 int array[3];                 // 인티저 객체 3개가 만들어짐
+		 Enemy* pEnemy = new Enemy();  // Enemy 객체 하나가 만들어짐
+	  - 맴버 변수 초기화에 사용 (값을 계산하거나 변경해서 넣을 때 좋음)
+	  - 일반 함수와 다른 특징
+	     1. 이름이 구조체 이름과 같다.
+		 2. 리턴 타입이 없다.
+		 3. 객체가 만들어질 때 자동으로 호출됨.
+		 4. 생성자가 여러개 있을 수도 있다.
+		 5. 없으면 기본 생성자가 자동으로 만들어진다.(무조건 하나는 있다)
+*/
+
+
 
 
 #define _CRT_SECURE_NO_WARNINGS //scanf 처리
@@ -687,11 +732,15 @@ C++ 의 메모리 영역 (단순화 된 버전)
 #include <direct.h>
 #include <fstream>
 #include <string>
+#include "Day2025.09.12_Struct.h"
 
 
 /*
 int main() // 엔트리 포인트(코드가 시작되는 곳)
 {
+	Day20250912_Struct();
+	Day20250912_OperatorOverloading();
+	TestPosition();
 
 	return 0;
 }
