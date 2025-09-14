@@ -14,275 +14,298 @@
 #include "Day2025.09.12_Maze_Struct.h"
 
 
-    /*
-    std::random_device Random;
-	std::mt19937 RandomEngine(Random());
-	std::uniform_int_distribution<int> DamageDist(5, 15);
-	std::uniform_int_distribution<int> PercentDist(1, 100); // 확률
-	*/
+   const int MazeHeight = 10;
+const int MazeWidth = 20;
 
-	enum EventType
+// 이동 후 이벤트: 20% 전투, 나머지 없음
+EventType GetMoveEvent(Game& GameState)
+{
+	int RandomNumber = GameState.PercentDist(GameState.RandomEngine);
+
+	if (RandomNumber <= 20)
 	{
-		Battle = 0,
-		Heal = 1,
-		EventNone = 2,
+		return Battle;
+	}
+	else
+	{
+		return EventNone;
+	}
+}
+
+// 10% 고정 크리티컬 (매 공격마다 PercentDist로 판정)
+bool IsCriticalHit(Game& GameState)
+{
+	int RandomNumber = GameState.PercentDist(GameState.RandomEngine);
+
+	if (RandomNumber <= 10)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+// 적 처치, 플레이어 코인 누적
+void GrantEnemyReward(Player& PlayerState, const Enemy& EnemyUnit)
+{
+	PlayerState.Coin += EnemyUnit.RewardCoin;
+	printf("코인 %d 획득! (보유 코인: %d)\n", EnemyUnit.RewardCoin, PlayerState.Coin);
+}
+
+// 코인 50 소모 체력 회복
+void RecoverWithReward(Player& PlayerState)
+{
+	if (PlayerState.Coin < 50)
+	{
+		printf("코인이 부족합니다. (보유: %d)\n", PlayerState.Coin);
+		return;
+	}
+
+	PlayerState.Coin -= 50;
+	PlayerState.Health += PlayerState.RecoveryHp;
+
+	if (PlayerState.Health > 100)
+	{
+		PlayerState.Health = 100;
+	}
+
+	printf("보상 사용! 체력 회복! 현재 체력: %d (코인 -50, 보유: %d)\n", PlayerState.Health, PlayerState.Coin);
+}
+
+// 유틸: 미로 출력
+void PrintMaze(const int Maze[MazeHeight][MazeWidth], int PlayerX, int PlayerY)
+{
+	for (int Y = 0; Y < MazeHeight; ++Y)
+	{
+		for (int X = 0; X < MazeWidth; ++X)
+		{
+			if (X == PlayerX && Y == PlayerY)
+			{
+				printf("P ");
+			}
+			else if (Maze[Y][X] == 0)
+			{
+				printf(". ");
+			}
+			else if (Maze[Y][X] == 1)
+			{
+				printf("# ");
+			}
+			else if (Maze[Y][X] == 2)
+			{
+				printf("S ");
+			}
+			else if (Maze[Y][X] == 3)
+			{
+				printf("E ");
+			}
+			else
+			{
+				// 절대 들어오면 안되는 곳 == 맵 데이터가 잘못된 것
+			}
+		}
+		printf("\n");
+	}
+}
+
+	// 시작 위치 찾기
+PlayerPosition FindStartPosition(const int Maze[MazeHeight][MazeWidth])
+{
+	for (int y = 0; y < MazeHeight; y++)
+	{
+		for (int x = 0; x < MazeWidth; x++)
+		{
+			if (Maze[y][x] == 2)
+			{
+				return PlayerPosition(x, y);
+			}
+		}
+	}
+	return PlayerPosition(0, 0);
+}
+
+bool RunBattle(Game& GameState, Player& PlayerState)
+{
+	Enemy EnemyUnit(GameState);   // 체력/공격력/보상: 생성 시 1회 롤링 → 고정
+
+	printf("\n=== 전투 시작 ===\n");
+	printf("적 등장! HP:%d  ATK:%d)\n", EnemyUnit.Health, EnemyUnit.AttackPower);
+	printf("플레이어 HP:%d\n\n", PlayerState.Health);
+
+	while (PlayerState.Health > 0 && EnemyUnit.Health > 0)
+	{
+		// 플레이어 턴 
+		int PlayerDamage = GameState.DamageDist(GameState.RandomEngine);
+
+		if (IsCriticalHit(GameState))
+		{
+			PlayerDamage = PlayerDamage * 2;
+			printf("[플레이어] 크리티컬! ");
+		}
+		else
+		{
+			printf("[플레이어] 공격! ");
+		}
+
+		EnemyUnit.Health -= PlayerDamage;
+
+		if (EnemyUnit.Health < 0)
+		{
+			EnemyUnit.Health = 0;
+		}
+
+		printf("%d 데미지 → 적 HP:%d\n", PlayerDamage, EnemyUnit.Health);
+
+		if (EnemyUnit.Health <= 0)
+		{
+			break;
+		}
+
+		// 적 턴 
+		int EnemyDamage = EnemyUnit.AttackPower;
+
+		if (IsCriticalHit(GameState))
+		{
+			EnemyDamage = EnemyDamage * 2;
+			printf("[적] 크리티컬! ");
+		}
+		else
+		{
+			printf("[적] 공격! ");
+		}
+
+		PlayerState.Health -= EnemyDamage;
+
+		if (PlayerState.Health < 0)
+		{
+			PlayerState.Health = 0;
+		}
+
+		printf("%d 데미지 → 플레이어 HP:%d\n", EnemyDamage, PlayerState.Health);
+	}
+
+	if (PlayerState.Health <= 0)
+	{
+		printf("\n플레이어가 쓰러졌습니다... 패배!\n");
+		return false;
+	}
+
+	printf("\n적 처치! 승리!\n");
+	GrantEnemyReward(PlayerState, EnemyUnit);
+
+	printf("보상을 사용하여 HP를 회복하시겠습니까? (1: Yes, 2: No): ");
+	int Choice = 0;
+	std::cin >> Choice;
+
+	if (Choice == 1)
+	{
+		RecoverWithReward(PlayerState);
+	}
+	else
+	{
+		printf("회복 미사용 (HP:%d, 코인:%d)\n", PlayerState.Health, PlayerState.Coin);
+	}
+
+	printf("=== 전투 종료 ===\n\n");
+	return true;
+}
+
+
+void MazeEscapeRun()
+{
+	// 미로 (0:길, 1:벽, 2:시작, 3:출구)
+	int Maze[MazeHeight][MazeWidth] =
+	{
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
+		{1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
+		{1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
+		{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+		{1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
+		{1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
+		{1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
+		{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 	};
 
-	// 이동했을 때 일정확률(20 %)로 전투가 발생한다.
-	// 이동했을 때 일정확률(10 %)로 플레이어 HP가 회복된다.
-	// 두 이벤트는 중복으로 발생하지 않는다.
-	EventType GetMoveEvent(Game& game)
+	Game GameState;       // 난수 엔진 + 분포
+	Player PlayerState;   // HP=100, Coin=0
+
+	PlayerPosition Player = FindStartPosition(Maze);
+
+
+	while (true)
 	{
-		int RandomNumber = game.PercentDist(game.RandomEngine);
-		if (RandomNumber <= 20) 
-			return Battle;            // 20%
-		else if (RandomNumber <= 30) 
-			return Heal;              // 다음 10%
-		else return EventNone;        // 나머지 70%
-	}
+		PrintMaze(Maze, Player.X, Player.Y);
 
-	void RunBattle(Game& game, Player& player, Enemy& enemy)  
-	{
-		while (player.Health > 0 && enemy.Health > 0)
-		{  
-			Game game;                           // 여기서 RandomEngine + 분포기 세팅됨
-			Player player(game.RandomEngine);    // 플레이어 생성
-			Enemy goblin(game.RandomEngine);     // 적 생성
+		// 이동 입력
+		char Input = 0;
+		printf("이동 (w/a/s/d): ");
+		std::cin >> Input;
 
-			int ChoiceReward = 0;                // 보상 선택
-			int Coin = 0;
+		// 이동 후보
+		int PlayerNewX = Player.X;
+		int PlayerNewY = Player.Y;
 
-			printf("적 등장! HP:%d | ATK:%d\n", goblin.Health, goblin.AttackPower);
+		if (Input == 'w' || Input == 'W')
+		{
+			PlayerNewY--;
+		}
+		else if (Input == 's' || Input == 'S')
+		{
+			PlayerNewY++;
+		}
+		else if (Input == 'a' || Input == 'A')
+		{
+			PlayerNewX--;
+		}
+		else if (Input == 'd' || Input == 'D')
+		{
+			PlayerNewX++;
+		}
 
-			// 플레이어 턴
-			int PlayerDamage = game.DamageDist(game.RandomEngine);
-			int PlayerCritDamage = game.PercentDist(game.RandomEngine);
-			int PlayerCoin = game.RewardDist(game.RandomEngine);
-
-			if (PlayerCritDamage <= 10)
+		// 벽 체크 후 이동
+		if (PlayerNewX >= 0 && PlayerNewX < MazeWidth &&
+			PlayerNewY >= 0 && PlayerNewY < MazeHeight)
+		{
+			if (Maze[PlayerNewY][PlayerNewX] != 1)
 			{
-				PlayerDamage = PlayerDamage * 2;
-				goblin.Health = goblin.Health - PlayerDamage;
-				printf("플레이어 크리티컬 공격!\n");
-				printf("적에게 [%d]피해를 입혔습니다.\n", PlayerDamage);
-				printf("적 현재 체력: %d\n", goblin.Health);
-			}
-			else 
-			{
-				goblin.Health = goblin.Health - PlayerDamage;
-				printf("플레이어 공격!\n");
-			}
-			if (goblin.Health <= 0)        // 적 죽었을때
-			{
-				printf("적에게 %d 데미지 -> 적 체력: 0\n", PlayerDamage);
-				printf("적을 처지하여 코인(%d)을 획득하셨습니다.\n", PlayerCoin);
-				printf("보상을 사용하여 HP를 회복 하시겠습니까? (1. Yes, 2. No)\n");
-				Coin = Coin + PlayerCoin;  // 코인
-				std::cin >> ChoiceReward;
-
-				if (ChoiceReward == 1)
-				{
-					if (PlayerCoin >= 50)
-					{
-						printf("HP가 [%d] 회복 되셨습니다.\n", player.RecoveryHp);
-					}
-					else
-					{
-						printf("코인이 부족합니다.\n");
-					}
-				}
-				else
-				{
-					printf("그대로 진행합니다.");
-				}
-				break;
-			}
-	
-			//적 턴
-			int EnemyDamage = game.DamageDist(game.RandomEngine);
-			int EnemyCritDamage = game.PercentDist(game.RandomEngine);
-
-			if (EnemyCritDamage <= 10)
-			{
-				EnemyDamage = EnemyDamage * 2;
-				player.Health = player.Health - EnemyDamage;
-				printf("적 크리티컬 공격!\n");
-				printf("%d 만큼 피해를 입었습니다. 현재 체력: %d", EnemyDamage, player.Health);
+				Player.X = PlayerNewX;
+				Player.Y = PlayerNewY;
 			}
 			else
 			{
-				player.Health = player.Health - EnemyDamage;
-				printf("적 공격!");
-				printf("%d 만큼 피해를 입었습니다. 현재 체력: %d", player.Health);
-			}
-	        player.Health = player.Health - EnemyDamage;
-			if (player.Health <= 0)
-			{
-				printf("플레이어에게 %d 데미지 → 플레이어 HP: 0, 사망!\n", EnemyDamage);
-				break;
-			}
-			else
-			{
-				printf("플레이어에게 %d 데미지 → 플레이어 HP: %d\n", EnemyDamage, player.Health);
-			}
-		}
-		if (player.Health > 0)
-		{
-			printf("플레이어 승리!\n");
-
-		}
-		else if (enemy.Health > 0)
-		{
-			printf("적 승리!\n");
-		}
-	}
-
-	int main()
-	{
-		const int MazeHeight = 10;
-		const int MazeWidth = 20;
-
-		// 미로 배열 (0:길, 1:벽, 2:시작, 3:출구)
-		int Maze[MazeHeight][MazeWidth] =
-		{
-			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
-			{1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
-			{1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
-			{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
-			{1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
-			{1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
-			{1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
-			{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
-			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-		};
-
-		// 플레이어 시작점 
-
-		int PlayerX = 0, PlayerY = 0;
-
-		for (int y = 0; y < MazeHeight; y++)
-		{
-			for (int x = 0; x < MazeWidth; x++)
-			{
-				if (Maze[y][x] == 2)   // 시작 위치
-				{
-					PlayerX = x;
-					PlayerY = y;
-					break;
-				}
+				printf("벽입니다. 이동 불가.\n");
 			}
 		}
 
-		Game game;
-		Player player(game.RandomEngine);
-	
-		player.AttackPower = game.DamageDist(game.RandomEngine);
-		player.CriticalDamage = game.PercentDist(game.RandomEngine);
+		// 이동 후 이벤트
+		EventType EventResult = GetMoveEvent(GameState);
 
-
-		while (true)
+		if (EventResult == Battle)
 		{
-			// 미로 변신
-			for (int y = 0; y < MazeHeight; y++)
-			{
-				for (int x = 0; x < MazeWidth; x++)
-				{
-					if (x == PlayerX && y == PlayerY)
-					{
-						printf("P ");          // 플레이어
-					}
-					else if (Maze[y][x] == 0)  // 길
-					{
-						printf(". ");
-					}
-					else if (Maze[y][x] == 1)  // 벽
-					{
-						printf("# ");
-					}
-					else if (Maze[y][x] == 2)  // 시작점
-					{
-						printf("S ");
-					}
-					else if (Maze[y][x] == 3)  // 출구
-					{
-						printf("E ");
-					}
-				}
-				printf("\n");
-			}
-			// 이동
-			char Input = 0;
-			printf("이동할 수 있는 방향을 선택하세요 (w: 위, s: 아래, a: 왼쪽, d: 오른쪽): \n");
-			printf("방향 입력: ");
-			std::cin >> Input;
+			printf("전투 발생!\n");
 
-			int PlayerNewX = PlayerX;  // 바로 PlayerX로 하면 벽에 끼어서 되돌리는 코드 또 넣어야 됨.
-			int PlayerNewY = PlayerY;
-			if
-				(Input == 'w' || Input == 'W')
-				PlayerNewY--;
-			else if
-				(Input == 's' || Input == 'S')
-				PlayerNewY++;
-			else if
-				(Input == 'a' || Input == 'A')
-				PlayerNewX--;
-			else if
-				(Input == 'd' || Input == 'D')
-				PlayerNewX++;
-			// 이동 벽 확인 0 이면 가고 1이면 안감
-			if (PlayerNewX >= 0 && PlayerNewX < MazeWidth &&
-				PlayerNewY >= 0 && PlayerNewY < MazeHeight)
-			{
-				if (Maze[PlayerNewY][PlayerNewX] != 1)   // 벽이 아니면 이동
-				{
-					PlayerX = PlayerNewX;
-					PlayerY = PlayerNewY;
-				}
-				//이벤트
-				EventType Result = GetMoveEvent(game);
-				int PlayerHp = 100;
+			bool IsAlive = RunBattle(GameState, PlayerState);
 
-				if (Result == Battle)
-				{
-					printf("전투 발생!\n");
-					RunBattle(game, player, enemy);    // 전투 시작
-					if (PlayerHp <= 0)
-					{
-						printf("게임 오버!\n");
-						break;
-					}
-				}
-				else if (Result == Heal)
-				{
-					int RecoverHp = 30;                    // 고정 회복
-					PlayerHp += RecoverHp;
-					if (PlayerHp > 100)
-						PlayerHp = 100;                  // 최대치 보정
-					printf("체력 회복! +%d → 현재 체력: %d/100\n", RecoverHp, PlayerHp);
-				}
-				else
-				{
-					printf("아무 일도 없음!\n");
-				}
-			}
-			// 출구
-			if (Maze[PlayerY][PlayerX] == 3)  // 아마 플레이어 위치를 임의로 정해서 그런듯
+			if (!IsAlive)
 			{
-				printf("축하합니다! 출구에 도착했습니다!\n");
+				printf("게임 오버!\n");
 				break;
 			}
 		}
-		return 0;
-	}
+		else
+		{
+			printf("아무 일도 없음\n");
+		}
 
-
-	/*
-	void RecoverWithReward()
-	{
-		Health += RecoveryHp;
-		if (Health > 100) Health = 100;
-		printf("보상으로 +%d 회복! 현재 HP: %d\n", RecoveryHp, Health);
+		// 출구 도착
+		if (Maze[Player.Y][Player.X] == 3)
+		{
+			printf("축하합니다! 출구에 도착했습니다!\n");
+			break;
+		}
 	}
-	*/
+}

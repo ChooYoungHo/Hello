@@ -727,24 +727,30 @@ C++ 의 메모리 영역 (단순화 된 버전)
 #include <time.h>     // 시간 값
 #include <random>
 #include <limits.h>
-#include "Hello.h"   // 헤더 파일
-#include "Practice.h"
 #include <direct.h>
 #include <fstream>
 #include <string>
-#include "Day2025.09.12_Struct.h"
+#include "Hello.h"   
+#include "Practice.h"
+#include "Day2025.09.13 Prac.h"
+//#include "Day2025.09.12_Maze_Struct.h"
 
 
-/*
+
+
 int main() // 엔트리 포인트(코드가 시작되는 곳)
 {
-	Day20250912_Struct();
-	Day20250912_OperatorOverloading();
-	TestPosition();
+	//Day20250912_Struct();
+	//Day20250912_OperatorOverloading();
+	//TestPosition();
+
+	//MazeEscapeRun();
+	DayWeekRun();
+
 
 	return 0;
 }
-*/
+
 
 
 
