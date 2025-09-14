@@ -330,7 +330,7 @@ break
    - 무작위로 숫자를 선택하는 법
    - C 스타일
 	  - rand();         // 함수 사용
-	  - srand(time(0)); // 시드값 사용
+	  - srand(time(0)); , srand((unsigned int)time(0));   // 시드값 사용
 
 	  srand(time(0));  // 시드 값 시간 사용,  테스트용은 srand(0); 사용
 	  for (int i = 0; i < 100; i++)
@@ -726,13 +726,15 @@ C++ 의 메모리 영역 (단순화 된 버전)
 #include <cstdio>     // stdio.h에 네임스페이스 추가한 래퍼 
 #include <time.h>     // 시간 값
 #include <random>
+#include <ctime>      // srand 
 #include <limits.h>
 #include <direct.h>
 #include <fstream>
 #include <string>
 #include "Hello.h"   
 #include "Practice.h"
-#include "Day2025.09.13 Prac.h"
+#include "Day2025.09.14 Blackjack.h"
+//#include "Day2025.09.13 Prac.h"
 //#include "Day2025.09.12_Maze_Struct.h"
 
 
@@ -745,10 +747,9 @@ int main() // 엔트리 포인트(코드가 시작되는 곳)
 	//TestPosition();
 
 	//MazeEscapeRun();
-	DayWeekRun();
+	//DayWeekRun();
+	BlackJackRun();
 
-
-	return 0;
 }
 
 

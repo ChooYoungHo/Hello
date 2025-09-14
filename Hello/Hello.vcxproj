@@ -127,6 +127,7 @@
     <ClCompile Include="Day2025.09.11_Maze.cpp" />
     <ClCompile Include="Day2025.09.12_Maze_Struct.cpp" />
     <ClCompile Include="Day2025.09.12_Struct.cpp" />
+    <ClCompile Include="Day2025.09.14 Blackjack.cpp" />
     <ClCompile Include="Hello.cpp" />
     <ClCompile Include="Practice.cpp" />
   </ItemGroup>
@@ -135,6 +136,7 @@
     <ClInclude Include="Day2025.09.11_Maze.h" />
     <ClInclude Include="Day2025.09.12_Maze_Struct.h" />
     <ClInclude Include="Day2025.09.12_Struct.h" />
+    <ClInclude Include="Day2025.09.14 Blackjack.h" />
     <ClInclude Include="Hello.h" />
     <ClInclude Include="Practice.h" />
   </ItemGroup>

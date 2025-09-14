@@ -33,6 +33,9 @@
     <ClCompile Include="Day2025.09.13 Prac.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Day2025.09.14 Blackjack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hello.h">
@@ -51,6 +54,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Day2025.09.13 Prac.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Day2025.09.14 Blackjack.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
