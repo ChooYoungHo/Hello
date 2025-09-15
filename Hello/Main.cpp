@@ -316,10 +316,10 @@ break
 		{
 		std::cin >> Count;
 		Sum += Count;
-				if (Count == 0)
-				{
-				break;
-				}
+			if (Count == 0)
+			{
+			break;
+			}
 		}
 		printf("숫자의 합: %d\n", Sum);
 
@@ -382,7 +382,7 @@ break
    - 선언을 하고 사용해야 한다.
    - 함수의 리턴타입, 함수의 이름, 함수의 파라메터를 설정해줘야 한다.
 		함수의 리턴타입 : 함수가 끝났을 때 돌려 받을 값의 종류
-		함수의 이름 : 함수를 호출(사용)하고 싶을 떄 부르는 이름
+		함수의 이름 : 함수를 호출(사용)하고 싶을 때 부르는 이름
 		함수의 파라메터 : 함수의 입력값 0개 이상 들어갈 수 있다.
    - 선언을 한 후에는 구현을 정의해야한다. (함수의 실제 동작을 작성)
 		int Sum(int Test1, int Test2);  // 리턴타입이 int고 이름이 sum이고 파라메터는 int 2개인 함수를 선언했다.
@@ -547,7 +547,7 @@ break
 			 (*pNumber) = (*pNumber) * 2;  // 입력받은 주소에 있는 int 값을 2배로 만들기
 		 }
 
-		 void Practice20250909()
+		 void Practice()
 		 {
 			// Number라는 변수를 하나 선언하고 포인터 변수 p에 Number의 주소를 저장하기
 			// p를 이용해서 Number의 값을 변경 시키기
@@ -731,9 +731,11 @@ C++ 의 메모리 영역 (단순화 된 버전)
 #include <direct.h>
 #include <fstream>
 #include <string>
-#include "Hello.h"   
-#include "Practice.h"
-#include "Day2025.09.14 Blackjack.h"
+#include "Position.h"
+
+
+//#include "Day2025.09.13 DayLeapYear.h"
+//#include "Day2025.09.14 Blackjack.h"
 //#include "Day2025.09.13 Prac.h"
 //#include "Day2025.09.12_Maze_Struct.h"
 
@@ -745,10 +747,15 @@ int main() // 엔트리 포인트(코드가 시작되는 곳)
 	//Day20250912_Struct();
 	//Day20250912_OperatorOverloading();
 	//TestPosition();
-
+	//PlayBlackjack();  //#include "Day2025.09.15 Blackjack.h"
 	//MazeEscapeRun();
-	//DayWeekRun();
+
 	BlackJackRun();
+	
+	//DayWeekRun();
+
+
+
 
 }
 

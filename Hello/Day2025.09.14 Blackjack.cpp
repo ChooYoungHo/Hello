@@ -64,11 +64,11 @@ int CardValue(const Card& card)
 	}
 	else if (card.CardRank == JACK || card.CardRank == QUEEN || card.CardRank == KING)
 	{
-		Value = 10;         // J, Q, K
+		Value = 10;             // J, Q, K
 	}
 	else if (card.CardRank == ACE)
 	{
-		Value = 11;         // Ace (일단 11로 계산)
+		Value = 11;             // Ace (일단 11로 계산)
 	}
 
 	return Value;
@@ -78,12 +78,11 @@ int CardValue(const Card& card)
 int CalculateScore(const Card* Hand, int Count)
 {
 	int Sum = 0;
-	int AceCount = 0;                     // ACE 개수
+	int AceCount = 0;                         // ACE 개수
 
 	for (int i = 0; i < Count; i++)
 	{
-		int Value = CardValue(Hand[i]);
-		Sum += Value;
+		Sum += CardValue(Hand[i]);
 
 		if (Hand[i].CardRank == ACE)          // ACE 카운터
 		{
@@ -93,7 +92,7 @@ int CalculateScore(const Card* Hand, int Count)
 
 	while (Sum > 21 && AceCount > 0) 	  
 	{
-		Sum -= 10;                        // 21 넘으면 ACE -> 1 
+		Sum -= 10;                            // 21 넘으면 ACE -> 1 
 		AceCount--;
 	}
 
@@ -109,7 +108,7 @@ bool IsBust(int Score)
 // 카드 셔플
 void ShuffleDeck(Deck& deck)
 {
-	// 덱 채우기
+	// 덱 채우기                                // Deck() : Index(0), Count(52) 생성자에 쓰는게 좋다.
 	int idx = 0;
 	for (int i = SPADE; i <= CLUB; i++)        // 무늬
 	{
@@ -133,20 +132,28 @@ void ShuffleDeck(Deck& deck)
 	}
 }
 
-// 카드 한장 뽑기
+// 덱에서 카드 한장씩 뽑기
 bool DrawCard(Deck& deck, Card& outCard)
 {
-	if (deck.Index >= deck.Count)               // 다 뽑았으면 실패
+	if (deck.Index >= deck.Count)               // 남은 카드 없을때
 	{
-		return false;
+		return false;                           // 실패
 	}
 	else
 	{
-	    outCard = deck.Cards[deck.Index];
-	    deck.Index++;
+		outCard = deck.Cards[deck.Index];       // 복사
+	    deck.Index++;                           // 다음 뽑기
 	}
 
 	return true;
+}
+
+void PrintCards(const Card& InCard)
+{
+	const char* SuitStrs[4] = { "SPADE", "HEART", "DIAMOND", "CLUB" };
+	const char* ValueStrs[13] = { "A","2","3","4","5","6","7","8","9","10","J","Q","K" };
+
+	printf("%s %s\n", SuitStrs[InCard.CardSuit], ValueStrs[InCard.CardRank - 1]);
 }
 
 // 플레이어 턴
@@ -154,7 +161,7 @@ int PlayerTurn(const Card* Deck, int& DeckIndex, Card* PlayerHand, int& PlayerCo
 {
 	while (true)
 	{
-		int Score = CalculateScore(PlayerHand, PlayerCount);
+		int Score = CalculateScore(PlayerHand, PlayerCount);   // 점수 계산
 
 		if (IsBust(Score))
 			return 1;                   // 버스트
@@ -162,7 +169,7 @@ int PlayerTurn(const Card* Deck, int& DeckIndex, Card* PlayerHand, int& PlayerCo
 			return 2;                   // 블랙잭
 
 		int Choice = 0;
-		printf("1.Hit(카드 받음)  2.Stand(카드 받지 않음): \n");
+		printf("1.Hit (카드 받음)  2.Stand (카드 받지 않음): \n");
 		std::cin >> Choice;
 
 		if (Choice == 1)
@@ -170,6 +177,12 @@ int PlayerTurn(const Card* Deck, int& DeckIndex, Card* PlayerHand, int& PlayerCo
 			PlayerHand[PlayerCount] = Deck[DeckIndex];         // 카드 한 장 받기
 			PlayerCount++;                                     // 플레이어 카드 수 증가
 			DeckIndex++;
+
+			printf("플레이어 Hit! 받은 카드: ");                
+			PrintCards(PlayerHand[PlayerCount - 1]); 
+
+			int Score = CalculateScore(PlayerHand, PlayerCount);
+			printf("플레이어 현재 점수: %d\n", Score);
 		}
 		else if (Choice == 2)
 		{
@@ -177,7 +190,7 @@ int PlayerTurn(const Card* Deck, int& DeckIndex, Card* PlayerHand, int& PlayerCo
 		}
 		else
 		{
-			printf("잘못된 입력입니다. 다시 선택하세요.\n");
+			printf("잘못된 입력.\n");
 		}
 	}
 }
@@ -193,14 +206,20 @@ int DealerTurn(const Card* Deck, int& DeckIndex, Card* DealerHand, int& DealerCo
 		{
 			return 1;                                 // 버스트
 		}
-		if (Score >= 17)
+		if (Score >= 17)                              // 소프트17 CalculateScore (ACE가 21 안넘으면 0 유지)
 		{
 			return 0;                                 // 스탠드
 		}
 
-		DealerHand[DealerCount] = Deck[DeckIndex];    // 17 미만, 카드 한 장 받기
+		DealerHand[DealerCount] = Deck[DeckIndex];    // else 17 미만일때 카드 한 장 받기
 		DealerCount++;                                // 딜러 카드 수 증가
 		DeckIndex++;    
+
+		printf("딜러 Hit! 받은 카드: ");
+		PrintCards(DealerHand[DealerCount - 1]);
+
+		Score = CalculateScore(DealerHand, DealerCount);
+		printf("딜러 현재 점수: %d\n", Score);
 	}
 }
 
@@ -227,12 +246,11 @@ int GameResult(int PlayerScore, int DealerScore, bool PlayerBust, bool DealerBus
 	return 0;                                   // 무승부
 }
 
-/*
-### 1) 초기 배분
-- 딜러와 플레이어 모두 2장씩 카드를 받음.
-- 플레이어의 카드는 두 장 모두 공개.
-- 딜러는 한 장은 공개(오픈 카드), 한 장은 비공개(홀 카드).
-*/
+
+//### 1) 초기 배분
+//- 딜러와 플레이어 모두 2장씩 카드를 받음.
+//- 플레이어의 카드는 두 장 모두 공개.
+//- 딜러는 한 장은 공개(오픈 카드), 한 장은 비공개(홀 카드).
 void InitialDeal(Deck& deck,
 	             Card* PlayerHand, int& PlayerCount,
 	             Card* DealerHand, int& DealerCount)
@@ -264,8 +282,9 @@ void InitialDeal(Deck& deck,
 	int DealerOpenValue = CardValue(DealerHand[0]);                   // 첫 장(오픈 카드)만 공개
 
 	printf("초기 배분 결과: \n");
-	//printf("플레이어 카드1: %d%d\n",	PlayerHand[0].CardSuit, PlayerHand[0].CardRank);
-	//printf("플레이어 카드2: %d%d\n",	PlayerHand[1].CardSuit, PlayerHand[1].CardRank);
+	printf("플레이어 카드1: "); PrintCards(PlayerHand[0]);
+	printf("플레이어 카드2: "); PrintCards(DealerHand[0]);
+	
 	printf("플레이어: 카드 2장, 현재 점수: %d\n", PlayerScore);
 	printf("딜러: 오픈 카드: %d, 홀 카드: 비공개\n", DealerOpenValue);
 }
@@ -287,8 +306,9 @@ void BlackJackRun()
 	// 초기 배분
 	InitialDeal(deck, PlayerHand, PlayerCount, DealerHand, DealerCount);
 
-	// 플레이어 턴: 0=Stand, 1=Bust, 2=Blackjack
+	// 플레이어 턴 (return : 1 = Bust, 2 = Blackjack) 
 	int PlayerResult = PlayerTurn(deck.Cards, deck.Index, PlayerHand, PlayerCount);
+
 	if (PlayerResult == 1)
 	{ 
 		printf("플레이어 버스트! 패배!\n"); 
@@ -300,18 +320,27 @@ void BlackJackRun()
 		return;
 	}
 
-	// 딜러 턴: 0=Stand, 1=Bust
+	// 플레이어 Stand 고를 때 -> 딜러 Hit 
+	printf("딜러 카드 공개:\n");
+	for (int i = 0; i < DealerCount; i++)
+	{
+		PrintCards(DealerHand[i]);   
+	}
+	int DealerScoreNow = CalculateScore(DealerHand, DealerCount);
+	printf("딜러 현재 점수: %d\n", DealerScoreNow);
+
+	// 딜러 턴 (return : 0 = Stand, 1 = Bust)
 	int DealerResult = DealerTurn(deck.Cards, deck.Index, DealerHand, DealerCount);
 
-	// 최종 판정 (-1 패 / 0 무 / 1 승)
-	int pScore = CalculateScore(PlayerHand, PlayerCount);
-	int dScore = CalculateScore(DealerHand, DealerCount);
-	int result = GameResult(pScore, dScore, PlayerResult == 1, DealerResult == 1);
+	// 최종 판정 (return : -1 = 패, 0 = 무, 1 = 승)
+	int PlayerScore = CalculateScore(PlayerHand, PlayerCount);
+	int DealerScore = CalculateScore(DealerHand, DealerCount);
+	int Result = GameResult(PlayerScore, DealerScore, PlayerResult == 1, DealerResult == 1);
 
-	if (result == 1)      
+	if (Result == 1)
 		printf("플레이어 승리!\n");
-	else if (result == -1)
-		printf("플레이어 패배...\n");
+	else if (Result == -1)
+		printf("플레이어 패배\n");
 	else                  
 		printf("무승부!\n");
 }

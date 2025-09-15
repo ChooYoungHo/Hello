@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Hello.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Practice.cpp">
@@ -30,15 +30,21 @@
     <ClCompile Include="Day2025.09.12_Maze_Struct.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Day2025.09.13 Prac.cpp">
+    <ClCompile Include="Day2025.09.13 DayLeapYear.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Day2025.09.14 Blackjack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Day2025.09.15 BlackJack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Position.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Hello.h">
+    <ClInclude Include="Main.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Practice.h">
@@ -53,10 +59,16 @@
     <ClInclude Include="Day2025.09.12_Maze_Struct.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Day2025.09.13 Prac.h">
+    <ClInclude Include="Day2025.09.13 DayLeapYear.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Day2025.09.14 Blackjack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Day2025.09.15 BlackJack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Position.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

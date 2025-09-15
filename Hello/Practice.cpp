@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <random>
 #include "Practice.h"
-#include "Hello.h"
 
 void TestClass::TestFunc()
 {

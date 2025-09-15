@@ -123,21 +123,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Day2025.09.13 Prac.cpp" />
+    <ClCompile Include="Day2025.09.13 DayLeapYear.cpp" />
     <ClCompile Include="Day2025.09.11_Maze.cpp" />
     <ClCompile Include="Day2025.09.12_Maze_Struct.cpp" />
     <ClCompile Include="Day2025.09.12_Struct.cpp" />
     <ClCompile Include="Day2025.09.14 Blackjack.cpp" />
-    <ClCompile Include="Hello.cpp" />
+    <ClCompile Include="Day2025.09.15 BlackJack.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Position.cpp" />
     <ClCompile Include="Practice.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Day2025.09.13 Prac.h" />
+    <ClInclude Include="Day2025.09.13 DayLeapYear.h" />
     <ClInclude Include="Day2025.09.11_Maze.h" />
     <ClInclude Include="Day2025.09.12_Maze_Struct.h" />
     <ClInclude Include="Day2025.09.12_Struct.h" />
     <ClInclude Include="Day2025.09.14 Blackjack.h" />
-    <ClInclude Include="Hello.h" />
+    <ClInclude Include="Day2025.09.15 BlackJack.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Position.h" />
     <ClInclude Include="Practice.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
