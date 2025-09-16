@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="동물리스트">
+      <UniqueIdentifier>{c30e7d38-386c-4ef8-9073-125f816863a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="몬스터">
+      <UniqueIdentifier>{0ac71a6d-a8a1-4484-87a7-c40553c762b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Maze">
+      <UniqueIdentifier>{bb57ad6d-bea4-48d3-b54b-60e39420da7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -21,13 +30,7 @@
     <ClCompile Include="Practice.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Day2025.09.11_Maze.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Day2025.09.12_Struct.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Day2025.09.12_Maze_Struct.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Day2025.09.13 DayLeapYear.cpp">
@@ -42,6 +45,51 @@
     <ClCompile Include="Position.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Day2025.09.16 Object.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Animal.cpp">
+      <Filter>동물리스트</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiger.cpp">
+      <Filter>동물리스트</Filter>
+    </ClCompile>
+    <ClCompile Include="Bear.cpp">
+      <Filter>동물리스트</Filter>
+    </ClCompile>
+    <ClCompile Include="Lion.cpp">
+      <Filter>동물리스트</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>몬스터</Filter>
+    </ClCompile>
+    <ClCompile Include="Goblin.cpp">
+      <Filter>몬스터</Filter>
+    </ClCompile>
+    <ClCompile Include="Day2025.09.12_Maze_Struct.cpp">
+      <Filter>Maze</Filter>
+    </ClCompile>
+    <ClCompile Include="Day2025.09.11_Maze.cpp">
+      <Filter>Maze</Filter>
+    </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>몬스터</Filter>
+    </ClCompile>
+    <ClCompile Include="Troll.cpp">
+      <Filter>몬스터</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeGame.cpp">
+      <Filter>Maze</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Maze</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Maze</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -50,13 +98,7 @@
     <ClInclude Include="Practice.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Day2025.09.11_Maze.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Day2025.09.12_Struct.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Day2025.09.12_Maze_Struct.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Day2025.09.13 DayLeapYear.h">
@@ -70,6 +112,51 @@
     </ClInclude>
     <ClInclude Include="Position.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Day2025.09.16 Object.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiger.h">
+      <Filter>동물리스트</Filter>
+    </ClInclude>
+    <ClInclude Include="Animal.h">
+      <Filter>동물리스트</Filter>
+    </ClInclude>
+    <ClInclude Include="Bear.h">
+      <Filter>동물리스트</Filter>
+    </ClInclude>
+    <ClInclude Include="Lion.h">
+      <Filter>동물리스트</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>몬스터</Filter>
+    </ClInclude>
+    <ClInclude Include="Goblin.h">
+      <Filter>몬스터</Filter>
+    </ClInclude>
+    <ClInclude Include="Day2025.09.11_Maze.h">
+      <Filter>Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="Day2025.09.12_Maze_Struct.h">
+      <Filter>Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>몬스터</Filter>
+    </ClInclude>
+    <ClInclude Include="Troll.h">
+      <Filter>몬스터</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeGame.h">
+      <Filter>Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Maze</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

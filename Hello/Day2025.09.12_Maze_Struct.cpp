@@ -14,7 +14,7 @@
 #include "Day2025.09.12_Maze_Struct.h"
 
 
-   const int MazeHeight = 10;
+const int MazeHeight = 10;
 const int MazeWidth = 20;
 
 // 이동 후 이벤트: 20% 전투, 나머지 없음
@@ -110,7 +110,7 @@ void PrintMaze(const int Maze[MazeHeight][MazeWidth], int PlayerX, int PlayerY)
 	}
 }
 
-	// 시작 위치 찾기
+// 시작 위치 찾기
 PlayerPosition FindStartPosition(const int Maze[MazeHeight][MazeWidth])
 {
 	for (int y = 0; y < MazeHeight; y++)

@@ -30,8 +30,10 @@ struct PlayerPosition
 	}
 };
 
-struct Game
+
+class Game
 {
+public:
 	std::random_device Random;
 	std::mt19937 RandomEngine;
 
@@ -40,6 +42,7 @@ struct Game
 	std::uniform_int_distribution<int> RewardDist;   // 50 ~ 100
 	std::uniform_int_distribution<int> EnemyHpDist;  // 70 ~ 100
 
+public:
 	Game()
 		: RandomEngine(Random()),
 		DamageDist(5, 15),
