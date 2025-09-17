@@ -22,6 +22,9 @@
     <Filter Include="Maze">
       <UniqueIdentifier>{bb57ad6d-bea4-48d3-b54b-60e39420da7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="클래스 예시">
+      <UniqueIdentifier>{579714f4-9637-47bd-9f0d-93710d43346c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -46,9 +49,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Day2025.09.16 Object.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Car.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Animal.cpp">
@@ -90,6 +90,21 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Maze</Filter>
     </ClCompile>
+    <ClCompile Include="Day20250917.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Hawk.cpp">
+      <Filter>동물리스트</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>클래스 예시</Filter>
+    </ClCompile>
+    <ClCompile Include="Dog.cpp">
+      <Filter>동물리스트</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>클래스 예시</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -114,9 +129,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Day2025.09.16 Object.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Car.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Tiger.h">
@@ -156,6 +168,33 @@
       <Filter>Maze</Filter>
     </ClInclude>
     <ClInclude Include="Actor.h">
+      <Filter>Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="Day20250917.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Hawk.h">
+      <Filter>동물리스트</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSample가상함수.h">
+      <Filter>클래스 예시</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>클래스 예시</Filter>
+    </ClInclude>
+    <ClInclude Include="Dog.h">
+      <Filter>동물리스트</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>클래스 예시</Filter>
+    </ClInclude>
+    <ClInclude Include="IFlayable.h">
+      <Filter>동물리스트</Filter>
+    </ClInclude>
+    <ClInclude Include="ICanBattle.h">
+      <Filter>클래스 예시</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeBattle.h">
       <Filter>Maze</Filter>
     </ClInclude>
   </ItemGroup>

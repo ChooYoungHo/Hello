@@ -1,22 +1,22 @@
 #pragma once
 #include <string>
-#include <random>
 #include "Monster.h"
-
 
 class Goblin : public Monster
 {
 public:
+    Goblin() = default;
+    explicit Goblin(const std::string& InName);   // 정의는 cpp
 
-	void StoneThrow();
+    virtual ~Goblin() override = default;
 
-public:
+    // 고블린 전투
+    virtual void MazeAttack(MazeBattle* InTarget, Game& InGame) override;
+    virtual void MazeTakeDamage(int InDamage) override;
 
-	Goblin() = default;
-	Goblin(std::string InName)
-		: Monster(InName , 30.0f, 5.0f)
-	{
-	}
+    // 고유 기술
+    void StoneThrow(MazeBattle* InTarget, Game& InGame);
 };
+
 
 

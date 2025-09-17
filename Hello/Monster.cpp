@@ -1,10 +1,29 @@
+#include <cstdio>
 #include "Monster.h"
+#include "MazeGame.h"
+#include "MazeBattle.h"
 
-void Monster::Attack(Actor& InTarget, Game& InGame)
+
+Monster::Monster(const std::string& InName, int InHp, int InAttackPower)
+    : Actor(InName, InHp, InAttackPower)
 {
-    int InDamage = static_cast<int>(InGame.GetDamage());
-    printf("[%s]의 공격! (%d)\n", GetName().c_str(), InDamage);
-    InTarget.ReceiveDamage(InDamage);
-    printf(" -> [%s] 남은 HP: %d\n", InTarget.GetName().c_str(), InTarget.GetHealth());
 }
 
+void Monster::MazeAttack(MazeBattle* InTarget, Game& InGame)
+{
+    if (InTarget == nullptr || IsDead())
+    {
+        return;
+    }
+
+    int Damage = InGame.GetDamage();   // 5 ~ 15
+    int Percent = InGame.GetPercent();  // 1 ~ 100
+
+    if (Percent <= 10)
+    {
+        Damage *= 2;
+        std::printf("%s 크리티컬 공격!\n", GetName().c_str());
+    }
+
+    InTarget->MazeTakeDamage(Damage);
+}

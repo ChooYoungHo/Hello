@@ -785,8 +785,70 @@ C++ 의 메모리 영역 (단순화 된 버전)
       - 코드 재사용성이 증가한다.
 	  - 계층구조로 객체들의 관계를 명확히 할 수 있다.
 	  - 부모 클래스의 포인터나 참조를 통해 자식 클래스를 다룰 수 있다.
+	  - 가상 테이블(vtable)
+	     - 클래스에 가상 함수가 하나라도 있으면 자동으로 생성
+		 - 그 클래스의 가상 함수들의 주소 목록을 저장해 놓은 테이블
 */
 
+/*
+가상 함수
+   - 부모 클래스에서 함수의 선언 앞에다가 virtual을 붙이면 된다.
+   - 자식 클래스는 부모의 가상함수를 덮어쓸 경우에만 함수의 선언 앞에 virtual이라고 쓰고 뒤에 override라고 붙인다.
+   - 주의: 상속을 하거나 받았을 때는 소멸자를 무조건 가상함수 처리해야 한다.
+     ex) virtual void Move() override;
+
+   - C 스타일 캐스팅(위험)
+      Tiger* pTempTiger = (Tiger*)pAnimal;
+      pTempTiger->Hunt();
+      ((Tiger*)pAnimal)->Hunt();
+
+   - C++ 스타일 캐스팅 중 하나
+	dynamic_cast
+	   - 런타임(실행중)에 이 주소가 실제 어떤 자식 클래스의 객체를 가리키고 있는지 안전하게 확인해주는 cast
+	   - 부모 클래스에 반드시 하나 이상의 가상함수가 있어야 함. (vtable이 있어야 하기 때문에)
+	   - Child* pChild = dynamic_cast<Child*>(pParent);
+	   - 속도가 늦기 때문에 가능한 적게 쓰는게 좋다.
+*/
+
+/*
+순수 가상 함수
+   - 가상 함수인데 구현을 "= 0" 으로 표시해 놓은 것
+   - 선언만 있고 구현이 없다.
+   - 순수 가상 함수를 가진 클래스를 상속 받은 클래스는 반드시 순수 가상함수를 override해서 구현해야 한다.
+
+추상 클래스
+   - 하나 이상의 순수 가상 함수를 포함하는 클래스
+   - 다른 클래스가 상속받을 기본 틀을 제공하기 위해 사용
+   - 인스턴스화 할 수 없다. -> 상속 받은 클래스에서 순수 가상함수를 override한 후에 인스턴스화 가능
+     ex) Animal a;, Animal Animals[5], new Animal(); 같은건 오류
+
+인터페이스
+   - 추상 클래스를 인터페이스로 사용.
+   - 이 클래스는 "이런일을 할 수 있다" 라고 알려주는 것 -> 이런일을 수행하는 함수가 존재해야만 한다.
+   - (클래스가 반드시 구현해야 할 맴버 함수들이 명제를 정의하기 위해 사용)
+   - 주의사항
+      - 이름은 무조건 대문자'I'로 시작하는 것이 관례 (필수적인 관례)
+	  - 맴버는 순수 가상 함수만 있다. (소멸자 제외)
+	  - 인터페이스를 사용했으면 무조건 함수를 만들어야 한다.
+*/
+
+/*
+enum class
+   - enum : 상수의 집합
+   - enum class: 더 안전해진 enum (안전해진만큼 불편해진 부분도 있음)
+   - enum class는 코드의 명확성과 안전성을 향상시킨다.
+
+   enum AnimalType
+   {
+      Dog, Cat, Tiger
+   }
+
+   // uint8_t를 사용하려면 #include <stdint.h>가 필요
+   enum class AnimalType : uint8_t  -> 8비트로 한다. 
+   {
+	  Dog, Cat, Tiger
+   }
+*/
 
 #define _CRT_SECURE_NO_WARNINGS //scanf 처리
 #define _CRTDBG_MAP_ALLOC
@@ -803,7 +865,7 @@ C++ 의 메모리 영역 (단순화 된 버전)
 #include <fstream>
 #include <string>
 #include "Position.h"
-#include "Day2025.09.16 Object.h"
+#include "Day20250917.h"
 
 
 
@@ -824,16 +886,18 @@ int main() // 엔트리 포인트(코드가 시작되는 곳)
 	//MazeEscapeRun();
 	//BlackJackRun();
 	//DayWeekRun();
-
-	Day0916 day0916;
+	//Day0916 day0916;
 	//day0916.TestAnimal();
-	day0916.TestAnimals();
+	//day0916.TestAnimals();
+
+	Day0917 day0917;
+	//day0917.TestPolymorphism();
+	//day0917.TestVirtualFunction();
+	day0917.TestPractice1();
 
 	return 0;
 
 }
-
-
 
 
 

@@ -163,7 +163,7 @@ bool RunBattle(Game& GameState, Player& PlayerState)
 			break;
 		}
 
-		// 적 턴 
+	    // 적 턴 
 		int EnemyDamage = EnemyUnit.AttackPower;
 
 		if (IsCriticalHit(GameState))

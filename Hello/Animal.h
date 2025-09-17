@@ -18,8 +18,8 @@
 class Animal
 {
 public:
-	void Move();
-	void MakeSound();
+	virtual void Move() = 0;  // Move는 가상함수
+	virtual void MakeSound();
 	void Eat();
 	void Sleep();
 	void ShowInfo();
@@ -37,6 +37,9 @@ public:
 		: Name(InName)
 	{
 	}	// 짧은 경우는 함수의 구현이 해더에 있어도 된다(자동 inline처리)
+	virtual ~Animal()   // 상속을 받는 경우라면 무조건 소멸자 만들기
+	{
+	};
 
 protected:       //private:
 	inline void SetEnergy(float InEnergy)     // SET

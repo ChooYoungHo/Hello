@@ -1,0 +1,14 @@
+#pragma once
+#include "Animal.h"
+#include "IFlayable.h"
+
+class Dog : public Animal
+{
+public:
+    virtual void Move() override;
+	virtual void MakeSound() override;
+
+	Dog() = default;
+	Dog(std::string InName) : Animal(InName) {};
+	virtual ~Dog() {};
+};

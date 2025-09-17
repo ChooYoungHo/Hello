@@ -71,11 +71,13 @@ void Day0916::TestTiger()
 }
 */
 
+/*
 void Day0916::TestAnimals()
 {
 	Bear bear = Bear("곰탱이");
 	bear.Roar();
 }
+*/
 
 // 간단 실습
 // 다른 동물 만들어보기(3종류)
