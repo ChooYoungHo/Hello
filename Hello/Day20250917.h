@@ -42,8 +42,6 @@ enum class PlayerState : uint8_t
 // std::underlying_type_t ´Â #include <type_traits> ÇÊ¿ä
 using StateType = std::underlying_type_t<PlayerState>;
 
-using StateType = std::underlying_type_t<PlayerState>;
-
 inline PlayerState operator|(PlayerState Left, PlayerState Right)
 {
 	return static_cast<PlayerState>(static_cast<StateType>(Left) | static_cast<StateType>(Right));

@@ -23,6 +23,7 @@ public:
 
     inline int GetX() const { return X; }
     inline int GetY() const { return Y; }
+    inline int GetCoin() const { return Coin; }
     void Move(int InDx, int InDy);
     virtual ~Player() {};
 

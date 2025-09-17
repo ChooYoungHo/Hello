@@ -1,76 +1,69 @@
 #pragma once
 #include <string>
-#include <random>
-#include <stdint.h>
-#include "Actor.h"
+#include <cstdint>
 #include "MazeGame.h"
+#include "Player.h"  
 
-// ==== 플레이어 ====
-// - HP 100 시작
-// - 공격 데미지는 "매 턴" DamageDist로 결정
-// - 크리티컬 확률 10% (PercentDist로 판정, 성공 시 2배)
-// - 코인 회복 기능: 코인 50 차감 → HP +50 
+const int MazeHeight = 10;
+const int MazeWidth = 20;
 
-//9 / 12 심화문제
-//- 변경된 미로 탈출 게임에 기능 추가하기
-//1. 플레이어의 위치, HP를 저장하는 구조체 만들고 적용하기
-//2. 적의 HP, 공격력, 보상이 들어있는 구조체 만들고 적용하기
-//3. 적 생성시 HP와 공격력과 보상을 랜덤하게 설정하기
-//4. 이동시 확률로 HP 회복하던 것을 보상을 사용하여 회복하는 것으로 수정하기
-
-
-
-enum class EventType : uint8_t
+enum class EventType
 {
-	Battle = 0, 
-	EventNone = 1 
+    Battle = 0,
+    None = 1
 };
 
+enum class CellType
+{
+    Road = 0,
+    Wall = 1,
+    Start = 2,
+    Exit = 3
+};
 
 struct PlayerPosition
 {
-	int X;
-	int Y;
+    int X = 0;
+    int Y = 0;
 
-	PlayerPosition(int PlayerX, int PlayerY)
-		: X(PlayerX), Y(PlayerY)
-	{
-	}
+    PlayerPosition() = default;
+    PlayerPosition(int InX, int InY) : X(InX), Y(InY) {}
 };
 
-
-class Monster : public Actor
+// ===== 미로 맵 =====
+class Maze
 {
 public:
-	Monster() = default;
+    Maze();
 
-	// 직접 스탯 지정
-	Monster(const std::string& InName, int InHp, int InAttackPower, int InRewardCoin = 0);
+    // 출력/조회
+    void MazePrint(int InPlayerX, int InPlayerY);
+    PlayerPosition FindStart();
 
-	// 랜덤 스탯 생성 (Game의 분포 사용)
-	Monster(Game& InGame, const std::string& InName = "Monster");
+    // 유틸
+    bool InBounds(int InX, int InY);
+    bool IsWall(int InX, int InY);
 
-	virtual ~Monster() override = default;
+    inline int GetWidth()  const { return MazeWidth; }
+    inline int GetHeight() const { return MazeHeight; }
 
-	virtual void MazeAttack(MazeBattle* InTarget, Game& InGame) override;
-
-	inline int  GetRewardCoin() const { return RewardCoin; }
-	inline void SetRewardCoin(int InCoin) { RewardCoin = (InCoin < 0) ? 0 : InCoin; }
-
-protected:
-	int RewardCoin = 0;
+private:
+    int Grid[MazeHeight][MazeWidth];
 };
 
+// ===== 전투/이벤트 유틸 =====
+class Encounter
+{
+public:
+    static EventType RollMoveEvent(Game& InGame); // 20% Battle
+    static bool      RollCritical(Game& InGame);  // 10% Crit
+};
 
+// ===== 전투 실행 =====
+bool RunBattle(Game& InGame, Player& InPlayer);
 
-/*
-bool IsCriticalHit(Game& game);                
-void GrantEnemyReward(Player& player, const Enemy& enemy);
-void RecoverWithReward(Player& player);
+// ===== 전체 게임 루프 =====
 void MazeEscapeRun();
-*/
-
-
 
 
 

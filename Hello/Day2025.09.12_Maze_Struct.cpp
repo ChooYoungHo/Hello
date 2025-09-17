@@ -12,8 +12,247 @@
 #include <fstream>
 #include <string>
 #include "Day2025.09.12_Maze_Struct.h"
+#include "MazeGame.h"     
+#include "Player.h"    
+#include "Monster.h"     
+#include "MazeBattle.h"   
 
 
+
+Maze::Maze()
+{
+	// 0:길, 1:벽, 2:시작, 3:출구
+	const int Init[MazeHeight][MazeWidth] =
+	{
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1},
+		{1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1},
+		{1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1},
+		{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+		{1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
+		{1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
+		{1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1},
+		{1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+	};
+
+	for (int y = 0; y < MazeHeight; y++)
+	{
+		for (int x = 0; x < MazeWidth; x++)
+		{
+			Grid[y][x] = Init[y][x];
+		}
+	}
+}
+
+void Maze::MazePrint(int InPlayerX, int InPlayerY)
+{
+	for (int y = 0; y < MazeHeight; y++)
+	{
+		for (int x = 0; x < MazeWidth; x++)
+		{
+			if (x == InPlayerX && y == InPlayerY)
+			{
+				std::printf("P ");
+			}
+			else if (Grid[y][x] == static_cast<int>(CellType::Road))
+			{
+				std::printf(". ");
+			}
+			else if (Grid[y][x] == static_cast<int>(CellType::Wall))
+			{
+				std::printf("# ");
+			}
+			else if (Grid[y][x] == static_cast<int>(CellType::Start))
+			{
+				std::printf("S ");
+			}
+			else if (Grid[y][x] == static_cast<int>(CellType::Exit))
+			{
+				std::printf("E ");
+			}
+			else
+			{
+				std::printf("? ");
+			}
+		}
+		std::printf("\n");
+	}
+}
+
+PlayerPosition Maze::FindStart()
+{
+	for (int y = 0; y < MazeHeight; y++)
+	{
+		for (int x = 0; x < MazeWidth; x++)
+		{
+			if (Grid[y][x] == static_cast<int>(CellType::Start))
+			{
+				return PlayerPosition(x, y);
+			}
+		}
+	}
+	return PlayerPosition(0, 0);
+}
+
+bool Maze::InBounds(int InX, int InY)
+{
+	return (InX >= 0 && InX < MazeWidth && InY >= 0 && InY < MazeHeight);
+}
+
+bool Maze::IsWall(int InX, int InY)
+{
+	if (!InBounds(InX, InY)) 
+	{
+		return true;
+	}
+	return Grid[InY][InX] == static_cast<int>(CellType::Wall);
+}
+
+EventType Encounter::RollMoveEvent(Game& InGame)
+{
+	int RandomNumber = InGame.GetPercent(); // 1~100
+	return (RandomNumber <= 20) ? EventType::Battle : EventType::None;
+}
+
+bool Encounter::RollCritical(Game& InGame)
+{
+	int RandomNumber = InGame.GetPercent(); // 1~100
+	return (RandomNumber <= 10);
+}
+
+// ===== 전투 =====
+static void GrantEnemyReward(Player& InPlayer, const Monster& InEnemy)
+{
+	InPlayer.AddCoin(InEnemy.GetRewardCoin());
+	std::printf("코인 %d 획득! (보유 코인: %d)\n",
+		InEnemy.GetRewardCoin(), InPlayer.GetCoin());
+}
+
+bool RunBattle(Game& InGame, Player& InPlayer)
+{
+	// 생성 시 랜덤 스탯/보상 확정
+	Monster Enemy(InGame, "Monster");
+
+	std::printf("\n=== 전투 시작 ===\n");
+	std::printf("적 등장! HP:%d  ATK:%d  보상:%d\n",
+		Enemy.GetHealth(), Enemy.GetAttackPower(), Enemy.GetRewardCoin());
+	std::printf("플레이어 HP:%d\n\n", InPlayer.GetHealth());
+
+	while (!InPlayer.IsDead() && !Enemy.IsDead())
+	{
+		// 플레이어 턴
+		std::printf("[플레이어] ");
+		InPlayer.MazeAttack(&Enemy, InGame);
+		if (Enemy.IsDead()) break;
+
+		// 적 턴
+		std::printf("[적] ");
+		Enemy.MazeAttack(&InPlayer, InGame);
+	}
+
+	if (InPlayer.IsDead())
+	{
+		std::printf("\n플레이어가 쓰러졌습니다... 패배!\n");
+		return false;
+	}
+
+	std::printf("\n적 처치! 승리!\n");
+	GrantEnemyReward(InPlayer, Enemy);
+
+	std::printf("보상을 사용하여 HP를 회복하시겠습니까? (1: Yes, 2: No): ");
+	int Choice = 0;
+	std::cin >> Choice;
+
+	if (Choice == 1)
+	{
+		InPlayer.RecoverWithCoin(50, 50);
+	}
+	else
+	{
+		std::printf("회복 미사용 (HP:%d, 코인:%d)\n", InPlayer.GetHealth(), InPlayer.GetCoin());
+	}
+
+	std::printf("=== 전투 종료 ===\n\n");
+	return true;
+}
+
+// 실행
+void MazeEscapeRun()
+{
+	Maze Map;
+	Game GameState;
+
+	PlayerPosition Start = Map.FindStart();
+	Player PlayerState("Player", Start.X, Start.Y);
+
+	while (true)
+	{
+		Map.MazePrint(PlayerState.GetX(), PlayerState.GetY());
+
+		char Input = 0;
+		std::printf("이동 (w/a/s/d): ");
+		std::cin >> Input;
+
+		int Dx = 0;
+		int Dy = 0;
+
+		if (Input == 'w' || Input == 'W') Dy = -1;
+		else if (Input == 's' || Input == 'S') Dy = 1;
+		else if (Input == 'a' || Input == 'A') Dx = -1;
+		else if (Input == 'd' || Input == 'D') Dx = 1;
+
+		int NewX = PlayerState.GetX() + Dx;
+		int NewY = PlayerState.GetY() + Dy;
+
+		if (Map.InBounds(NewX, NewY))
+		{
+			if (!Map.IsWall(NewX, NewY))
+			{
+				PlayerState.Move(Dx, Dy);
+			}
+			else
+			{
+				std::printf("벽입니다. 이동 불가.\n");
+			}
+		}
+
+		EventType Event = Encounter::RollMoveEvent(GameState);
+		if (Event == EventType::Battle)
+		{
+			std::printf("전투 발생!\n");
+			bool Alive = RunBattle(GameState, PlayerState);
+			if (!Alive)
+			{
+				std::printf("게임 오버!\n");
+				break;
+			}
+		}
+		else
+		{
+			std::printf("아무 일도 없음\n");
+		}
+
+		if (PlayerState.GetX() == 18 && PlayerState.GetY() == 7)
+		{
+			std::printf("축하합니다! 출구에 도착했습니다!\n");
+			break;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 const int MazeHeight = 10;
 const int MazeWidth = 20;
 
@@ -309,3 +548,4 @@ void MazeEscapeRun()
 		}
 	}
 }
+*/

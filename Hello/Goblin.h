@@ -6,7 +6,7 @@ class Goblin : public Monster
 {
 public:
     Goblin() = default;
-    explicit Goblin(const std::string& InName);   // Á¤ÀÇ´Â cpp
+    Goblin(const std::string& InName);   
 
     virtual ~Goblin() override = default;
 

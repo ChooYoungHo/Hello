@@ -36,5 +36,5 @@ void Tiger::Attack(ICanBattle* InTarget)
 
 void Tiger::TakeDamage(int InDamage)
 {
-	printf("[%.0f]의 피해를 입었다.", InDamage);
+	printf("[%c]의 피해를 입었다.", InDamage);
 }

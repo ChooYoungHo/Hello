@@ -44,8 +44,6 @@ class Actor : public MazeBattle
 {
 public:
     // 공격자 : 대상에게 피해 가하기
-
-
     virtual void MazeAttack(MazeBattle* InTarget, Game& game) override
     {
         if (InTarget == nullptr || IsDead())
