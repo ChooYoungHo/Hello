@@ -1,9 +1,7 @@
 #pragma once
 #include <string>
-#pragma once
-#include <string>
 #include "Actor.h"
-#include "MazeGame.h"   // 전방선언 금지 규칙: 직접 include
+#include "MazeGame.h"   
 
 class Monster : public Actor
 {

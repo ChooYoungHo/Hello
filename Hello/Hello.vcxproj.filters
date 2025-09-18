@@ -25,6 +25,9 @@
     <Filter Include="클래스 예시">
       <UniqueIdentifier>{579714f4-9637-47bd-9f0d-93710d43346c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="자료 구조">
+      <UniqueIdentifier>{b3bad587-126b-41da-8196-7859eff0e686}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -104,6 +107,12 @@
     </ClCompile>
     <ClCompile Include="Shape.cpp">
       <Filter>클래스 예시</Filter>
+    </ClCompile>
+    <ClCompile Include="Day20250918_List.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>자료 구조</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="MazeBattle.h">
       <Filter>Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="Day20250918_List.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>자료 구조</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,18 +5,18 @@
 class Goblin : public Monster
 {
 public:
-    Goblin() = default;
-    Goblin(const std::string& InName);   
+    Goblin(Game& InGame, const std::string& InName = "Goblin")
+        : Monster(InGame, InName)   
+    {
+    }
 
     virtual ~Goblin() override = default;
 
-    // 고블린 전투
     virtual void MazeAttack(MazeBattle* InTarget, Game& InGame) override;
     virtual void MazeTakeDamage(int InDamage) override;
 
-    // 고유 기술
+private:
     void StoneThrow(MazeBattle* InTarget, Game& InGame);
 };
-
 
 

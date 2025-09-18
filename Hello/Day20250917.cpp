@@ -24,10 +24,12 @@ void Day0917::TestPolymorphism()
 	pAnimal = pTiger;
 	pAnimal->Move();          // 포효
 
+	/*
 	// C 스타일 캐스팅(위험)
 	Tiger* pTempTiger = (Tiger*)pAnimal;
 	pTempTiger->Hunt();
 	((Tiger*)pAnimal)->Hunt();
+	*/
 
 	// C++ 스타일
 	Tiger* pTempTiger = dynamic_cast<Tiger*>(pAnimal);

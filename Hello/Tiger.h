@@ -13,8 +13,7 @@ public:
 	virtual void TakeDamage(int InDamage) override;
 
 	void Hunt();	// 호랑이 전용 함수
-	void Move();
-	
+		
 	
 public:
 	// 생성자,소멸자는 상속의 대상이 아니다.

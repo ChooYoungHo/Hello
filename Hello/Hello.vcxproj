@@ -135,9 +135,11 @@
     <ClCompile Include="Day2025.09.15 BlackJack.cpp" />
     <ClCompile Include="Day2025.09.16 Object.cpp" />
     <ClCompile Include="Day20250917.cpp" />
+    <ClCompile Include="Day20250918_List.cpp" />
     <ClCompile Include="Dog.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="Hawk.cpp" />
+    <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="Lion.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MazeGame.cpp" />
@@ -163,11 +165,13 @@
     <ClInclude Include="Day2025.09.15 BlackJack.h" />
     <ClInclude Include="Day2025.09.16 Object.h" />
     <ClInclude Include="Day20250917.h" />
+    <ClInclude Include="Day20250918_List.h" />
     <ClInclude Include="Dog.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="Hawk.h" />
     <ClInclude Include="ICanBattle.h" />
     <ClInclude Include="IFlayable.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Lion.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MazeBattle.h" />

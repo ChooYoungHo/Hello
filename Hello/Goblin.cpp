@@ -3,11 +3,12 @@
 #include "MazeGame.h"
 #include "MazeBattle.h"
 
-Goblin::Goblin(const std::string& InName)
-    : Monster(InName, 30, 5)  // HP=30, ATK=5
+/*
+Goblin::Goblin(Game& InGame, const std::string& InName)
+    : Monster(InGame, InName)
 {
 }
-
+*/
 void Goblin::MazeAttack(MazeBattle* InTarget, Game& InGame)
 {
     StoneThrow(InTarget, InGame);
@@ -16,7 +17,7 @@ void Goblin::MazeAttack(MazeBattle* InTarget, Game& InGame)
 void Goblin::MazeTakeDamage(int InDamage)
 {
     if (InDamage < 0) { InDamage = 0; }
-    Actor::MazeTakeDamage(InDamage); 
+    Actor::MazeTakeDamage(InDamage);
 }
 
 void Goblin::StoneThrow(MazeBattle* InTarget, Game& InGame)
