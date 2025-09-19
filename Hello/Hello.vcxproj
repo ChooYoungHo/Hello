@@ -125,8 +125,12 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Animal.cpp" />
+    <ClCompile Include="BattleBoard.cpp" />
+    <ClCompile Include="BattleShip.cpp" />
     <ClCompile Include="Bear.cpp" />
     <ClCompile Include="Car.cpp" />
+    <ClCompile Include="CircularQueue.cpp" />
+    <ClCompile Include="CircularQueue2.cpp" />
     <ClCompile Include="Day2025.09.13 DayLeapYear.cpp" />
     <ClCompile Include="Day2025.09.11_Maze.cpp" />
     <ClCompile Include="Day2025.09.12_Maze_Struct.cpp" />
@@ -136,7 +140,9 @@
     <ClCompile Include="Day2025.09.16 Object.cpp" />
     <ClCompile Include="Day20250917.cpp" />
     <ClCompile Include="Day20250918_List.cpp" />
+    <ClCompile Include="Day20250919_Stack.cpp" />
     <ClCompile Include="Dog.cpp" />
+    <ClCompile Include="FixedStack.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="Hawk.cpp" />
     <ClCompile Include="LinkedList.cpp" />
@@ -155,8 +161,12 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Animal.h" />
+    <ClInclude Include="BattleBoard.h" />
+    <ClInclude Include="BattleShip.h" />
     <ClInclude Include="Bear.h" />
     <ClInclude Include="Car.h" />
+    <ClInclude Include="CircularQueue.h" />
+    <ClInclude Include="CircularQueue2.h" />
     <ClInclude Include="Day2025.09.13 DayLeapYear.h" />
     <ClInclude Include="Day2025.09.11_Maze.h" />
     <ClInclude Include="Day2025.09.12_Maze_Struct.h" />
@@ -166,7 +176,9 @@
     <ClInclude Include="Day2025.09.16 Object.h" />
     <ClInclude Include="Day20250917.h" />
     <ClInclude Include="Day20250918_List.h" />
+    <ClInclude Include="Day20250919_Stack.h" />
     <ClInclude Include="Dog.h" />
+    <ClInclude Include="FixedStack.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="Hawk.h" />
     <ClInclude Include="ICanBattle.h" />

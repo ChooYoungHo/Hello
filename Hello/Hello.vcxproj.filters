@@ -28,6 +28,9 @@
     <Filter Include="자료 구조">
       <UniqueIdentifier>{b3bad587-126b-41da-8196-7859eff0e686}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BattleShip">
+      <UniqueIdentifier>{01bad089-547e-4941-b981-570ffb6c83f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -113,6 +116,24 @@
     </ClCompile>
     <ClCompile Include="LinkedList.cpp">
       <Filter>자료 구조</Filter>
+    </ClCompile>
+    <ClCompile Include="FixedStack.cpp">
+      <Filter>자료 구조</Filter>
+    </ClCompile>
+    <ClCompile Include="Day20250919_Stack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularQueue.cpp">
+      <Filter>자료 구조</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularQueue2.cpp">
+      <Filter>자료 구조</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleShip.cpp">
+      <Filter>BattleShip</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleBoard.cpp">
+      <Filter>BattleShip</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +232,24 @@
     </ClInclude>
     <ClInclude Include="LinkedList.h">
       <Filter>자료 구조</Filter>
+    </ClInclude>
+    <ClInclude Include="FixedStack.h">
+      <Filter>자료 구조</Filter>
+    </ClInclude>
+    <ClInclude Include="Day20250919_Stack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularQueue.h">
+      <Filter>자료 구조</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularQueue2.h">
+      <Filter>자료 구조</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleShip.h">
+      <Filter>BattleShip</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleBoard.h">
+      <Filter>BattleShip</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

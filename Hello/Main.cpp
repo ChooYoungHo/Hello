@@ -901,11 +901,53 @@ enum class
       - 탐색 속도가 매우 느리다. (처음부터 순서대로 찾아야 한다.)
 	  - 다음 노드를 저장하기 위한 포인터를 위해 추가 메모리 공간이 필요하다. (오버해드 발생)
 	  - 그리드 형태 안좋음
+*/
+/*
+스택(Stack)
+   - 특징
+      - 후입선출(Last In First Out, LIFO) 구조
+   - 구조
+      - 속성(맴버 변수)
+	     - Top : 데이터 입출력 위치
+      - 기능(맴버 함수)
+	     - Push : Top에 데이터 추가
+		 - Pop : Top에서 데이터 가져오기
+	  - 장점
+	     - 구조가 단순하다 -> 구현이 쉽다.
+		 - 데이터 저장 및 읽기 속도가 빠름
+		 - 적절한 사용 예
+		    - UI 창 닫는 순서, 실행 취고(Undo), 함수 콜 스택 등등
+	  - 단점
+	     - 맨 위의 데이터 외에는 접근하거나 탐색할 수 없음
+	     - 기능이 단순하여 활용도가 제한적
+*/
 
+/*
+큐(Queue)
+   - 특성
+      - 선입 선출(First In First Out, FIFO) 구조. 먼저 들어온 것이 먼저 나간다.
+   - 구조
+      - 속성
+	     - Front : 큐의 제일 앞. 항상 데이터는 여기서 제거된다.
+		 - Rear : 큐의 마지막. 항상 데이터는 여기에 추가된다.
+   - 기능
+      - Enqueue : Rear에 데이터를 추가하는 함수
+	  - Dequeue : Front에서 데이터를 빼 내는 함수
+   - 장점
+      - 순서대로 데이터를 처리할 때 유용
+	  - 대기표, 식당 줄, 매칭 큐 등등 활용 됨
+   - 단점
+      - 중간에 있는 데이터에 접근하거나 탐색 불가능
+	  - 기능이 단순하여 활용도가 제한적
+*/
 
-
-
-	
+/*
+얕은 복사
+   - 할당된 메모리를 복사할 때 주소만 복사하는 것
+   - 장점 : 빠르다.
+   - 단점 : 댕글링 포인터를 만들지 않게 하기 위해 신경 써야 한다.
+   - 이해 안되면 외워야 하는 것
+      - 구조체나 클래스는 함수 파라메터로 넘길 때 참조나 포인터로만 넘겨라.
 */
 
 #define _CRT_SECURE_NO_WARNINGS //scanf 처리
@@ -923,9 +965,9 @@ enum class
 #include <fstream>
 #include <string>
 #include "Position.h"
-#include "Day20250918_List.h"
+#include "Day20250919_Stack.h"
 
-
+//#include "Day20250918_List.h"
 //#include "Day20250917.h"
 //#include "Day2025.09.13 DayLeapYear.h"
 //#include "Day2025.09.14 Blackjack.h"
@@ -950,14 +992,12 @@ int main() // 엔트리 포인트(코드가 시작되는 곳)
 	//Day0916 day0916;
 	//day0916.TestAnimal();
 	//day0916.TestAnimals();
-
 	//Day0917 day0917;
 	//day0917.TestPolymorphism();
 	//day0917.TestVirtualFunction();
 	//day0917.TestPractice1();
-
-	Day20250918_List day0918;
-	day0918.TestSingleLinkedList();
+	//Day20250919_Stack day0918;
+	//day0918.TestQueue();
 
 
 	return 0;
