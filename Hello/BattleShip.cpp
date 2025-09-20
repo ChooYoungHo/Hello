@@ -1,47 +1,54 @@
 #include "BattleShip.h"
 
-// 배 길이 설정 및 상태 초기화 (0 <= InLength <= MaxShipLen)
+// 배 길이 설정 및 상태 초기화 
 void BattleShip::Reset(int InLength)
 {
-    if (InLength < 0) { InLength = 0; }
-    if (InLength > MaxShipLen) { InLength = MaxShipLen; }
+    if (InLength < 0) 
+    { 
+        InLength = 0; 
+    }
+    if (InLength > MaxShipLen) 
+    { 
+        InLength = MaxShipLen; 
+    }
 
     Length = InLength;
     Hits = 0;
     IsSunk = false;
 
-    // 좌표/히트마스크 초기화
-    for (int i = 0; i < MaxShipLen; ++i)
+    // 좌표,히트마스크 초기화
+    for (int i = 0; i < MaxShipLen; i++)
     {
-        ShipGrid[i].X = 0;
-        ShipGrid[i].Y = 0;
+        ShipCoords[i].X = 0;
+        ShipCoords[i].Y = 0;
         HitMask[i] = false;
     }
 }
 
-// 시작점과 가로/세로 직선 배치
-// InLayout == true  → 가로 배치 (오른쪽으로 i 증가)
-// InLayout == false → 세로 배치 (아래쪽으로 i 증가)
-void BattleShip::SetLine(int InStartX, int InStartY, bool InLayout)
+// 시작점,가로,세로 배치
+void BattleShip::SetLine(int InStartX, int InStartY, ShipLayout InLayout)
 {
-    // 좌표 채우기 (Length개만)
-    for (int i = 0; i < Length; ++i)
+    for (int I = 0; I < Length; ++I)
     {
-        ShipGrid[i].X = InStartX + (InLayout ? i : 0);
-        ShipGrid[i].Y = InStartY + (InLayout ? 0 : i);
-        HitMask[i] = false;  // 새 배치 시 피격 정보도 리셋
+        if (InLayout == ShipLayout::Horizontal)
+        {
+            ShipCoords[I].X = InStartX + I;  // 가로: X 증가
+            ShipCoords[I].Y = InStartY;      // Y 고정
+        }
+        else // Vertical
+        {
+            ShipCoords[I].X = InStartX;      // X 고정
+            ShipCoords[I].Y = InStartY + I;  // 세로: Y 증가
+        }
     }
-
-    Hits = 0;
-    IsSunk = false;
 }
 
 // (InX, InY)가 이 배의 일부이면 해당 인덱스(0~Length-1) 반환, 아니면 -1
 int BattleShip::FindShipIndex(int InX, int InY) const
 {
-    for (int i = 0; i < Length; ++i)
+    for (int i = 0; i < Length; i++)
     {
-        if (ShipGrid[i].X == InX && ShipGrid[i].Y == InY)
+        if (ShipCoords[i].X == InX && ShipCoords[i].Y == InY)
         {
             return i;
         }

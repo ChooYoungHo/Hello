@@ -1,8 +1,8 @@
 #pragma once
 #include <stdio.h>
-#include <cstdint>
 
-enum class BattleType : uint8_t
+
+enum class BattleType
 {
     Empty = 0,    // 빈 곳
     Ship  = 1,    // 적 함선 (정답 맵에만 보임)
