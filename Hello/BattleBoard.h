@@ -4,10 +4,10 @@
 
 enum class BattleType : uint8_t
 {
-    Empty = 0,  // 빈 곳
-    Ship  = 1,   // 적 함선 (정답 맵에만 보임)
+    Empty = 0,    // 빈 곳
+    Ship  = 1,    // 적 함선 (정답 맵에만 보임)
     Hit   = 2,    // 명중
-    Miss  = 3    // 빗나감
+    Miss  = 3     // 빗나감
 };
 
 class BattleBoard
@@ -24,11 +24,13 @@ public:
     // 빈곳
     void Clear();
 
-    // 경계
+    // 경계 (보드 안인지 확인)
     bool InBounds(int InX, int InY) const;
 
-    // 실행 타입
+    // 보드 좌표 전투 세팅 (InType : Empty, Ship, Hit, Miss)
     void SetBattle(int InX, int InY, BattleType InType);
+
+    // 해당 좌표 리턴 (Empty, Ship, Hit, Miss)
     BattleType GetBattle(int InX, int InY) const;
 
     // 보드 출력

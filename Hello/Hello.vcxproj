@@ -127,6 +127,8 @@
     <ClCompile Include="Animal.cpp" />
     <ClCompile Include="BattleBoard.cpp" />
     <ClCompile Include="BattleShip.cpp" />
+    <ClCompile Include="BattleShipGame.cpp" />
+    <ClCompile Include="BattleShipManager.cpp" />
     <ClCompile Include="Bear.cpp" />
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="CircularQueue.cpp" />
@@ -163,6 +165,8 @@
     <ClInclude Include="Animal.h" />
     <ClInclude Include="BattleBoard.h" />
     <ClInclude Include="BattleShip.h" />
+    <ClInclude Include="BattleShipGame.h" />
+    <ClInclude Include="BattleShipManager.h" />
     <ClInclude Include="Bear.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="CircularQueue.h" />

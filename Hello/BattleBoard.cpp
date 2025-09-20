@@ -26,6 +26,7 @@ void BattleBoard::SetBattle(int InX, int InY, BattleType InType)
     BattleGrid[InY][InX] = InType;
 }
 
+// ÇØ´ç ÁÂÇ¥ Å¸ÀÔ Á¶È¸
 BattleType BattleBoard::GetBattle(int InX, int InY) const
 {
     if (!InBounds(InX, InY))
@@ -38,16 +39,19 @@ BattleType BattleBoard::GetBattle(int InX, int InY) const
 // ¹è ¼û±è(.), ¸ÂÃá°÷(X), ¸ø¸ÂÃá°÷(O) 
 void BattleBoard::PrintPlayer() const
 {
+    // ¿­ ¹øÈ£
     printf("    ");
-    for (int X = 0; X < Width; ++X) 
-    { 
-        printf("%2d ", X); 
+    for (int X = 0; X < Width; ++X)
+    {
+        printf("%2d ", X);
     }
     printf("\n");
 
     for (int Y = 0; Y < Height; ++Y)
     {
-        printf("%d  ", Y);
+        // Çà ¹øÈ£
+        printf("%2d  ", Y);
+
         for (int X = 0; X < Width; ++X)
         {
             char Dot = '.';
@@ -55,40 +59,45 @@ void BattleBoard::PrintPlayer() const
 
             if (Type == BattleType::Hit)
             {
-                Dot = 'O';
+                Dot = 'X';   // ¸ÂÃá °÷
             }
             else if (Type == BattleType::Miss)
             {
-                Dot = 'X';
+                Dot = 'O';   // ¸ø ¸ÂÃá °÷
             }
-            else 
+            else
             {
-                Dot = '.'; 
+                Dot = '.';   // ºó Ä­
             }
-            printf("%c", Dot);
+
+            printf(" %c ", Dot);
         }
         printf("\n");
     }
 }
 
 
-// ºó°÷(.), ¹è(S), ¸ÂÃá°÷(O), ¸ø¸ÂÃã(X)
+// ºó°÷(.), ¹è(S), ¸ÂÃá°÷(X), ¸ø¸ÂÃã(O)
 void BattleBoard::PrintShip() const
 {
+    // ¿­ ¹øÈ£
     printf("    ");
-    for (int X = 0; X < Width; ++X) 
-    { 
+    for (int X = 0; X < Width; ++X)
+    {
         printf("%2d ", X);
     }
     printf("\n");
 
     for (int Y = 0; Y < Height; ++Y)
     {
+        // Çà ¹øÈ£
         printf("%2d  ", Y);
+
         for (int X = 0; X < Width; ++X)
         {
             char Dot = '.';
             BattleType Type = BattleGrid[Y][X];
+
             if (Type == BattleType::Empty)
             {
                 Dot = '.';
@@ -99,17 +108,18 @@ void BattleBoard::PrintShip() const
             }
             else if (Type == BattleType::Hit)
             {
-                Dot = 'O';
+                Dot = 'X';   // ¸ÂÃá °÷
             }
             else if (Type == BattleType::Miss)
             {
-                Dot = 'X';
+                Dot = 'O';   // ¸ø ¸ÂÃá °÷
             }
+
             printf(" %c ", Dot);
         }
         printf("\n");
     }
-}
+}   
 
 
 

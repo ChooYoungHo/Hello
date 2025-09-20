@@ -966,6 +966,7 @@ enum class
 #include <string>
 #include "Position.h"
 #include "Day20250919_Stack.h"
+#include "BattleShipGame.h"
 
 //#include "Day20250918_List.h"
 //#include "Day20250917.h"
@@ -999,6 +1000,8 @@ int main() // 엔트리 포인트(코드가 시작되는 곳)
 	//Day20250919_Stack day0918;
 	//day0918.TestQueue();
 
+	BattleShipGame battleShipGame;
+	battleShipGame.BattleShipGameRun();
 
 	return 0;
 

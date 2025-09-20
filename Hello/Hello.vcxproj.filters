@@ -135,6 +135,12 @@
     <ClCompile Include="BattleBoard.cpp">
       <Filter>BattleShip</Filter>
     </ClCompile>
+    <ClCompile Include="BattleShipManager.cpp">
+      <Filter>BattleShip</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleShipGame.cpp">
+      <Filter>BattleShip</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -249,6 +255,12 @@
       <Filter>BattleShip</Filter>
     </ClInclude>
     <ClInclude Include="BattleBoard.h">
+      <Filter>BattleShip</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleShipManager.h">
+      <Filter>BattleShip</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleShipGame.h">
       <Filter>BattleShip</Filter>
     </ClInclude>
   </ItemGroup>
